@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shofia Nabila Elfa Rahma | 2110010113</title>
+  <link rel="icon" href="saya.jpg">
+  <link rel="stylesheet" href="portofolio.css">
+</head>
+
+<body>
+  <main class="container">
+    <!-- <h4 class="header-text text-2xl text-primary max-w-2xl font-code bg-background-normal p-4 rounded-lg backdrop-blur-sm">
+      I build <span class="typing-text"></span>
+    </h4> -->
+    <div class="content-wrapper">
+      
+      <section class="intro">
+        <h1>Assalamu'alaikum! 👋</h1>
+        <!-- <h4 class="header-text text-2xl text-primary max-w-2xl font-code bg-background-normal p-4 rounded-lg backdrop-blur-sm">
+          Aku <span class="typing-text"></span>
+        </h4> -->
+        <p>A Beginner Software Engineer who loves to sleep.</p>
+      </section>
+
+      <nav>
+        <a href="#" class="nav-link" data-section="about">Tentang</a>
+        <a href="#" class="nav-link" data-section="projects">Proyek</a>
+        <a href="#" class="nav-link" data-section="contact">Kontak</a>
+      </nav>
+
+      <div id="content">
+      </div>
+    </div>
+  </main>
+  <script>
+    // Array of texts to type
+    const texts = ["Shofia Nabila Elfa Rahma"];
+    let textIndex = 0;
+    let charIndex = 0;
+
+    const typingElement = document.querySelector('.typing-text');
+
+    // Function to type text
+    function typeText() {
+        if (charIndex < texts[textIndex].length) {
+            typingElement.textContent += texts[textIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeText, 100); // Adjust speed of typing
+        } else {
+            // After finishing one text, move to the next one after a short delay
+            setTimeout(() => {
+                typingElement.textContent = ''; // Clear text
+                charIndex = 0;
+                textIndex = (textIndex + 1) % texts.length; // Cycle through texts
+                typeText(); // Start typing next text
+            }, 1500); // Wait before starting to type next text
+        }
+    }
+    // Start typing when the page loads
+    window.onload = typeText;
+  </script>
+  <script src="portofolio.js"></script>
+</body>
+</html>

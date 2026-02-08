@@ -1,0 +1,1 @@
+{"version":1,"defects":{"LoginTest::testLoginValidAdmin":8,"LoginTest::testLoginInvalid":8},"times":{"ExampleTest::testBasic":0.017,"MyClassTest::testExample":0.001,"LoginTest::testLoginValidAdmin":0.034,"LoginTest::testLoginInvalid":0.002}}

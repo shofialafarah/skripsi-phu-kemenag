@@ -1,0 +1,93 @@
+.container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Menambahkan scroll horizontal jika konten tabel melebar */
+}
+
+/* Tombol Tambah Staf */
+.add-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+}
+
+/* Styling Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #4CAF50;
+    border-right: 1px solid #4CAF50;
+    white-space: nowrap;
+}
+
+th:last-child, td:last-child {
+    border-right: none;
+}
+
+
+th {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+/* Gaya tombol */
+td a {
+    display: inline-block;
+    width: 20px; /* lebar tombol sama */
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+td .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td .edit-btn:hover {
+    background-color: #45a049;
+}
+
+td .delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+td .delete-btn:hover {
+    background-color: #e53935;
+}
+
+td .info-btn {
+    background-color: #b1f436;
+    color: white;
+}
+
+td .info-btn:hover {
+    background-color: #a0d930; /* sedikit variasi hover */
+}
+
+/* Efek hover pada baris */
+tr:hover {
+    background-color: #f1f1f1;
+}
+

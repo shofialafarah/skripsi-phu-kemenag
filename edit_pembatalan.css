@@ -1,0 +1,141 @@
+/* Global Reset and Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #228B22;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Form Container */
+form {
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 15px 25px; /* lebih kecil */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1e7ea;
+}
+
+/* Form Header */
+h3, h4 {
+    text-align: center;
+    color: #228B22;
+    margin-bottom: 15px; /* lebih kecil */
+    border-bottom: 3px solid #32CD32;
+    padding-bottom: 5px; /* lebih kecil */
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 3px; /* lebih kecil */
+    margin-bottom: 2px; /* lebih kecil */
+    font-weight: 600;
+    color: #065a14;
+}
+
+/* Input Fields */
+.form-control {
+    width: 100%;
+    padding: 6px 10px; /* lebih kecil */
+    margin-bottom: 8px; /* lebih kecil */
+    border: 1px solid #bdc3c7;
+    border-radius: 4px; /* lebih kecil */
+    transition: all 0.3s ease;
+    font-size: 13px; /* lebih kecil */
+}
+
+.form-control:focus {
+    border-color: #32CD32;
+    outline: none;
+    box-shadow: 0 0 8px rgba(5, 112, 23, 0.2);
+}
+
+/* Select and Radio Inputs */
+select,
+.radio input[type="radio"] {
+    margin-right: 8px; /* lebih kecil */
+}
+
+.form-group {
+    background-color: #f9fafa;
+    padding: 8px;
+    border-radius: 6px; /* lebih kecil */
+    margin-bottom: 12px; /* lebih kecil */
+}
+
+.radio {
+    margin-bottom: 8px; /* lebih kecil */
+}
+
+.radio label {
+    display: inline-block;
+    margin-left: 4px; /* lebih kecil */
+    font-weight: normal;
+}
+
+/* Textarea */
+textarea.form-control {
+    resize: vertical;
+    min-height: 60px; /* lebih kecil */
+}
+
+/* Submit Button */
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(145deg, #0c5c2c 0%, #4caf50 100%);
+    color: white;
+    border: none;
+    border-radius: 6px; /* lebih kecil */
+    font-size: 14px; /* lebih kecil */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px; /* lebih kecil */
+}
+
+.btn-primary:hover {
+    background: linear-gradient(145deg, #0c5c2c 0%, #4caf50 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    form {
+        padding: 12px;
+        width: 95%;
+    }
+
+    .form-control {
+        font-size: 12px; /* lebih kecil */
+        padding: 5px 8px; /* lebih kecil */
+    }
+}
+
+/* Accessibility and Focus States */
+*:focus {
+    outline: 2px solid #32CD32;
+    outline-offset: 2px;
+}
+
+/* Error and Validation Styles (optional) */
+.form-control:invalid {
+    border-color: #e74c3c;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: white;
+    }
+
+    form {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+    }
+}

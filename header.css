@@ -1,0 +1,357 @@
+:root {
+    --primary-green: #228B22;
+    --secondary-green: #32CD32;
+    --accent-gold: #ffd700;
+    --text-light: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+/* Navigation */
+nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+
+/* Nav Links and Dropdown Container */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Kurangi gap agar elemen tidak terlalu berjauhan */
+    height: 40px;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: var(--accent-gold);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown Styles */
+/* Perbaikan untuk Dropdown */
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.dropbtn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Area hover yang lebih besar untuk dropdown */
+.dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 20px; /* Area tambahan untuk mencegah dropdown hilang */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(35, 45, 35, 0.95);
+    min-width: 200px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 100;
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    margin-top: 10px; /* Tambah margin atas */
+}
+
+/* Pastikan konten dropdown tetap terlihat saat hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--text-light);
+    padding: 0.8rem 1.2rem;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap; /* Mencegah text wrap */
+}
+
+/* Area tambahan di atas dropdown content untuk mencegah hilang */
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -20px; /* Sesuaikan dengan height pada .dropdown::after */
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+
+/* Hover style untuk link di dropdown */
+.dropdown-content a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent-gold);
+}
+
+/* Animasi dropdown */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.dropdown-content {
+    animation: dropdownFade 0.3s ease;
+}
+
+/* Posisi ikon notifikasi */
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Ikon bel tetap terlihat */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+/* Badge notifikasi */
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+
+/* Dropdown notifikasi */
+.notifications-dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1); /* Warna transparan */
+    backdrop-filter: blur(10px); /* Efek blur */
+    -webkit-backdrop-filter: blur(10px); /* Untuk dukungan Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Border tipis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+    border-radius: 5px;
+    padding: 10px;
+    width: 350px;
+    z-index: 100;
+}
+
+.notifications-dropdown h4 {
+    margin: 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.notifications-dropdown table {
+    width: 100%;
+    font-size: 14px;
+}
+.notification-table td {
+    cursor: pointer;
+}
+
+.notifications-dropdown tr.success { background-color: #d4edda; }
+.notifications-dropdown tr.danger { background-color: #f8d7da; }
+.notifications-dropdown tr.info { background-color: #d1ecf1; }
+
+.notifications-dropdown p {
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+    padding: 10px 0;
+}
+
+/* Bungkus semua dropdown dalam container */
+.dropdown-container {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem; /* Atur jarak antar dropdown */
+}
+
+
+
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.cta-button {
+    background: var(--accent-gold);
+    color: #333;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: #ffe44d;
+}
+
+/* Floating Cards Animation */
+.floating-cards {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.card {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content {
+        padding: 1rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    article {
+        width: 100%;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f9f7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0c5c2c;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4caf50;
+}

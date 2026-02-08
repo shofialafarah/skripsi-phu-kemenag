@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+:root {
+    --primary-green: #228B22;
+    --secondary-green: #32CD32;
+    --accent-gold: #ffd700;
+    --text-light: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+html, body {
+    overflow: hidden; /* Mencegah scroll */
+    height: 100%; /* Pastikan body memenuhi viewport */
+}
+
+body {
+	background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100vh;
+	margin: -20px 0 50px;
+}
+
+.reset-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px 50px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #228B22; /* Warna hijau utama */
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #32CD32;
+    border-radius: 10px;
+    box-shadow: 7px 5px 2px #02020233;
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    font-size: 14px;
+}
+
+input:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px #0000004d;
+}
+
+input::placeholder {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+button {
+	border-radius: 20px;
+	border: 1px solid var(--primary-green);
+	background: linear-gradient(145deg, #0c5c2c 0%, #4caf50 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(12, 92, 44, 0.2);
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+    cursor: pointer;
+}
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 2px 15px #0000004d;
+}
+
+a {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #28a745;
+}
+
+.alert-error {
+    background-color: #dc3545;
+}
+.otp-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.otp-input {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #333;
+    border-radius: 5px;
+}
+
+.otp-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}

@@ -1,0 +1,104 @@
+/* Kontainer Utama */
+.container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Menambahkan scroll horizontal jika konten tabel melebar */
+}
+
+/* Tombol Tambah */
+.add-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+}
+
+/* Styling Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    min-width: 1200px; /* Membuat tabel lebih lebar untuk data besar */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+td {
+    white-space: nowrap; /* Membuat isi tabel tidak membungkus teks */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tombol Aksi di Kolom */
+td a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+td .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+td .edit-btn:hover {
+    background-color: #45a049;
+}
+
+td .delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+td .delete-btn:hover {
+    background-color: #e53935;
+}
+
+td .info-btn {
+    background-color: #b1f436;
+    color: white;
+}
+
+td .info-btn:hover {
+    background-color: #a5d636;
+}
+
+/* Efek Hover pada Baris */
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    table {
+        min-width: unset; /* Menghapus batas minimal jika lebar layar kecil */
+    }
+}

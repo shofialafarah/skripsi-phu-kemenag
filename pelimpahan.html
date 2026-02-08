@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PHU KEMENAG BANJAR</title>
+    <link rel="icon" href="logo_kemenag.png" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icon Font Stylesheet -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Spinner Start -->
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!--Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
+            <div class="col-lg-6 px-5 text-start">
+                <small><i class="fa fa-map-marker-alt me-2"></i>Jl. Sekumpul No. 72-73 Kelurahan Jawa </small>
+                <small class="ms-4"><i class="fa fa-envelope me-2"></i>banjarkalsel@kemenag.go.id</small>
+            </div>
+            <div class="col-lg-6 px-5 text-end">
+                <small>Ikuti Kami:</small>
+                <a class="text-body ms-3" href="https://www.facebook.com/kemenagbanjar/"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-body ms-3" href="https://x.com/kemenagkalsel/"><i class="fab fa-twitter"></i></a>
+                <a class="text-body ms-3" href=""><i class="fab fa-linkedin-in"></i></a>
+                <a class="text-body ms-3" href="https://instagram.com/kemenag_kab_banjar/"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-dark m-0">Kementerian Agama</span></h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="index.html" class="nav-item nav-link active">Beranda</a>
+                    <a href="tentang-phu.html" class="nav-item nav-link">Tentang PHU</a>
+                    <!-- <a href="product.html" class="nav-item nav-link">Layanan</a> -->
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Layanan</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="pendaftaran.html" class="dropdown-item">Pendaftaran Haji</a>
+                            <a href="estimasi.html" class="dropdown-item">Estimasi Keberangkatan</a>
+                            <a href="pembatalan.html" class="dropdown-item">Pembatalan Haji</a>
+                            <a href="pelimpahan.html" class="dropdown-item">Pelimpahan Haji</a>
+                        </div>
+                    </div>
+                    <a href="kontak.html" class="nav-item nav-link">Hubungi Kami</a>
+                </div>
+                <div class="d-none d-lg-flex ms-2">
+                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="login.php">
+                        <small class="fa fa-user text-body"></small>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+      <div class="container">
+        <h1 class="display-3 mb-3 animated slideInDown">Pelimpahan Haji</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a class="text-body" href="#">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a class="text-body" href="#">Layanan</a>
+            </li>
+            <li class="breadcrumb-item text-dark active" aria-current="page">
+              Pelimpahan
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Product Start -->
+    <div class="container pt-5 pb-0">
+      <div class="row g-0 gx-5 align-items-end">
+        <div class="col-lg-12">
+          <div
+            class="section-header text-start mb-0 wow fadeInUp"
+            data-wow-delay="0.1s"
+          >
+            <h1 class="display-5">Persyaratan</h1>
+            <div class="catatan">
+              Berikut adalah langkah-langkah Pelimpahan Haji Online pada aplikasi:
+            </div>
+            <div>
+              <li>Buka situs <b> <a href="index.html" target="_blank" style="color: black;">https://phu-kemenag-banjar.go.id/</a></b></li>
+                <li>Login menggunakan akun haji yang telah terdaftar. Jika belum punya akun, silahkan register terlebih dahulu.</li>
+                <li>Pilih menu Pelimpahan Haji</li>
+                <li>Mengisi Formulir Pengajuan Pelimpahan Haji.</li>
+              <li>
+                Jika status dokumen telah disetujui oleh staf, mohon ditunggu H+7
+                pengajuan.
+              </li>
+              <li>
+                Jika dokumen bukti pelimpahan haji telah diupload staf, silahkan
+                datang ke kantor Kementerian Agama Kabupaten Banjar dengan
+                membawa
+                <mark style="background-color: yellow">
+                  <b>Materai 10 Ribu 2 Lembar</b></mark
+                >untuk pengajuan berkas ke Kanwil.
+              </li>
+              <br />
+              <br />Apabila ada pertanyaan lebih lanjut, silahkan menghubungi
+              <a
+                href="https://wa.me/6285101336711?text=Assalamu'alaikum%2C%20Saya%20ingin%20bertanya%20tentang%20pelimpahan%20haji."
+                target="_blank"
+              >
+                Bu Fatimah
+              </a>
+              via whatsapp ini pada jam hari kerja.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product End -->
+
+    <!-- Service Start -->
+    <div class="container-fluid pt-0 pb-5">
+      <div class="container">
+        <div class="row g-5">
+          <!-- Meninggal Dunia -->
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div
+              class="service-item h-100 p-5"
+              style="background-color: #a9f392; border-radius: 20px"
+            >
+              <h4
+                class="mb-3"
+                style="
+                  background-color: white;
+                  padding: 20px;
+                  border-radius: 20px;
+                "
+              >
+                Pelimpahan karena Meninggal Dunia
+              </h4>
+              <p class="mb-4">Dokumen yang diupload:</p>
+              <ul class="list-unstyled">
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Akta Kematian dari DUKCAPIL
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Bukti Setoran Awal BPIH
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Pendaftaran Pergi Haji
+                  (SPPH)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Keterangan Ahli Waris
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Kuasa Penunjukkan
+                  Pelimpahan Porsi
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>KTP Ahli Waris digabung 1
+                  Halaman
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>KTP Penerima Pelimpahan Porsi
+                  1 Halaman
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Kartu Keluarga Penerima
+                  Pelimpahan porsi
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-splotch me-3"></i>Akta Kelahiran (Jika
+                  Penerima Pelimpahan Porsi adalah Anak Kandung/Saudara
+                  Kandung/Orang Tua Kandung)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-splotch me-3"></i>Buku Nikah (Jika Penerima
+                  Pelimpahan Porsi adalah Suami/Isteri)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Buku Rekening Penerima
+                  Pelimpahan Porsi
+                </li>
+                <li style="color: black;">
+                  <i class="fa fa-check me-3"></i>Foto Wajah 80%
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Sakit Permanen -->
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+            <div
+              class="service-item h-100 p-5"
+              style="background-color: #a9f392; border-radius: 20px"
+            >
+              <h4
+                class="mb-3"
+                style="
+                  background-color: white;
+                  padding: 20px;
+                  border-radius: 20px;
+                "
+              >
+                Pelimpahan karena Sakit Permanen
+              </h4>
+              <p class="mb-4">Persyaratan yang harus dilengkapi:</p>
+              <ul class="list-unstyled">
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Keterangan Sakit dari
+                  Rumah Sakit Pemerintah
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Bukti Setoran Awal BPIH
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Pendaftaran Pergi Haji
+                  (SPPH)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Keterangan Ahli Waris
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Surat Kuasa Penunjukkan
+                  Pelimpahan Porsi
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>KTP Ahli Waris digabung 1
+                  Halaman
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>KTP Penerima Pelimpahan Porsi
+                  1 Halaman
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Kartu Keluarga Penerima
+                  Pelimpahan porsi
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-splotch me-3"></i>Akta Kelahiran (Jika
+                  Penerima Pelimpahan Porsi adalah Anak Kandung/Saudara
+                  Kandung/Orang Tua Kandung)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-splotch me-3"></i>Buku Nikah (Jika Penerima
+                  Pelimpahan Porsi adalah Suami/Isteri)
+                </li>
+                <li style="color: black">
+                  <i class="fa fa-check me-3"></i>Buku Rekening Penerima
+                  Pelimpahan Porsi
+                </li>
+                <li style="color: black;">
+                  <i class="fa fa-check me-3"></i>Foto Wajah 80%
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Service End -->
+
+    <!-- Footer Start -->
+    <div
+      class="container-fluid bg-dark footer wow fadeIn"
+      data-wow-delay="0.1s"
+    >
+      <div class="container py-5">
+        <div class="row g-5">
+          <div class="col-lg-3 col-md-6">
+            <h1 class="fw-bold text-primary mb-4">
+              KEMENAG <br /><span class="text-primary">Kab. Banjar</span>
+            </h1>
+            <div class="d-flex pt-2">
+              <a
+                class="btn btn-square btn-outline-light rounded-circle me-1"
+                href="https://x.com/kemenagkalsel/"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                class="btn btn-square btn-outline-light rounded-circle me-1"
+                href="https://www.facebook.com/kemenagbanjar/"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                class="btn btn-square btn-outline-light rounded-circle me-1"
+                href="www.youtube.com/@kementerianagamakabbanjar"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h4 class="text-light mb-4">Alamat</h4>
+            <p>
+              <i class="fa fa-map-marker-alt me-3"></i>Jl. Sekumpul No. 72-73
+              Kelurahan Jawa Martapura Banjar 70614
+            </p>
+            <p><i class="fa fa-phone-alt me-3"></i>(0511) 4721249</p>
+            <p><i class="fa fa-envelope me-3"></i>banjarkalsel@kemenag</p>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h4 class="text-light mb-4">Daftar Tautan</h4>
+            <a class="btn btn-link" href="tentang-phu.html">Tentang PHU</a>
+            <a class="btn btn-link" href="kontak.html">Hubungi Kami</a>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h4 class="text-light mb-4">Pembuat Website:</h4>
+            <p>Shofia Nabila Elfa Rahma 2110010113</p>
+            <div class="position-relative mx-auto" style="max-width: 400px">
+              <input
+                class="form-control bg-transparent w-100 py-3 ps-4 pe-5"
+                type="text"
+                placeholder="Kirim email"
+              />
+              <button
+                type="button"
+                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
+              >
+                SignUp
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              &copy; <a href="portofolio.html">Shofia Nabila Elfa Rahma</a>,
+              2110010113.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a
+      href="#"
+      class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
+      ><i class="bi bi-arrow-up"></i
+    ></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,292 @@
+/* Main Dashboard Styles */
+:root {
+    --primary-color: #656aff;
+    --dark-bg: #1e1b29;
+    --card-bg: #ffffff;
+    --text-dark: #333333;
+    --text-light: #7a7b92;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --pending-color: #f7931e;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5fa;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    margin-left: 84px; /* Default margin for closed sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* When sidebar is open, adjust margin */
+.sidebar.open + .dashboard-container {
+    margin-left: 280px;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px 24px;
+    background-color: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow);
+}
+
+.welcome-section h1 {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.welcome-section p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin: 4px 0 0 0;
+}
+
+.date-time-section {
+    display: flex;
+  align-items: center;
+  gap: 12px;              /* spasi antara tanggal & waktu */
+  margin-top: 4px;
+}
+
+.current-date {
+    font-size: 16px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.current-time {
+    font-size: 22px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0; 
+}
+
+/* ========================= kolom pencarian =================================== */
+.search-container {
+    position: relative; /* penting untuk posisi ikon */
+    display: inline-block;
+}
+
+/* Input pencarian */
+.search-input {
+    padding: 8px 12px 8px 36px; /* sisakan space kiri untuk ikon */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 250px;
+}
+  
+/* Ikon pencarian */
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    pointer-events: none; /* biar klik tetap ke input */
+}
+  
+/* Placeholder teks */
+.search-input::placeholder {
+    color: #aaa;
+    font-size: 14px;
+  }
+  
+  /* Icon pesan dan notifikasi, dengan border hitam */
+  .icon-button {
+    background: none;
+    border: 1px solid #ccc; /* Border hitam */
+    border-radius: 30%;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+/* Hover effect untuk ikon pesan dan notif */
+.icon-button:hover {
+    background-color: #f5f5f5; /* Warna latar belakang saat hover */
+  }
+  
+  /* Untuk menambahkan jarak dan border pada tombol pesan dan notifikasi */
+  .icon-button + .icon-button {
+    margin-left: 12px; /* Memberi jarak antar icon */
+  }
+  
+  /* Styling untuk pesan dan notifikasi icons */
+  .icon-button span {
+    display: block;
+    font-size: 18px; /* Ukuran font ikon */
+    color: #444;
+  }
+  
+  /* Tombol hover effect */
+  .icon-button:hover span {
+    color: #656aff; /* Warna ikon saat hover */
+  }
+
+
+/* Empty state styling */
+.empty-state {
+    padding: 16px;
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Table responsiveness */
+@media screen and (max-width: 992px) {
+    .dashboard-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card-content {
+        padding: 16px;
+    }
+    
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .status-tag {
+        padding: 4px 10px;
+        font-size: 11px;
+    }
+    
+    .action-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+/* For very small screens */
+@media screen and (max-width: 480px) {
+    .card-header {
+        padding: 14px 16px;
+    }
+    
+    .card-header h2 {
+        font-size: 16px;
+    }
+    
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Two Column Layout */
+.dashboard-main-content {
+    flex: 2; /* Membuat bagian ini mengambil lebih banyak ruang */
+    min-width: 600px; /* Tambahkan lebar minimum agar tabel tidak mengecil */
+}
+
+.dashboard-tables-column {
+    flex: 1;
+    min-width: 0; /* Prevents flex items from overflowing */
+}
+
+.dashboard-profile-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* Responsive Styles */
+@media screen and (max-width: 1200px) {
+    .dashboard-main-content {
+        flex-direction: column;
+    }
+    
+    .dashboard-profile-column {
+        width: 100%;
+    }
+    
+    .activity-graph {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .graph-container {
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .task-details h4 {
+        font-size: 13px;
+    }
+}
+
+/* Grid dua kolom: Data Pelayanan & Profil */
+  @media screen and (max-width: 768px) {
+    .dashboard-main-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  .dashboard-cards {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.dashboard-main-content {
+    flex: 2;
+}
+
+.dashboard-profile-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-card, .task-card {
+    flex: 1;
+}
+  
