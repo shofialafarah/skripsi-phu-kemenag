@@ -53,7 +53,7 @@
                     </p>
                     <a
                         class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill"
-                        href="pendaftaran.html">Baca Selengkapnya</a>
+                        href="pendaftaran.php">Baca Selengkapnya</a>
                 </div>
             </div>
             <!-- Estimasi Haji -->
@@ -73,7 +73,7 @@
                     </p>
                     <a
                         class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill"
-                        href="estimasi.html">Baca Selengkapnya</a>
+                        href="estimasi.php">Baca Selengkapnya</a>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
                     </p>
                     <a
                         class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill"
-                        href="pembatalan.html">Baca Selengkapnya</a>
+                        href="pembatalan.php">Baca Selengkapnya</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -113,7 +113,7 @@
                     </p>
                     <a
                         class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill"
-                        href="pelimpahan.html">Baca Selengkapnya</a>
+                        href="pelimpahan.php">Baca Selengkapnya</a>
                 </div>
             </div>
         </div>
@@ -235,7 +235,7 @@
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid" src="assets/img/blog-4.jpg" alt="" />
+                <img class="img-fluid" src="assets/img/blog-1.png" alt="gambar blog 1" />
                 <div class="bg-light p-4">
                     <a
                         class="d-block h5 lh-base mb-4"
@@ -250,10 +250,10 @@
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                 <img
                     class="img-fluid"
-                    src="assets/img/blog-5.jpg"
-                    alt="https://www.facebook.com/100063789843059/photos/1085838930219092/?_rdr" />
+                    src="assets/img/blog-2.png"
+                    alt="gambar blog 2" />
                 <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">Penyelenggara Haji dan Umrah</a>
+                    <a class="d-block h5 lh-base mb-4" href="https://www.facebook.com/100063789843059/photos/1085838930219092/?_rdr">Penyelenggara Haji dan Umrah</a>
                     <div class="text-muted border-top pt-4">
                         <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
                         <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan,
@@ -264,10 +264,10 @@
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                 <img
                     class="img-fluid"
-                    src="assets/img/blog-6.jpg"
-                    alt="https://kalsel.kemenag.go.id/cetak/525776/KaKanwil-Resmikan-PTSP-Kantor-Kemenag-Banjar" />
+                    src="assets/img/blog-3.png"
+                    alt="gambar blog 3" />
                 <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">KaKanwil Resmikan PTSP Kantor Kemenag Banjar</a>
+                    <a class="d-block h5 lh-base mb-4" href="https://www.facebook.com/kemenagbanjar/photos/d41d8cd9/1280725874063729/">Kegiatan Apel Pagi KanKemenag Kab. Banjar </a>
                     <div class="text-muted border-top pt-4">
                         <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
                         <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>28 Juni,

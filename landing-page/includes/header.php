@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <title>PHU KEMENAG BANJAR</title>
-    <link rel="icon" href="logo_kemenag.png" />
+    <link rel="icon" href="assets/img/logo_kemenag.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="keywords" />
     <meta content="" name="description" />
 
     <!-- Favicon -->
-    <link href="img/favicon.icon" rel="icon" />
+    <link href="assets/img/favicon.icon" rel="icon" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
