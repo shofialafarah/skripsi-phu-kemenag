@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once __DIR__ . '/../../../../includes/koneksi.php';
 session_start();
 
@@ -12,22 +12,22 @@ if (!$result) {
 }
 ?>
 
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include '../../includes/sidebar_admin.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include '../../includes/header_admin.php'; ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include '../../includes/sidebar_admin.php'; ?>
+    </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include '../../includes/header_admin.php'; ?>
 
-            <main class="pPendaftaran-wrapper">
-                <div class="pPendaftaran">
-                    <div class="pPendaftaran-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Manajemen Akun Kepala Seksi
-                    </div>
-                    <div class="pPendaftaran-body">
-                        <div style="overflow-x: auto; border-radius: 5px;">
+        <main class="pPendaftaran-wrapper">
+            <div class="pPendaftaran">
+                <div class="pPendaftaran-header" style="color: white;">
+                    <i class="fas fa-table me-1"></i> Manajemen Akun Kepala Seksi
+                </div>
+                <div class="pPendaftaran-body">
+                    <div style="overflow-x: auto; border-radius: 5px;">
                         <table id="tabelStaf" class="table table-striped table-bordered table-hover">
                             <thead class="table-dark">
                                 <tr>
@@ -48,69 +48,69 @@ if (!$result) {
                                 $query = "SELECT * FROM kepala_seksi";
                                 $result = mysqli_query($koneksi, $query);
                                 $no = 1;
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        //Username
-                                        echo "<td class='text-center'>
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    //Username
+                                    echo "<td class='text-center'>
                                             <span class='badge bg-primary'>" . htmlspecialchars($row['username']) . "</span>
                                         </td>";
 
-                                        //Nama Kasi
-                                        echo "<td class='text-center'>" . htmlspecialchars($row['nama_kepala']) . "</td>";
+                                    //Nama Kasi
+                                    echo "<td class='text-center'>" . htmlspecialchars($row['nama_kepala']) . "</td>";
 
-                                        //Nomor NIP
-                                        echo "<td class='text-center'>" . htmlspecialchars($row['nip']) . "</td>";
+                                    //Nomor NIP
+                                    echo "<td class='text-center'>" . htmlspecialchars($row['nip']) . "</td>";
 
-                                        //Posisi
-                                        echo "<td class='text-center'>" . htmlspecialchars($row['jabatan']) . "</td>";
+                                    //Posisi
+                                    echo "<td class='text-center'>" . htmlspecialchars($row['jabatan']) . "</td>";
 
-                                        //Nomor Telepon
-                                        echo "<td class='text-center'>
+                                    //Nomor Telepon
+                                    echo "<td class='text-center'>
                                             <span class='badge bg-success'><i class='fas fa-phone'></i> " . htmlspecialchars($row['no_telepon']) . "</span>
                                         </td>";
 
-                                        //Email
-                                        echo "<td class='text-center'>
+                                    //Email
+                                    echo "<td class='text-center'>
                                                 <a href='mailto:" . htmlspecialchars($row['email']) . "' style='color: #0d6efd; text-decoration: underline;'>" . htmlspecialchars($row['email']) . " </a>
                                         </td>";
 
-                                        //Password
-                                        echo "<td class='text-center'>" . (!empty($row['password']) ? '*****' : '-') . "</td>";
+                                    //Password
+                                    echo "<td class='text-center'>" . (!empty($row['password']) ? '*****' : '-') . "</td>";
 
-                                        //Foto
+                                    //Foto
 
-                                        if (!empty($row['foto'])) {
-                                            echo "<td class='text-center'>
+                                    if (!empty($row['foto'])) {
+                                        echo "<td class='text-center'>
         <img src='" . htmlspecialchars($row['foto']) . "' alt='Foto' 
             style='width:60px; height:60px; object-fit:cover; border-radius:50%; border:2px solid #ccc;' />
     </td>";
-                                        } else {
-                                            echo "<td class='text-center text-muted'>Tidak ada</td>";
-                                        }
-
-                                        //AKSI
-                                        echo "<td class='text-center'>";
-                                        
-                                    echo "<div class='d-flex justify-content-center gap-2'>";
-                                        echo "<a href='edit_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-warning me-1 mb-1' title='Edit'><i class='fas fa-edit'></i></a>";
-                                        echo "<a href='profil_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Edit'><i class='fas fa-print'></i></a>";
-                                        echo "</div>";
-                                        echo "</td>";
-                                        echo "</tr>";
+                                    } else {
+                                        echo "<td class='text-center text-muted'>Tidak ada</td>";
                                     }
+
+                                    //AKSI
+                                    echo "<td class='text-center'>";
+
+                                    echo "<div class='d-flex justify-content-center gap-2'>";
+                                    echo "<a href='edit_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-warning me-1 mb-1' title='Edit'><i class='fas fa-edit'></i></a>";
+                                    echo "<a href='profil_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Lihat Profile Kasi'><i class='fas fa-user'></i></a>";
+                                    echo "</div>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
                                 ?>
                             </tbody>
                         </table>
-                        </div>
-                    </div>
-                    <div class="footer" style="color: white; text-align: center;">
-                        <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
                     </div>
                 </div>
-            </main>
-        </div>
+                <div class="footer" style="color: white; text-align: center;">
+                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
+                </div>
+            </div>
+        </main>
     </div>
-    <script src="../../assets/js/sidebar_staf.js"></script>
+</div>
+<script src="../../assets/js/sidebar_staf.js"></script>
 </body>
 
 </html>
