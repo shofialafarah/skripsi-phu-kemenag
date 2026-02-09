@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'koneksi.php';
+include '../../includes/koneksi.php';
 
 // library PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;

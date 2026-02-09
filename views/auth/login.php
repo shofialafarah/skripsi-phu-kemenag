@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($table === 'administrator') {
                     $_SESSION['user_logged_in'] = true;
-                    header("Location: dashboard_administrator.php");
+                    header("Location: ../admin/dashboard_administrator.php");
                 } elseif ($table === 'kepala_seksi') {
                     $_SESSION['id_kepala'] = $user['id_kepala'];
                     header("Location: dashboard_kepala_seksi.php");

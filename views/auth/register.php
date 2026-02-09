@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'koneksi.php'; 
+include '../../includes/koneksi.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $nama = filter_input(INPUT_POST, 'nama', FILTER_SANITIZE_STRING);
