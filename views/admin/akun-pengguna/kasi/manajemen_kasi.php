@@ -1,5 +1,6 @@
-<?php session_start();
-include 'koneksi.php'; // pastikan file koneksi benar
+<?php 
+include_once __DIR__ . '/../../../../includes/koneksi.php';
+session_start();
 
 // Ambil semua data dari tabel kasi
 $query = "SELECT * FROM kepala_seksi ORDER BY id_kepala DESC";
@@ -11,24 +12,14 @@ if (!$result) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Administrator</title>
-    <link rel="icon" href="logo_kemenag.png">
-
-<body>
     <div class="layout">
         <div class="layout-sidebar">
             <!-- SIDEBAR -->
-            <?php include 'sidebar_admin.php'; ?>
+            <?php include '../../includes/sidebar_admin.php'; ?>
         </div>
         <!-- MAIN AREA -->
         <div class="layout-content">
-            <?php include 'header_admin.php'; ?>
+            <?php include '../../includes/header_admin.php'; ?>
 
             <main class="pPendaftaran-wrapper">
                 <div class="pPendaftaran">
@@ -36,8 +27,7 @@ if (!$result) {
                         <i class="fas fa-table me-1"></i> Manajemen Akun Kepala Seksi
                     </div>
                     <div class="pPendaftaran-body">
-                        <div class="d-flex flex-wrap align-items-center mb-3">
-                        </div>
+                        <div style="overflow-x: auto; border-radius: 5px;">
                         <table id="tabelStaf" class="table table-striped table-bordered table-hover">
                             <thead class="table-dark">
                                 <tr>
@@ -54,7 +44,7 @@ if (!$result) {
                             </thead>
                             <tbody>
                                 <?php
-                                include 'koneksi.php';
+                                include_once __DIR__ . '/../../../../includes/koneksi.php';
                                 $query = "SELECT * FROM kepala_seksi";
                                 $result = mysqli_query($koneksi, $query);
                                 $no = 1;
@@ -100,14 +90,18 @@ if (!$result) {
 
                                         //AKSI
                                         echo "<td class='text-center'>";
+                                        
+                                    echo "<div class='d-flex justify-content-center gap-2'>";
                                         echo "<a href='edit_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-warning me-1 mb-1' title='Edit'><i class='fas fa-edit'></i></a>";
                                         echo "<a href='profil_kasi.php?id=" . $row['id_kepala'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Edit'><i class='fas fa-print'></i></a>";
+                                        echo "</div>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
                                 ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                     <div class="footer" style="color: white; text-align: center;">
                         <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
@@ -116,6 +110,7 @@ if (!$result) {
             </main>
         </div>
     </div>
+    <script src="../../assets/js/sidebar_staf.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-include '../../../includes/koneksi.php';
+include_once __DIR__ . '/../../../includes/koneksi.php';
 
 // Cek apakah session id_admin sudah diset
 if (!isset($_SESSION['id_admin'])) {

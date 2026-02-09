@@ -1,5 +1,5 @@
 <?php
-// include '../../includes/koneksi.php';
+include_once __DIR__ . '/../../../includes/koneksi.php';
 
 $currentPage = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
@@ -101,7 +101,7 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
 
                 <div class="content-wrapper">
                     <nav class="menu">
-                        <a href="../dashboard_administrator.php" class="<?= ($currentPage == 'dashboard_administrator.php') ? 'active' : '' ?>">
+                        <a href="../../dashboard_administrator.php" class="<?= ($currentPage == 'dashboard_administrator.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p>Dashboard</p>
                         </a>
@@ -112,9 +112,9 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $penggunaPages) ? 'open' : '' ?>" id="penggunaSubmenu">
-                            <a href="akun-pengguna/manajemen_jamaah.php" class="<?= ($currentPage == 'akun-pengguna/manajemen_jamaah.php' || $currentPage == 'tambah_jamaah.php' || $currentPage == 'edit_jamaah.php') ? 'active' : '' ?>">Jamaah</a>
-                            <a href="akun-pengguna/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php') ? 'active' : '' ?>">Staf PHU</a>
-                            <a href="akun-pengguna/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/manajemen_kasi.php' || $currentPage == 'tambah_kasi.php' || $currentPage == 'edit_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/jamaah/manajemen_jamaah.php" class="<?= ($currentPage == 'akun-pengguna/jamaah/manajemen_jamaah.php' || $currentPage == 'tambah_jamaah.php' || $currentPage == 'edit_jamaah.php') ? 'active' : '' ?>">Jamaah</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/staf/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php') ? 'active' : '' ?>">Staf PHU</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/kasi/manajemen_kasi.php' || $currentPage == 'tambah_kasi.php' || $currentPage == 'edit_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
                         </div>
                         <!-- Manajemen Sistem -->
                         <a class="dropdown-toggle <?= in_array($currentPage, $sistemPage) ? 'active' : '' ?>" onclick="toggleDropdown('sistemSubmenu', this)">

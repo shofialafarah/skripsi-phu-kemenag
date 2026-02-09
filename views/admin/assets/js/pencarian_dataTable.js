@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  console.log("cari_jamaah.js loaded");
+  console.log("pencarian_dataTable.js loaded");
 
   // Inisialisasi DataTable dengan fitur pencarian
   const table = $("#tabelStaf").DataTable({
