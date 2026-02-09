@@ -27,19 +27,23 @@
               ></a>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-4">
             <h4 class="text-light mb-4">Alamat</h4>
             <p>
               <i class="fa fa-map-marker-alt me-3"></i>Jl. Sekumpul No. 72-73
               Kelurahan Jawa Martapura Banjar 70614
             </p>
             <p><i class="fa fa-phone-alt me-3"></i>(0511) 4721249</p>
-            <p><i class="fa fa-envelope me-3"></i>banjarkalsel@kemenag</p>
+            <p><i class="fa fa-envelope me-3"></i>phukemenagbanjar@gmail.com</p>
           </div>
-          <div class="col-lg-3 col-md-6">
-            <h4 class="text-light mb-4">Daftar Tautan</h4>
-            <a class="btn btn-link" href="tentang-phu.html">Tentang PHU</a>
-            <a class="btn btn-link" href="kontak.html">Hubungi Kami</a>
+          <div class="col-lg-2 col-md-6">
+            <h4 class="text-light mb-4">List Tautan</h4>
+            <a class="btn btn-link" href="tentang-phu.php">Tentang PHU</a>
+            <a class="btn btn-link" href="pendaftaran.php">Pendaftaran</a>
+            <a class="btn btn-link" href="estimasi.php">Estimasi</a>
+            <a class="btn btn-link" href="pembatalan.php">Pembatalan</a>
+            <a class="btn btn-link" href="pelimpahan.php">Pelimpahan</a>
+            <a class="btn btn-link" href="kontak.php">Hubungi Kami</a>
           </div>
           <div class="col-lg-3 col-md-6">
             <h4 class="text-light mb-4">Pembuat Website:</h4>
