@@ -137,7 +137,7 @@
             <!-- Tombol Login -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="login.php"
+              href="../auth/login.php"
             >
               <small class="fa fa-user text-body"></small>
             </a>
@@ -145,7 +145,7 @@
             <!-- Tombol Register -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="register.php"
+              href="../auth/register.php"
             >
               <small class="fa fa-user-plus text-body"></small>
             </a>
