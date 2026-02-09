@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>PHU KEMENAG BANJAR</title>
-    <link rel="icon" href="assets/img/logo_kemenag.png" />
+    <link rel="icon" href="../assets/logo_kemenag.png" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="keywords" />
     <meta content="" name="description" />
@@ -137,7 +137,7 @@
             <!-- Tombol Login -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="../auth/login.php"
+              href="../views/auth/login.php"
             >
               <small class="fa fa-user text-body"></small>
             </a>
@@ -145,7 +145,7 @@
             <!-- Tombol Register -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="../auth/register.php"
+              href="../views/auth/register.php"
             >
               <small class="fa fa-user-plus text-body"></small>
             </a>

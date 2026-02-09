@@ -6,7 +6,7 @@ include 'koneksi.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 $message = ''; // Variabel untuk menyimpan pesan notifikasi
 
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
-    <link rel="icon" href="../landing-page/assets/img/logo_kemenag.png">
+    <link rel="icon" href="../../assets/logo_kemenag.png">
     <link rel="stylesheet" href="assets/css/lupa_password.css">
 </head>
 

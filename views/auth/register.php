@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     $stmt->bind_param("ssssss", $nama, $validasi_bank, $nomor_telepon, $email, $username, $password);
     
     if ($stmt->execute()) {
-        echo "<script>alert('Registrasi berhasil! Silakan login.'); window.location.href = '../landing-page/login.php';</script>";
+        echo "<script>alert('Registrasi berhasil! Silakan login.'); window.location.href = 'login.php';</script>";
         exit;
     } else {
         echo "<script>alert('Terjadi kesalahan, coba lagi.'); window.history.back();</script>";
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Register</title>
-    <link rel="icon" href="../landing-page/assets/img/logo_kemenag.png">
+    <link rel="icon" href="../../assets/logo_kemenag.png">
     <link rel="stylesheet" href="assets/css/register.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
@@ -90,10 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     <div class="overlay-container">
         <div class="overlay">
             <div class="overlay-panel overlay-left">
-                <img src="../landing-page/assets/img/logo_kemenag.png" height="100" width="100" alt="">
+                <img src="../../assets/logo_kemenag.png" height="100" width="100" alt="">
                 <h1>Selamat Datang!</h1>
                 <p>Silakan isi data pribadi Anda untuk memulai proses pendaftaran.</p>
-                <button class="ghost" onclick="window.location.href='../landing-page/index.php';">Kembali</button>
+                <button class="ghost" onclick="window.location.href='../../landing-page/index.php';">Kembali</button>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-include 'koneksi.php'; // Panggil koneksinya dulu
+include '../../includes/koneksi.php'; // Panggil koneksinya dulu
 include 'fungsi.php';  // Baru panggil fungsinya
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -110,7 +110,7 @@ $koneksi->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Login</title>
-    <link rel="icon" href="../landing-page/assets/img/logo_kemenag.png">
+    <link rel="icon" href="../../assets/logo_kemenag.png">
     <link rel="stylesheet" href="assets/css/login.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
@@ -155,17 +155,17 @@ $koneksi->close();
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <img src="../landing-page/assets/img/logo_kemenag.png" height="100" width="100" alt="" srcset="">
+                    <img src="../../assets/logo_kemenag.png" height="100" width="100" alt="" srcset="">
                     <h1>Selamat Datang!</h1>
                     <p>Silakan masuk dengan akun yang sudah terdaftar.</p>
                     <button class="ghost" id="signIn">Masuk</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <img src="../landing-page/assets/img/logo_kemenag.png" height="100" width="100" alt="" srcset="">
+                    <img src="../../assets/logo_kemenag.png" height="100" width="100" alt="" srcset="">
                     <h1>Assalamualaikum!</h1>
                     <p>Silakan masuk dengan akun yang sudah terdaftar.</p>
 
-                    <button class="ghost" onclick="window.location.href='../landing-page/index.php';">Kembali</button>
+                    <button class="ghost" onclick="window.location.href='../../landing-page/index.php';">Kembali</button>
                 </div>
             </div>
         </div>
