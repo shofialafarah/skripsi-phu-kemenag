@@ -238,6 +238,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
             </main>
         </div>
     </div>
+    <script src="../../assets/js/sidebar.js"></script>
     <script src="assets/js/kasi.js"></script>
 </body>
 

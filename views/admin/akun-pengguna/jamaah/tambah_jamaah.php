@@ -296,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-<script src="../../assets/js/sidebar_staf.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
 <script src="assets/js/jamaah.js"></script>
 </body>
 

@@ -145,7 +145,7 @@ if ($result && $result->num_rows > 0) {
         </div>
     </div>
 </div>
-<script src="../../assets/js/sidebar_staf.js"></script>
+<script src="../../assets/js/sidebar.js"></script>
 </body>
 
 </html>

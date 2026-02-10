@@ -12,8 +12,25 @@ while ($row = $result->fetch_assoc()) {
 
 // Default nilai jika belum diatur
 $app_name = $settings['app_name'] ?? 'PHU KEMENAG';
-$app_logo = $settings['app_logo'] ?? '../../../assets/logo_kemenag.png';
+$app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
+
+// Tentukan src logo untuk sidebar (sama dengan logika di pengaturan)
+$default_system_logo = '/phu-kemenag-banjar-copy/assets/sistem.png';
+if (empty($app_logo)) {
+    $app_logo_src = $default_system_logo;
+} elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
+    $app_logo_src = $app_logo;
+} elseif (strpos($app_logo, '/') === 0) {
+    $app_logo_src = $app_logo;
+} else {
+    $candidate = '/phu-kemenag-banjar-copy/assets/' . $app_logo;
+    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
+        $app_logo_src = $candidate;
+    } else {
+        $app_logo_src = $default_system_logo;
+    }
+}
 
 // Buat array submenu agar lebih gampang
 $penggunaPages = [
@@ -23,9 +40,10 @@ $penggunaPages = [
     'manajemen_staf.php',
     'tambah_staf.php',
     'edit_staf.php',
+    'profil_staf.php',
     'manajemen_kasi.php',
-    'tambah_kasi.php',
-    'edit_kasi.php'
+    'edit_kasi.php',
+    'profil_kasi.php'
 ];
 
 $sistemPage = ['pengaturan.php', 'reset_password.php'];
@@ -91,7 +109,7 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
             </button>
             <div class="inner">
                 <div class="header">
-                    <img src="<?= file_exists('settings/' . $app_logo) ? 'settings/' . htmlspecialchars($app_logo) : htmlspecialchars($app_logo); ?>" class="logo" />
+                    <img src="<?= htmlspecialchars($app_logo_src); ?>" class="logo" />
                     <h1><?= htmlspecialchars($app_name); ?></h1>
                 </div>
                 <div class="search">
@@ -113,8 +131,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
                         </a>
                         <div class="submenu <?= in_array($currentPage, $penggunaPages) ? 'open' : '' ?>" id="penggunaSubmenu">
                             <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/jamaah/manajemen_jamaah.php" class="<?= ($currentPage == 'akun-pengguna/jamaah/manajemen_jamaah.php' || $currentPage == 'tambah_jamaah.php' || $currentPage == 'edit_jamaah.php') ? 'active' : '' ?>">Jamaah</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/staf/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php') ? 'active' : '' ?>">Staf PHU</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/kasi/manajemen_kasi.php' || $currentPage == 'tambah_kasi.php' || $currentPage == 'edit_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/staf/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php' || $currentPage == 'profil_staf.php') ? 'active' : '' ?>">Staf PHU</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/kasi/manajemen_kasi.php' || $currentPage == 'edit_kasi.php' || $currentPage == 'profil_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
                         </div>
                         <!-- Manajemen Sistem -->
                         <a class="dropdown-toggle <?= in_array($currentPage, $sistemPage) ? 'active' : '' ?>" onclick="toggleDropdown('sistemSubmenu', this)">
@@ -123,8 +141,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $sistemPage) ? 'open' : '' ?>" id="sistemSubmenu">
-                            <a href="pengaturan.php" class="<?= ($currentPage == 'pengaturan.php') ? 'active' : '' ?>">Pengaturan</a>
-                            <a href="reset_password.php" class="<?= ($currentPage == 'reset_password.php') ? 'active' : '' ?>">Reset Password</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/pengaturan.php" class="<?= ($currentPage == 'kelola-sistem/pengaturan.php') ? 'active' : '' ?>">Pengaturan</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/reset_password.php" class="<?= ($currentPage == 'kelola-sistem/reset_password.php') ? 'active' : '' ?>">Reset Password</a>
                         </div>
                         <!-- Laporan Data Sistem -->
                         <a class="dropdown-toggle <?= in_array($currentPage, $cetakPage) ? 'active' : '' ?>" onclick="toggleDropdown('cetakSubmenu', this)">

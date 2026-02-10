@@ -57,8 +57,8 @@ if ($result && $result->num_rows > 0) {
         <?php include '../../includes/header_admin.php'; ?>
         <div class="staf-wrapper">
             <div class="staf-header" style="color: white;">
-                    <i class="fas fa-table me-1"></i> Profil Akun Staf PHU
-                </div>
+                <i class="fas fa-table me-1"></i> Profil Akun Staf PHU
+            </div>
             <div class="profil-staf-card">
                 <div class="profil-staf-content">
                     <div class="informasi-staf">
@@ -143,7 +143,7 @@ if ($result && $result->num_rows > 0) {
                 <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </div>
-        <script src="../../assets/js/sidebar_staf.js"></script>
+        <script src="../../assets/js/sidebar.js"></script>
         </body>
 
         </html>
