@@ -103,7 +103,7 @@ if (!$result) {
                                     echo "<div class='d-flex justify-content-center gap-2'>";
                                     echo "<a href='edit_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-warning me-1 mb-1' title='Edit'><i class='fas fa-edit'></i></a>";
                                     echo "<a href='hapus_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-danger mb-1' onclick=\"return confirm('Yakin ingin menghapus data ini?')\" title='Hapus'><i class='fas fa-trash'></i></a>";
-                                    echo "<a href='profil_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Cetak'><i class='fas fa-print'></i></a>";
+                                    echo "<a href='profil_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Lihat Profile Staf'><i class='fas fa-user'></i></a>";
                                     echo "</div>";
                                     echo "</td>";
                                     echo "</tr>";
@@ -113,9 +113,7 @@ if (!$result) {
                         </table>
                     </div>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </main>
     </div>

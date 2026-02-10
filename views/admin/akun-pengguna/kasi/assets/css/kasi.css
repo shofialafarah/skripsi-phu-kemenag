@@ -225,31 +225,6 @@ form button:hover {
   border-radius: 10px;
 }
 /* ============================== HALAMAN PROFIL KASI ==================================== */
-.profil-kasi-wrapper {
-  width: 100%;             /* Mengambil lebar penuh dari parent (.layout-content) */
-    max-width: 100%;        /* Menghilangkan batasan lebar jika ada */
-    padding: 20px;        /* Atur padding atas-bawah, kiri-kanan dibuat 0 agar mepet */
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    padding: 20px;
-    border-radius: 20px
-}
-
-/* WebKit browsers (Chrome, Edge, Safari) */
-.profil-kasi-wrapper::-webkit-scrollbar {
-  width: 10px;
-}
-.profil-kasi-wrapper::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-.profil-kasi-wrapper::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #66bb6a, #2e7d32);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
 .profil-kasi-card {
   background-color: var(--kemenag-green);
   border-radius: 15px;
@@ -338,19 +313,4 @@ form button:hover {
   transition: background-color 0.3s ease;
   text-decoration: none;
   display: inline-block;
-}
-
-@media (max-width: 768px) {
-  .profile-content {
-    flex-direction: column;
-  }
-
-  .profile-image {
-    flex: 0 0 auto;
-    text-align: center;
-  }
-
-  .profile-image img {
-    width: 200px;
-  }
 }

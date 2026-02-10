@@ -122,8 +122,8 @@ if ($result && $result->num_rows > 0) {
                     </div>
                     <div class="kasi-image">
                         <button type="button" class="btn-kembali-kasi" onclick="window.location.href='manajemen_kasi.php'">
-                                            <i class="fas fa-arrow-left"></i> Kembali
-                                        </button>
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
 
                         <img src="<?php echo htmlspecialchars($kasi['foto']); ?>" alt="Foto Kasi">
                         <!-- QR Code -->
