@@ -1,5 +1,61 @@
+/* ======================== HALAMAN MANAJEMEN JAMAAH ========================================== */
+.jamaah-wrapper {
+  overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
+  -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
+  scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
+}
+
+.jamaah-wrapper::-webkit-scrollbar {
+  display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+.jamaah {
+  position: relative;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+}
+
+.jamaah::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* tebal border */
+  background: linear-gradient(135deg, #a8e485, #012c01);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.jamaah:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.jamaah table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border: 1px var(--primary-color);
+}
+.jamaah-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* ============================== HALAMAN TAMBAH JAMAAH ==================================== */
 .card-jamaah {
-  max-width: 1000px;
+  width: 100%;
   margin: 30px auto;
   background-color: #fff;
   padding: 20px;

@@ -103,12 +103,12 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
         <div class="layout-content">
             <?php include '../../includes/header_admin.php'; ?>
 
-            <main class="pPendaftaran-wrapper">
-                <div class="pPendaftaran">
-                    <div class="pPendaftaran-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Manajemen Akun Jamaah PHU
+            <main class="jamaah-wrapper">
+                <div class="jamaah">
+                    <div class="jamaah-header" style="color: white;">
+                        <i class="fas fa-table me-1"></i> Edit Akun Jamaah
                     </div>
-                    <div class="pPendaftaran-body">
+                    <div class="jamaah-body">
                         <form method="post" enctype="multipart/form-data">
                             <div class="card-jamaah">
                                 <div class="header">
@@ -184,6 +184,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                             </div>
                         </form>
                     </div>
+                    <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
                 </div>
             </main>
         </div>

@@ -56,11 +56,9 @@ if ($result && $result->num_rows > 0) {
     <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
-        <div class="kasi-wrapper">
-            <div class="kasi-card">
-                <div class="kasi-content">
-                    
-
+        <div class="profil-kasi-wrapper">
+            <div class="profil-kasi-card">
+                <div class="profil-kasi-content">
                     <div class="informasi-kasi">
                         <div class="kasi-baris">
                             <div class="info-kasi">
@@ -140,6 +138,9 @@ if ($result && $result->num_rows > 0) {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="mt-4">
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </div>
     </div>

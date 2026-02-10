@@ -11,7 +11,7 @@ if (!$result) {
     die("Query error: " . $koneksi->error);
 }
 ?>
-
+<link rel="stylesheet" href="assets/css/kasi.css">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -21,12 +21,12 @@ if (!$result) {
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
-        <main class="pPendaftaran-wrapper">
-            <div class="pPendaftaran">
-                <div class="pPendaftaran-header" style="color: white;">
+        <main class="kasi-wrapper">
+            <div class="kasi">
+                <div class="kasi-header">
                     <i class="fas fa-table me-1"></i> Manajemen Akun Kepala Seksi
                 </div>
-                <div class="pPendaftaran-body">
+                <div class="kasi-body">
                     <div style="overflow-x: auto; border-radius: 5px;">
                         <table id="tabelStaf" class="table table-striped table-bordered table-hover">
                             <thead class="table-dark">
@@ -103,9 +103,7 @@ if (!$result) {
                         </table>
                     </div>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </main>
     </div>

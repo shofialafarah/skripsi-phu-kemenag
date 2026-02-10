@@ -89,12 +89,12 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
         <div class="layout-content">
             <?php include '../../includes/header_admin.php'; ?>
 
-            <main class="pPendaftaran-wrapper">
-                <div class="pPendaftaran">
-                    <div class="pPendaftaran-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Manajemen Akun Kepala Seksi
+            <main class="edit-kasi-wrapper">
+                <div class="edit-kasi">
+                    <div class="edit-kasi-header" style="color: white;">
+                        <i class="fas fa-table me-1"></i> Edit Akun Kepala Seksi
                     </div>
-                    <div class="pPendaftaran-body">
+                    <div class="edit-kasi-body">
                         <form method="post" action="" enctype="multipart/form-data">
                             <div class="card-kasi">
                                 <div class="header">
@@ -103,7 +103,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                                         <p class="sub-judul">Lihat dan ubah informasi profil</p>
                                     </div>
                                     <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                                        <button type="button" class="btn-kembali" onclick="window.location.href='manajemen_kasi.php'">
+                                        <button type="button" class="btn-kembali-kasi" onclick="window.location.href='manajemen_kasi.php'">
                                             <i class="fas fa-arrow-left"></i> Kembali
                                         </button>
                                     </div>
@@ -233,6 +233,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                             </div>
                         </form>
                     </div>
+                    <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
                 </div>
             </main>
         </div>

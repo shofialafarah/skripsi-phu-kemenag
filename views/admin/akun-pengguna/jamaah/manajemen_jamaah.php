@@ -11,7 +11,7 @@ if (!$result) {
     die("Query error: " . mysqli_error($koneksi));
 }
 ?>
-
+<link rel="stylesheet" href="assets/css/jamaah.css">
 <div class="layout">
     <div class="layout-sidebar">
         <?php include '../../includes/sidebar_admin.php'; ?>
@@ -19,12 +19,12 @@ if (!$result) {
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
-        <main class="pPendaftaran-wrapper">
-            <div class="pPendaftaran">
-                <div class="pPendaftaran-header" style="color: white;">
+        <main class="jamaah-wrapper">
+            <div class="jamaah">
+                <div class="jamaah-header">
                     <i class="fas fa-table me-1"></i> Manajemen Akun Jamaah Haji
                 </div>
-                <div class="pPendaftaran-body">
+                <div class="jamaah-body">
                     <div class="d-flex flex-wrap align-items-center mb-3">
                         <div class="ms-auto">
                             <a href="tambah_jamaah.php" class="btn btn-success">
@@ -91,9 +91,7 @@ if (!$result) {
                         </table>
                     </div>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </main>
     </div>
