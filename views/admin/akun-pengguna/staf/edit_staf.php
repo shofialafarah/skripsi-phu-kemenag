@@ -78,9 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("ssssssssssssi", $nama_staf, $nip, $pangkat, $posisi, $pend_terakhir, $tempat_lahir, $tgl_lahir, $alamat, $email, $username, $no_telepon, $foto, $id_staf);
 
         if ($stmt->execute()) {
-            echo "<script>window.location='manajemen_staf.php';</script>";
+            header('Location: manajemen_staf.php?updated=1');
+            exit();
         } else {
-            echo "<script>alert('Gagal memperbarui data!');</script>";
+            header('Location: manajemen_staf.php?updated=0');
+            exit();
         }
     }
 }
@@ -95,8 +97,8 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
     $stmt->bind_param("i", $id_staf);
     $stmt->execute();
 
-    // Redirect untuk refresh tampilan
-    echo "<script>window.location.href = 'edit_staf.php?id=$id_staf';</script>";
+    // Redirect untuk refresh tampilan dan beri tanda foto dihapus
+    header("Location: edit_staf.php?id=$id_staf&foto_removed=1");
     exit;
 }
 
@@ -119,13 +121,13 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                 <div class="staf-body">
                     <form method="post" action="" enctype="multipart/form-data">
                         <div class="card-staf">
-                            <div class="heders">
+                            <div class="header">
                                 <div class="isi-header">
                                     <h2 class="judul"><i class="fas fa-user"></i> Informasi Profil</h2>
                                     <p class="sub-judul">Lihat dan ubah informasi profil</p>
                                 </div>
                                 <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                                    <button type="button" class="btn-kembali-staf" onclick="window.location.href='manajemen_staf.php'">
+                                    <button type="button" class="btn-kembali" onclick="window.location.href='manajemen_staf.php'">
                                         <i class="fas fa-arrow-left"></i> Kembali
                                     </button>
                                 </div>
@@ -152,18 +154,16 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                                         <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
                                             <label for="foto" class="btn-upload-foto">Upload</label>
                                             <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
-                                            <a href="?id=<?= $id_staf ?>&remove_foto=true"
-                                                onclick="return confirm('Yakin ingin menghapus foto ini?');"
-                                                class="btn-hapus-foto">
+                                            <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger">
                                                 <i class="fas fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </div>
                                         <p style="font-size: 0.75rem; color: #555;">JPG, PNG, max 10MB</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 10px; align-items: center;">
+                            <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px; margin-bottom: 10px;">
                                 <div style="flex: 1;">
                                     <label>Nama:</label>
                                     <input type="text" name="nama_staf" value="<?= htmlspecialchars($data['nama_staf']) ?>" required>
@@ -174,7 +174,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 10px; align-items: center;">
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
                                 <div style="flex: 1;">
                                     <label>Pangkat:</label>
                                     <select name="pangkat" required>
@@ -231,7 +231,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 10px; align-items: center;">
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
 
                                 <div style="flex: 1;">
                                     <label>No. Telepon:</label>
@@ -247,7 +247,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 10px; align-items: center;">
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
                                 <div style="flex: 1;">
                                     <label>Tempat Lahir:</label>
                                     <input type="text" name="tempat_lahir" value="<?= htmlspecialchars($data['tempat_lahir']) ?>" required>
@@ -261,7 +261,7 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
                             <label>Alamat:</label>
                             <textarea name="alamat" required><?= htmlspecialchars($data['alamat']) ?></textarea>
                             <button type="submit" class="btn-simpan-perubahan">
-                                <i class="fas fa-save"></i> Simpan Perubahan
+                                <i class="fas fa-edit"></i> Edit Data
                             </button>
                         </div>
                     </form>
@@ -273,6 +273,30 @@ if (isset($_GET['remove_foto']) && $_GET['remove_foto'] == 'true') {
 </div>
 <script src="../../assets/js/sidebar.js"></script>
 <script src="assets/js/staf.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Simpan perubahan?',
+                text: 'Yakin ingin menyimpan perubahan data staf? ',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal'
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    }
+});
+</script> -->
 </body>
 
 </html>

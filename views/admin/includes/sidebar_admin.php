@@ -47,7 +47,7 @@ $penggunaPages = [
 ];
 
 $sistemPage = ['pengaturan.php', 'reset_password.php'];
-$cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
+$cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 ?>
     
     <!-- Terapkan pengaturan warna teks -->
@@ -151,8 +151,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_aktivitas_pengguna.php'];
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $cetakPage) ? 'open' : '' ?>" id="cetakSubmenu">
-                            <a href="laporan_data_pengguna.php" class="<?= ($currentPage == 'laporan_data_pengguna.php') ? 'active' : '' ?>">Data Pengguna</a>
-                            <a href="laporan_aktivitas_pengguna.php" class="<?= ($currentPage == 'laporan_aktivitas_pengguna.php') ? 'active' : '' ?>">Riwayat Aksi</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_data_pengguna.php" class="<?= ($currentPage == 'laporan/laporan_data_pengguna.php') ? 'active' : '' ?>">Data Pengguna</a>
+                            <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_riwayat_aksi.php" class="<?= ($currentPage == 'laporan_riwayat_aksi.php') ? 'active' : '' ?>">Riwayat Aksi</a>
                         </div>
                     </nav>
                     <button class="logout-btn" onclick="window.location.href='login.php'">

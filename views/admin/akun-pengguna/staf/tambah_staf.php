@@ -207,12 +207,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </html>
             HTML;
                 $mail->send();
-                echo "<script>alert('Akun staf berhasil dibuat dan email telah dikirim.'); window.location='manajemen_staf.php';</script>";
+                header('Location: manajemen_staf.php?created=1&mail=1');
+                exit();
             } catch (Exception $e) {
-                echo "<script>alert('Akun berhasil dibuat, tetapi email tidak terkirim: {$mail->ErrorInfo}'); window.location='manajemen_staf.php';</script>";
+                header('Location: manajemen_staf.php?created=1&mail=0');
+                exit();
             }
         } else {
-            echo "<script>alert('Gagal menambahkan data staf!');</script>";
+            header('Location: manajemen_staf.php?created=0');
+            exit();
         }
     }
 }
@@ -227,159 +230,187 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
-            <main class="staf-wrapper">
-                <div class="staf">
-                    <div class="staf-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Tambah Akun Staf PHU
-                    </div>
-                    <div class="staf-body">
-                        <form method="post" action="" enctype="multipart/form-data">
-                            <div class="card-staf">
-                                <div class="header">
-                                    <div class="isi-header">
-                                        <h2 class="judul"><i class="fas fa-user"></i> Informasi Profil</h2>
-                                        <p class="sub-judul">Lihat dan input informasi profil</p>
-                                    </div>
-                                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                                        <button type="button" class="btn-kembali-staf" onclick="window.location.href='manajemen_staf.php'">
-                                            <i class="fas fa-arrow-left"></i> Kembali
-                                        </button>
-                                    </div>
+        <main class="staf-wrapper">
+            <div class="staf">
+                <div class="staf-header" style="color: white;">
+                    <i class="fas fa-table me-1"></i> Tambah Akun Staf PHU
+                </div>
+                <div class="staf-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class="card-staf">
+                            <div class="header">
+                                <div class="isi-header">
+                                    <h2 class="judul"><i class="fas fa-user"></i> Informasi Profil</h2>
+                                    <p class="sub-judul">Lihat dan input informasi profil</p>
                                 </div>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                                    <button type="button" class="btn-kembali-staf" onclick="window.location.href='manajemen_staf.php'">
+                                        <i class="fas fa-arrow-left"></i> Kembali
+                                    </button>
+                                </div>
+                            </div>
 
-                                <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                    <!-- KIRI: FOTO + UPLOAD -->
-                                    <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+                                <!-- KIRI: FOTO + UPLOAD -->
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div>
+                                        <img id="previewFoto" src="assets/img/profil.jpg"
+                                            alt="Foto Staf"
+                                            style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
+                                    </div>
+                                    <div>
                                         <div>
-                                            <img id="previewFoto" src="assets/img/profil.jpg"
-                                                alt="Foto Staf"
-                                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
-                                        </div>
-                                        <div>
-                                            <label for="foto" style="font-weight: bold;">Foto Profil</label>
                                             <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                                <label for="foto" class="btn-upload-foto">Upload</label>
+                                                <label for="foto" class="btn-upload-foto" style="margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px;">
+                                                    Upload
+                                                </label>
                                                 <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
-                                                <button type="button" onclick="hapusFoto()" class="btn-hapus-foto">
+
+                                                <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger" style="width: 40px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: none;">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
-                                            <p style="font-size: 0.75rem; color: #555;">JPG, PNG, max 10MB</p>
+                                            <small class="text-muted">JPG, PNG, max 10MB</small>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>Nama:</label>
-                                        <input type="text" name="nama_staf" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>NIP:</label>
-                                        <input type="text" name="nip" required>
-                                    </div>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>Pangkat:</label>
-                                        <select name="pangkat" required>
-                                            <option value="" disabled selected>--- Pilih Pangkat ---</option>
-                                            <optgroup label="Golongan I">
-                                                <option value="Juru Muda/I a">Juru Muda/I a</option>
-                                                <option value="Juru Muda Tingkat I/I b">Juru Muda Tingkat I/I b</option>
-                                                <option value="Juru/I c">Juru/I c</option>
-                                                <option value="Juru Tingkat I/I d">Juru Tingkat I/I d</option>
-                                            </optgroup>
-                                            <optgroup label="Golongan II">
-                                                <option value="Pengatur Muda/II a">Pengatur Muda/II a</option>
-                                                <option value="Pengatur Muda Tingkat I/II b">Pengatur Muda Tingkat I/II b</option>
-                                                <option value="Pengatur/II c">Pengatur/II c</option>
-                                                <option value="Pengatur Tingkat I/II d">Pengatur Tingkat I/II d</option>
-                                            </optgroup>
-                                            <optgroup label="Golongan III">
-                                                <option value="Penata Muda/III a">Penata Muda/III a</option>
-                                                <option value="Penata Muda Tingkat I/III b">Penata Muda Tingkat I/III b</option>
-                                                <option value="Penata/III c">Penata/III c</option>
-                                                <option value="Penata Tingkat I/III d">Penata Tingkat I/III d</option>
-                                            </optgroup>
-                                            <optgroup label="Golongan IV">
-                                                <option value="Pembina/IV a">Pembina/IV a</option>
-                                                <option value="Pembina Tingkat I/IV b">Pembina Tingkat I/IV b</option>
-                                                <option value="Pembina Utama Muda /IV c">Pembina Utama Muda/IV c</option>
-                                                <option value="Pembina Utama Madya /IV d">Pembina Utama Madya/IV d</option>
-                                                <option value="Pembina Utama /IV e">Pembina Utama /IV e</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label for="posisi">Posisi:</label>
-                                        <select id="posisi" name="posisi" required>
-                                            <option value="" disabled selected>--- Pilih Posisi ---</option>
-                                            <option value="Staf Administrasi PHU">Staf Administrasi PHU</option>
-                                            <option value="Staf Verifikasi Dokumen">Staf Verifikasi Dokumen dan Visa</option>
-                                            <option value="Staf Pemberkasan">Staf Pemberkasan</option>
-                                            <option value="Staf Pelayanan Haji">Staf Pelayanan Haji</option>
-                                            <option value="Staf Akomodasi">Staf Akomodasi</option>
-                                            <option value="Staf Pendukung">Staf Pendukung</option>
-                                        </select>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Pendidikan Terakhir:</label>
-                                        <select name="pend_terakhir" required>
-                                            <option value="" disabled selected>--- Pilih Pendidikan Terakhir ---</option>
-                                            <option value="SMA/SMK">SMA/SMK</option>
-                                            <option value="D3">D3</option>
-                                            <option value="S1">S1</option>
-                                            <option value="S2">S2</option>
-                                            <option value="S3">S3</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>No. Telepon:</label>
-                                        <input type="text" name="no_telepon" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Email:</label>
-                                        <input type="email" name="email" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Username:</label>
-                                        <input type="text" name="username" required>
-                                    </div>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>Tempat Lahir:</label>
-                                        <input type="text" name="tempat_lahir" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Tanggal Lahir:</label>
-                                        <input type="date" name="tgl_lahir" required>
-                                    </div>
-                                </div>
-
-                                <label>Alamat:</label>
-                                <textarea name="alamat" required></textarea>
-
-                                <button type="submit" class="btn-simpan-perubahan">
-                                    <i class="fas fa-plus"></i> Tambah Data
-                                </button>
                             </div>
-                        </form>
-                    </div>
-                    <?php include '../../includes/footer_admin.php'; ?>
+
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+                                <div style="flex: 1;">
+                                    <label>Nama:</label>
+                                    <input type="text" name="nama_staf" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>NIP:</label>
+                                    <input type="text" name="nip" required>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+                                <div style="flex: 1;">
+                                    <label>Pangkat:</label>
+                                    <select name="pangkat" required>
+                                        <option value="" disabled selected>--- Pilih Pangkat ---</option>
+                                        <optgroup label="Golongan I">
+                                            <option value="Juru Muda/I a">Juru Muda/I a</option>
+                                            <option value="Juru Muda Tingkat I/I b">Juru Muda Tingkat I/I b</option>
+                                            <option value="Juru/I c">Juru/I c</option>
+                                            <option value="Juru Tingkat I/I d">Juru Tingkat I/I d</option>
+                                        </optgroup>
+                                        <optgroup label="Golongan II">
+                                            <option value="Pengatur Muda/II a">Pengatur Muda/II a</option>
+                                            <option value="Pengatur Muda Tingkat I/II b">Pengatur Muda Tingkat I/II b</option>
+                                            <option value="Pengatur/II c">Pengatur/II c</option>
+                                            <option value="Pengatur Tingkat I/II d">Pengatur Tingkat I/II d</option>
+                                        </optgroup>
+                                        <optgroup label="Golongan III">
+                                            <option value="Penata Muda/III a">Penata Muda/III a</option>
+                                            <option value="Penata Muda Tingkat I/III b">Penata Muda Tingkat I/III b</option>
+                                            <option value="Penata/III c">Penata/III c</option>
+                                            <option value="Penata Tingkat I/III d">Penata Tingkat I/III d</option>
+                                        </optgroup>
+                                        <optgroup label="Golongan IV">
+                                            <option value="Pembina/IV a">Pembina/IV a</option>
+                                            <option value="Pembina Tingkat I/IV b">Pembina Tingkat I/IV b</option>
+                                            <option value="Pembina Utama Muda /IV c">Pembina Utama Muda/IV c</option>
+                                            <option value="Pembina Utama Madya /IV d">Pembina Utama Madya/IV d</option>
+                                            <option value="Pembina Utama /IV e">Pembina Utama /IV e</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="posisi">Posisi:</label>
+                                    <select id="posisi" name="posisi" required>
+                                        <option value="" disabled selected>--- Pilih Posisi ---</option>
+                                        <option value="Staf Administrasi PHU">Staf Administrasi PHU</option>
+                                        <option value="Staf Verifikasi Dokumen">Staf Verifikasi Dokumen dan Visa</option>
+                                        <option value="Staf Pemberkasan">Staf Pemberkasan</option>
+                                        <option value="Staf Pelayanan Haji">Staf Pelayanan Haji</option>
+                                        <option value="Staf Akomodasi">Staf Akomodasi</option>
+                                        <option value="Staf Pendukung">Staf Pendukung</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Pendidikan Terakhir:</label>
+                                    <select name="pend_terakhir" required>
+                                        <option value="" disabled selected>--- Pilih Pendidikan Terakhir ---</option>
+                                        <option value="SMA/SMK">SMA/SMK</option>
+                                        <option value="D3">D3</option>
+                                        <option value="S1">S1</option>
+                                        <option value="S2">S2</option>
+                                        <option value="S3">S3</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+                                <div style="flex: 1;">
+                                    <label>No. Telepon:</label>
+                                    <input type="text" name="no_telepon" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Email:</label>
+                                    <input type="email" name="email" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Username:</label>
+                                    <input type="text" name="username" required>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+                                <div style="flex: 1;">
+                                    <label>Tempat Lahir:</label>
+                                    <input type="text" name="tempat_lahir" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Tanggal Lahir:</label>
+                                    <input type="date" name="tgl_lahir" required>
+                                </div>
+                            </div>
+
+                            <label>Alamat:</label>
+                            <textarea name="alamat" required></textarea>
+
+                            <button type="submit" class="btn-simpan-perubahan">
+                                <i class="fas fa-plus"></i> Tambah Data
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </main>
-        </div>
+                <?php include '../../includes/footer_admin.php'; ?>
+            </div>
+        </main>
     </div>
-    <script src="../../assets/js/sidebar.js"></script>
-    <script src="assets/js/staf.js"></script>
+</div>
+<script src="../../assets/js/sidebar.js"></script>
+<script src="assets/js/staf.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Simpan data?',
+                text: 'Yakin ingin menambah staf baru?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    }
+});
+</script> -->
 </body>
 
 </html>

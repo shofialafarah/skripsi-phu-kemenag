@@ -1,0 +1,54 @@
+/* ======================== HALAMAN LAPORAN ADMIN ========================================== */
+.laporan-wrapper {
+  overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
+  -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
+  scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
+}
+
+.laporan-wrapper::-webkit-scrollbar {
+  display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+.laporan {
+  position: relative;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+}
+
+.laporan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* tebal border */
+  background: linear-gradient(135deg, #a8e485, #012c01);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.laporan:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.laporan table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border: 1px var(--primary-color);
+}
+.laporan-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}

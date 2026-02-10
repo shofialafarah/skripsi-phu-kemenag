@@ -112,3 +112,5 @@ if (!$result) {
 </body>
 
 </html>
+<!-- SweetAlert2 for delete feedback -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

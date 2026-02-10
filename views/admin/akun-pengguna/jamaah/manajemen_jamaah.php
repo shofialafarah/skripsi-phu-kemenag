@@ -81,7 +81,7 @@ if (!$result) {
                                     echo "<td class='text-center'>";
                                     echo "<div class='d-flex justify-content-center gap-2'>";
                                     echo "<a href='edit_jamaah.php?id=" . $row['id_jamaah'] . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a>";
-                                    echo "<a href='hapus_jamaah.php?id=" . $row['id_jamaah'] . "' class='btn btn-sm btn-danger' onclick=\"return confirm('Yakin ingin menghapus data ini?')\"><i class='fas fa-trash'></i></a>";
+                                    echo "<a href='hapus_jamaah.php?id=" . $row['id_jamaah'] . "' class='btn btn-sm btn-danger delete-link' data-name='" . htmlspecialchars($row['username']) . "'><i class='fas fa-trash'></i></a>";
                                     echo "</div>";
                                     echo "</td>";
                                     echo "</tr>";
@@ -104,6 +104,9 @@ if (!$result) {
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/jamaah.js"></script>
 </body>
 
 </html>

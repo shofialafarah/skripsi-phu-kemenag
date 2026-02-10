@@ -70,10 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password_plain = generateRandomPassword();
         $hashed_password = password_hash($password_plain, PASSWORD_DEFAULT);
 
-        $stmt = $koneksi->prepare("INSERT INTO jamaah (nama, validasi_bank, nomor_telepon, email, username, password, foto)
-              VALUES (?, ?, ?, ?, ?, ?, ?')");
+        $stmt = $koneksi->prepare("INSERT INTO jamaah (nama, validasi_bank, nomor_telepon, email, username, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("sssssss", $nama, $validasi_bank, $nomor_telepon, $email, $username, $password, $foto);
+        $stmt->bind_param("sssssss", $nama, $validasi_bank, $nomor_telepon, $email, $username, $hashed_password, $foto);
 
         if ($stmt->execute()) {
             $mail = new PHPMailer(true);
@@ -194,110 +193,117 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </html>
             HTML;
                 $mail->send();
-                echo "<script>alert('Akun jamaah berhasil dibuat dan email telah dikirim.'); window.location='manajemen_staf.php';</script>";
+                header('Location: manajemen_jamaah.php?created=1&mail=1');
+                exit();
             } catch (Exception $e) {
-                echo "<script>alert('Akun berhasil dibuat, tetapi email tidak terkirim: {$mail->ErrorInfo}'); window.location='manajemen_staf.php';</script>";
+                header('Location: manajemen_jamaah.php?created=1&mail=0');
+                exit();
             }
         } else {
-            echo "<script>alert('Gagal menambahkan data jamaah!');</script>";
+            header('Location: manajemen_jamaah.php?created=0');
+            exit();
         }
     }
 }
 ?>
 <link rel="stylesheet" href="assets/css/jamaah.css">
 
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include '../../includes/sidebar_admin.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include '../../includes/header_admin.php'; ?>
-
-            <main class="jamaah-wrapper">
-                <div class="jamaah">
-                    <div class="jamaah-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Tambah Akun Jamaah
-                    </div>
-                    <div class="jamaah-body">
-                        <form method="post" action="" enctype="multipart/form-data">
-                            <div class="card-jamaah">
-                                <div class="header">
-                                    <div class="isi-header">
-                                        <h2 class="judul"><i class="fas fa-user"></i> Informasi Profil</h2>
-                                        <p class="sub-judul">Lihat dan input informasi profil</p>
-                                    </div>
-                                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                                        <button type="button" class="btn-kembali" onclick="window.location.href='manajemen_jamaah.php'">
-                                            <i class="fas fa-arrow-left"></i> Kembali
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                    <!-- KIRI: FOTO + UPLOAD -->
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <div>
-                                            <img id="previewFoto" src="assets/img/profil.jpg"
-                                                alt="Foto Jamaah"
-                                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
-                                        </div>
-                                        <div>
-                                            <label for="foto" style="font-weight: bold;">Foto Profil</label>
-                                            <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                                <label for="foto" class="btn-upload-foto">Upload</label>
-                                                <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
-                                                <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <p style="font-size: 0.75rem; color: #555;">JPG, PNG, max 10MB</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>Nama:</label>
-                                        <input type="text" name="nama" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>No. Validasi:</label>
-                                        <input type="text" name="validasi_bank" required>
-                                    </div>
-                                </div>
-
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <label>No. Telepon:</label>
-                                        <input type="text" name="no_telepon" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Email:</label>
-                                        <input type="email" name="email" required>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <label>Username:</label>
-                                        <input type="text" name="username" required>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn-simpan-perubahan">
-                                    <i class="fas fa-plus"></i> Tambah Data
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
-                </div>
-            </main>
-        </div>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include '../../includes/sidebar_admin.php'; ?>
     </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include '../../includes/header_admin.php'; ?>
+
+        <main class="jamaah-wrapper">
+            <div class="jamaah">
+                <div class="jamaah-header" style="color: white;">
+                    <i class="fas fa-table me-1"></i> Tambah Akun Jamaah
+                </div>
+                <div class="jamaah-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class="card-jamaah">
+                            <div class="header">
+                                <div class="isi-header">
+                                    <h2 class="judul"><i class="fas fa-user"></i> Informasi Profil</h2>
+                                    <p class="sub-judul">Lihat dan input informasi profil</p>
+                                </div>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                                    <button type="button" class="btn-kembali" onclick="window.location.href='manajemen_jamaah.php'">
+                                        <i class="fas fa-arrow-left"></i> Kembali
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+                                <!-- KIRI: FOTO + UPLOAD -->
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <div>
+                                        <img id="previewFoto" src="assets/img/profil.jpg"
+                                            alt="Foto Jamaah"
+                                            style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+                                            <label for="foto" class="btn-upload-foto" style="margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px;">
+                                                Upload
+                                            </label>
+                                            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
+
+                                            <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger" style="width: 40px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: none;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">JPG, PNG, max 10MB</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px; margin-top: 10px;">
+                                <div style="flex: 1;">
+                                    <label>Nama:</label>
+                                    <input type="text" name="nama" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>No. Validasi:</label>
+                                    <input type="text" name="validasi_bank" required>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+                                <div style="flex: 1;">
+                                    <label>No. Telepon:</label>
+                                    <input type="text" name="no_telepon" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Email:</label>
+                                    <input type="email" name="email" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Username:</label>
+                                    <input type="text" name="username" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-simpan-perubahan">
+                                <i class="fas fa-plus"></i> Tambah Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
+            </div>
+        </main>
+    </div>
+</div>
 
 <script src="../../assets/js/sidebar.js"></script>
 <script src="assets/js/jamaah.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

@@ -49,6 +49,10 @@ $adminstrator = $staffQuery->fetch_assoc();
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/dashboard_administrator.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/pendaftaran_jamaah.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/pembatalan_jamaah.css">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css">
+
 </head>
 
 <body>
