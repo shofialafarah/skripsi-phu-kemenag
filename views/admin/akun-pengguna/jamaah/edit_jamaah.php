@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<script>alert('Ukuran file maksimal 10MB!');</script>";
             } else {
                 // Buat direktori jika belum ada
-                $upload_dir = 'img/';
+                $upload_dir = 'assets/img/';
                 if (!is_dir($upload_dir)) {
                     mkdir($upload_dir, 0755, true);
                 }

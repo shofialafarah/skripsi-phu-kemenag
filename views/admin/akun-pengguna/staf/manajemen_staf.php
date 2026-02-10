@@ -11,6 +11,7 @@ if (!$result) {
     die("Query error: " . $koneksi->error);
 }
 ?>
+<link rel="stylesheet" href="assets/css/staf.css">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -20,12 +21,12 @@ if (!$result) {
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
-        <main class="pPendaftaran-wrapper">
-            <div class="pPendaftaran">
-                <div class="pPendaftaran-header" style="color: white;">
+        <main class="staf-wrapper">
+            <div class="staf">
+                <div class="staf-header" style="color: white;">
                     <i class="fas fa-table me-1"></i> Manajemen Akun Staf PHU
                 </div>
-                <div class="pPendaftaran-body">
+                <div class="staf-body">
                     <div class="d-flex flex-wrap align-items-center mb-3">
                         <div class="ms-auto">
                             <a href="tambah_staf.php" class="btn btn-success">

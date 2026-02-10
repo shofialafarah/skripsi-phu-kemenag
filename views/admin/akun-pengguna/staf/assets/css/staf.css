@@ -1,0 +1,169 @@
+/* ======================== HALAMAN MANAJEMEN staf ========================================== */
+.staf-wrapper {
+  overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
+  -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
+  scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
+}
+
+.staf-wrapper::-webkit-scrollbar {
+  display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+.staf {
+  position: relative;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+}
+
+.staf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* tebal border */
+  background: linear-gradient(135deg, #a8e485, #012c01);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.staf:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.staf table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border: 1px var(--primary-color);
+}
+.staf-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* ============================== HALAMAN TAMBAH staf ==================================== */
+.card-staf {
+  width: 100%;
+  margin: 30px auto;
+  background-color: #fff;
+  padding: 20px;
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+  color: #4caf50;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.isi-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.judul {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sub-judul {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+form input,
+form textarea,
+form select,
+form button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form button {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+.btn-upload-foto {
+  background-color: rgb(214, 217, 219);
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn-upload-foto:hover {
+  background-color: rgb(126, 129, 131);
+}
+
+.btn-hapus-foto {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: 1px solid;
+  border-color: #555;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-hapus-foto:hover {
+  background-color: #d32f2f;
+}
+
+.btn-simpan-perubahan {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-simpan-perubahan:hover {
+  background-color: #388e3c;
+}
