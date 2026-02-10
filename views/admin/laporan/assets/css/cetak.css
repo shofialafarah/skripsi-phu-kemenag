@@ -1,0 +1,74 @@
+.cetak-wrapper {
+            width: 100%;
+            font-family: Arial, sans-serif;
+            /* Sesuaikan dengan lebar halaman A4, umumnya sekitar 800px - 850px */
+            margin: 0 auto;
+            color: #333;
+            font-size: 12px;
+        }
+
+        .tabel-cetak {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .kepala-cetak,
+        .badan-cetak {
+            border: 1px solid #000;
+            padding: 5px 8px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .kepala-cetak {
+            background-color: #1b5e20;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* ==== Kop Surat ==== */
+        .kop-surat {
+            text-align: center;
+            border-bottom: 4px double #000;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .kop-surat img {
+            max-width: 80px;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .kop-surat h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #222;
+        }
+
+        .kop-surat p {
+            margin: 2px 0;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* ==== untuk kop surat agar float tidak merusak layout */
+        .kop-surat::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* ==== Tanda Tangan Pengesahan ==== */
+        .signature {
+            text-align: right;
+            margin-top: 50px;
+        }
+
+        /* ==== CSS Khusus untuk Pencetakan ==== */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }

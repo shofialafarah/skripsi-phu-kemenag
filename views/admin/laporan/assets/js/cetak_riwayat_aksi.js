@@ -11,12 +11,20 @@ document
       ? document.getElementById("filter-end").value
       : "";
 
-    let url = "cetak_laporan_aktivitas.php";
+    let url = "cetak/cetak_laporan_aktivitas.php";
+
+    // Periksa kedua tanggal; jika tidak lengkap, tunjukkan SweetAlert2
+    if (!startDate || !endDate) {
+      Swal.fire({
+        icon: "warning",
+        title: "Tanggal belum lengkap",
+        text: "Silakan pilih tanggal mulai dan tanggal akhir terlebih dahulu sebelum mencetak laporan.",
+      });
+      return;
+    }
 
     // Jika kedua tanggal filter diisi, tambahkan sebagai parameter URL
-    if (startDate && endDate) {
-      url += `?start_date=${startDate}&end_date=${endDate}`;
-    }
+    url += `?start_date=${startDate}&end_date=${endDate}`;
 
     console.log("Opening URL:", url); // Debug log
 

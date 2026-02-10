@@ -11,7 +11,7 @@ function parseDateTimeDMYHM(str) {
   let hours = 0, minutes = 0;
   if (parts.length === 2) {
     const timeParts = parts[1].split(":");
-    if (timeParts.length === 2) {
+    if (timeParts.length >= 2) {
       hours = parseInt(timeParts[0]);
       minutes = parseInt(timeParts[1]);
     }

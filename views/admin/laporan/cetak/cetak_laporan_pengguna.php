@@ -5,7 +5,8 @@ include_once __DIR__ . '/../../../../includes/koneksi.php';
 $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
 $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
-$query = "
+// Build UNION as a subquery so we can apply a WHERE clause to the combined result
+$base_union = "
     SELECT 'Jamaah' AS role, id_jamaah AS id, nama AS nama_lengkap, username, email, nomor_telepon AS no_telepon, created_at, updated_at, status_pengguna
     FROM jamaah
     UNION ALL
@@ -14,33 +15,36 @@ $query = "
     UNION ALL
     SELECT 'Kepala Seksi' AS role, id_kepala AS id, nama_kepala AS nama_lengkap, username, email, no_telepon, created_at, updated_at, status_pengguna
     FROM kepala_seksi
-    ORDER BY created_at DESC
 ";
 
-$where_clauses = [];
 $params = [];
 $types = '';
 
 if ($start_date && $end_date) {
-    $where_clauses[] = "p.tanggal_pengajuan BETWEEN ? AND ?";
+    // Apply date filter on the combined result's created_at column
+    $query = "SELECT * FROM (" . $base_union . ") AS t WHERE t.created_at BETWEEN ? AND ? ORDER BY t.created_at DESC";
     $params[] = $start_date;
     $params[] = $end_date;
-    $types .= 'ss';
+    $types = 'ss';
+} else {
+    $query = "SELECT * FROM (" . $base_union . ") AS t ORDER BY t.created_at DESC";
 }
 
-if (!empty($where_clauses)) {
-    $query .= " WHERE " . implode(' AND ', $where_clauses);
-}
-
-// Siapkan statement untuk menghindari SQL Injection
+// Prepare and execute
 if (!empty($params)) {
     $stmt = $koneksi->prepare($query);
     if ($stmt) {
-        $stmt->bind_param($types, ...$params);
+        // bind_param requires variables passed by reference; create variables dynamically
+        $bind_names[] = $types;
+        for ($i = 0; $i < count($params); $i++) {
+            $bind_name = 'bind' . $i;
+            $$bind_name = $params[$i];
+            $bind_names[] = &$$bind_name;
+        }
+        call_user_func_array([$stmt, 'bind_param'], $bind_names);
         $stmt->execute();
         $result = $stmt->get_result();
     } else {
-        // Handle prepare error
         echo "Error preparing statement: " . $koneksi->error;
         $result = false;
     }
@@ -82,82 +86,7 @@ $format_tanggal = $tanggal . ' ' . $bulan[$bulan_angka] . ' ' . $tahun;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak Laporan Pengguna</title>
     <link rel="icon" href="../assets/img/logo_kemenag.png">
-    <style>
-        .cetak-wrapper {
-            width: 100%;
-            font-family: Arial, sans-serif;
-            /* Sesuaikan dengan lebar halaman A4, umumnya sekitar 800px - 850px */
-            margin: 0 auto;
-            color: #333;
-            font-size: 12px;
-        }
-
-        .tabel-cetak {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .kepala-cetak,
-        .badan-cetak {
-            border: 1px solid #000;
-            padding: 5px 8px;
-            text-align: center;
-            vertical-align: top;
-        }
-
-        .kepala-cetak {
-            background-color: #1b5e20;
-            font-weight: bold;
-            color: white;
-        }
-
-        /* ==== Kop Surat ==== */
-        .kop-surat {
-            text-align: center;
-            border-bottom: 4px double #000;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-
-        .kop-surat img {
-            max-width: 100px;
-            float: left;
-            margin-right: 15px;
-        }
-
-        .kop-surat h2 {
-            margin: 0;
-            font-size: 20px;
-            color: #222;
-        }
-
-        .kop-surat p {
-            margin: 2px 0;
-            font-size: 12px;
-            line-height: 1.4;
-        }
-
-        /* ==== untuk kop surat agar float tidak merusak layout */
-        .kop-surat::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        /* ==== Tanda Tangan Pengesahan ==== */
-        .signature {
-            text-align: right;
-            margin-top: 50px;
-        }
-
-        /* ==== CSS Khusus untuk Pencetakan ==== */
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/cetak.css">
 </head>
 
 <body>
@@ -171,7 +100,16 @@ $format_tanggal = $tanggal . ' ' . $bulan[$bulan_angka] . ' ' . $tahun;
             </p>
         </div>
 
-        <h3 style="text-align: center; margin-bottom: 25px;">LAPORAN DATA PENGGUNA SISTEM</h3>
+        <h3 style="text-align: center; margin-bottom: 5px;">LAPORAN DATA PENGGUNA SISTEM</h3>
+        
+        <?php
+        // Format dan tampilkan periode tanggal
+        if ($start_date && $end_date) {
+            $start_formatted = date('d-m-Y', strtotime($start_date));
+            $end_formatted = date('d-m-Y', strtotime($end_date));
+            echo "<p style=\"text-align: center; margin: 5px 0 20px 0; font-style: italic;\">Periode: <strong>" . htmlspecialchars($start_formatted) . "</strong> sampai <strong>" . htmlspecialchars($end_formatted) . "</strong></p>";
+        }
+        ?>
 
         <table class="tabel-cetak">
             <thead>
@@ -212,7 +150,7 @@ $format_tanggal = $tanggal . ' ' . $bulan[$bulan_angka] . ' ' . $tahun;
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='9' class='badan-cetak'>Tidak ada data berkas pendaftaran jamaah haji yang ditemukan.</td></tr>";
+                    echo "<tr><td colspan='9' class='badan-cetak'>Tidak ada data akun pengguna sistem yang ditemukan.</td></tr>";
                 }
                 ?>
             </tbody>
@@ -227,7 +165,7 @@ $format_tanggal = $tanggal . ' ' . $bulan[$bulan_angka] . ' ' . $tahun;
                         <p style="margin: 0;">Kabupaten Banjar,</p>
                         <p style="margin: 0;">Kepala Seksi Peny. Haji dan Umrah</p>
                         <div style="margin: 20px 0; text-align: center;">
-                            <img src="../assets/img/ttd_kasi.jpg" alt="Tanda Tangan Kepala Seksi" style="width: 100px; height: auto;">
+                            <img src="../assets/img/ttd_kasi.jpg" alt="Tanda Tangan Kepala Seksi" style="width: 80px; height: auto;">
                             <!-- <br><br><br> -->
                         </div>
                         <strong>

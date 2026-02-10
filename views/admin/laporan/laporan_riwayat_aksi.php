@@ -1,7 +1,5 @@
-<?php session_start();
-include 'koneksi.php';
-
-// Cek apakah user sudah login
+<?php
+include_once __DIR__ . '/../../../includes/koneksi.php';
 
 $query = "
     SELECT 'Jamaah' AS role, id_jamaah AS id, nama AS nama_lengkap, username, 
@@ -36,41 +34,22 @@ function clean_input($data)
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Halaman Administrator</title>
-    <link rel="icon" href="logo_kemenag.png">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css">
-</head>
-
-<body>
+<link rel="stylesheet" href="assets/css/laporan.css">
     <div class="layout">
         <div class="layout-sidebar">
             <!-- SIDEBAR -->
-            <?php include 'sidebar_admin.php'; ?>
+            <?php include '../includes/sidebar_admin.php'; ?>
         </div>
         <!-- MAIN AREA -->
         <div class="layout-content">
-            <?php include 'header_admin.php'; ?>
+            <?php include '../includes/header_admin.php'; ?>
 
-            <main class="pPembatalan-wrapper">
-                <div class="pPembatalan">
-                    <div class="pPembatalan-header" style="color: white;">
+            <main class="laporan-wrapper">
+                <div class="laporan">
+                    <div class="laporan-header" style="color: white;">
                         <i class="fas fa-table me-1"></i> Laporan Aktivitas Pengguna
                     </div>
-                    <div class="pPembatalan-body">
+                    <div class="laporan-body">
                         <div class="d-flex flex-wrap align-items-center mb-3">
                             <div id="tanggal-filter" class="d-flex gap-2 flex-wrap align-items-end">
                                 <div>
@@ -213,6 +192,7 @@ function clean_input($data)
         </div>
     </div>
 
+    <script src="../assets/js/sidebar.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->
@@ -225,8 +205,8 @@ function clean_input($data)
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.js"></script>
 
-    <script src="assets/js/riwayat_aksi.js"></script>
-    <script src="assets/js/tanggal_cetak_pengguna.js"></script>
+    <script src="assets/js/cetak_riwayat_aksi.js"></script>
+    <script src="assets/js/tanggal_cetak_aktivitas.js"></script>
 </body>
 
 </html>

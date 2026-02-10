@@ -1,8 +1,6 @@
 <?php
 include_once __DIR__ . '/../../../includes/koneksi.php';
 
-// Cek apakah user sudah login
-
 $query = "
     SELECT 'Jamaah' AS role, id_jamaah AS id, nama AS nama_lengkap, username, email, nomor_telepon AS no_telepon, created_at, updated_at, status_pengguna
     FROM jamaah
