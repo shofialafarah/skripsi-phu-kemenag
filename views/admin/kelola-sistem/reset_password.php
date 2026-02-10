@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
     }
 }
 ?>
-<link rel="stylesheet" href="css/pengaturan.css">
+<link rel="stylesheet" href="assets/css/pengaturan.css">
     <div class="layout">
         <div class="layout-sidebar">
             <!-- SIDEBAR -->

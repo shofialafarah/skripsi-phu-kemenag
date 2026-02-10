@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             $file_extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-            if (in_array($file_extension, $allowed_types)) {
+                    if (in_array($file_extension, $allowed_types)) {
                 // Pindahkan file yang diunggah
                 if (move_uploaded_file($_FILES['app_logo']['tmp_name'], $target_file)) {
                     // Cek apakah key app_logo sudah ada
@@ -67,14 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute();
                     $stmt->close();
                 } else {
-                    echo "<script>alert('Gagal mengunggah logo baru.');</script>";
+                    header('Location: pengaturan.php?updated=0');
+                    exit();
                 }
             } else {
-                echo "<script>alert('Tipe file tidak diizinkan. Gunakan JPG, JPEG, PNG, atau GIF.');</script>";
+                header('Location: pengaturan.php?updated=0');
+                exit();
             }
         }
 
-        echo "<script>alert('Pengaturan berhasil diperbarui!'); window.location.href='pengaturan.php';</script>";
+        header('Location: pengaturan.php?updated=1');
+        exit();
     }
 }
 
@@ -124,7 +127,7 @@ if (isset($_POST['reset_default'])) {
 }
 
 ?>
-<link rel="stylesheet" href="css/pengaturan.css">
+<link rel="stylesheet" href="assets/css/pengaturan.css">
 
     <!-- Terapkan warna teks dari pengaturan -->
     <style>
@@ -157,10 +160,6 @@ if (isset($_POST['reset_default'])) {
                         <i class="fas fa-table me-1"></i> Pengaturan Sistem
                     </div>
                     <div class="pengaturan-body">
-                        <?php if (isset($_GET['reset']) && $_GET['reset'] == 'success'): ?>
-                            <div class="alert alert-success">Pengaturan berhasil dikembalikan ke default.</div>
-                        <?php endif; ?>
-
                         <form method="POST" action="" enctype="multipart/form-data">
                             <label>Nama Aplikasi:</label>
                             <input type="text" name="app_name" value="<?= htmlspecialchars($app_name); ?>" required>
@@ -191,6 +190,9 @@ if (isset($_POST['reset_default'])) {
         </div>
     </div>
     <script src="../assets/js/sidebar.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/pengaturan.js"></script>
 </body>
 
 </html>
