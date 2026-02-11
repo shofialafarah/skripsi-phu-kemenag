@@ -32,6 +32,7 @@ if (empty($app_logo)) {
     }
 }
 
+
 // Buat array submenu agar lebih gampang
 $penggunaPages = [
     'manajemen_jamaah.php',
@@ -49,8 +50,6 @@ $penggunaPages = [
 $sistemPage = ['pengaturan.php', 'reset_password.php'];
 $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 ?>
-    
-    <!-- Terapkan pengaturan warna teks -->
     <style>
         :root {
             --sidebar-text-color: <?= htmlspecialchars($theme_text_color); ?>;
@@ -119,41 +118,30 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 
                 <div class="content-wrapper">
                     <nav class="menu">
-                        <a href="../../dashboard_administrator.php" class="<?= ($currentPage == 'dashboard_administrator.php') ? 'active' : '' ?>">
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p>Dashboard</p>
                         </a>
-                        <!-- Manajemen Pengguna -->
-                        <a class="dropdown-toggle <?= in_array($currentPage, $penggunaPages) ? 'active' : '' ?>" onclick="toggleDropdown('penggunaSubmenu', this)">
-                            <span class="material-symbols-outlined">person</span>
-                            <p>Pengguna</p>
-                            <span class="material-symbols-outlined arrow">expand_more</span>
+                        <!-- Menu Pendaftaran Haji -->
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/tambah_pendaftaran.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/edit_pendaftaran.php') ? 'active' : '' ?>">
+                            <span class="material-symbols-outlined">assignment_add</span>
+                            <p>Pendaftaran Haji</p>
                         </a>
-                        <div class="submenu <?= in_array($currentPage, $penggunaPages) ? 'open' : '' ?>" id="penggunaSubmenu">
-                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/jamaah/manajemen_jamaah.php" class="<?= ($currentPage == 'akun-pengguna/jamaah/manajemen_jamaah.php' || $currentPage == 'tambah_jamaah.php' || $currentPage == 'edit_jamaah.php') ? 'active' : '' ?>">Jamaah</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/staf/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php' || $currentPage == 'profil_staf.php') ? 'active' : '' ?>">Staf PHU</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/kasi/manajemen_kasi.php' || $currentPage == 'edit_kasi.php' || $currentPage == 'profil_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
-                        </div>
-                        <!-- Manajemen Sistem -->
-                        <a class="dropdown-toggle <?= in_array($currentPage, $sistemPage) ? 'active' : '' ?>" onclick="toggleDropdown('sistemSubmenu', this)">
-                            <span class="material-symbols-outlined">settings</span>
-                            <p>Sistem</p>
-                            <span class="material-symbols-outlined arrow">expand_more</span>
+                        <!-- Menu Cek Estimasi Keberangkatan Haji -->
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/estimasi_jamaah.php') ? 'active' : '' ?>">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <p>Estimasi Haji</p>
                         </a>
-                        <div class="submenu <?= in_array($currentPage, $sistemPage) ? 'open' : '' ?>" id="sistemSubmenu">
-                            <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/pengaturan.php" class="<?= ($currentPage == 'kelola-sistem/pengaturan.php') ? 'active' : '' ?>">Pengaturan</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/reset_password.php" class="<?= ($currentPage == 'kelola-sistem/reset_password.php') ? 'active' : '' ?>">Reset Password</a>
-                        </div>
-                        <!-- Laporan Data Sistem -->
-                        <a class="dropdown-toggle <?= in_array($currentPage, $cetakPage) ? 'active' : '' ?>" onclick="toggleDropdown('cetakSubmenu', this)">
-                            <span class="material-symbols-outlined">print</span>
-                            <p>Laporan</p>
-                            <span class="material-symbols-outlined arrow">expand_more</span>
+                        <!-- Menu Pembatalan Haji -->
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pembatalan.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pembatalan_jamaah_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pembatalan_jamaah_meninggal.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan_keperluan_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/edit_pembatalan_keperluan_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan_meninggal_dunia.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/edit_pembatalan_meninggal_dunia.php') ? 'active' : '' ?>">
+                            <span class="material-symbols-outlined">cancel</span>
+                            <p>Pembatalan Haji</p>
                         </a>
-                        <div class="submenu <?= in_array($currentPage, $cetakPage) ? 'open' : '' ?>" id="cetakSubmenu">
-                            <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_data_pengguna.php" class="<?= ($currentPage == 'laporan/laporan_data_pengguna.php') ? 'active' : '' ?>">Data Pengguna</a>
-                            <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_riwayat_aksi.php" class="<?= ($currentPage == 'laporan_riwayat_aksi.php') ? 'active' : '' ?>">Riwayat Aksi</a>
-                        </div>
+                        <!-- Menu Pelimpahan Haji -->
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pelimpahan.php" class="<?= ($currentPage == 'pelimpahan_jamaah_sakit.php' || $currentPage == 'pelimpahan_jamaah_meninggal.php' || $currentPage == 'tambah_pelimpahan.php' || $currentPage == 'tambah_pelimpahan_sakit_permanen.php' || $currentPage == 'edit_pelimpahan_sakit_permanen.php' || $currentPage == 'tambah_pelimpahan_meninggal_dunia.php' || $currentPage == 'edit_pelimpahan_meninggal_dunia.php') ? 'active' : '' ?>">
+                            <span class="material-symbols-outlined">swap_horiz</span>
+                            <p>Pelimpahan Haji</p>
+                        </a>
                     </nav>
                     <button id="logoutBtn" class="logout-btn">
                         <span class="material-symbols-outlined">logout</span>
@@ -162,9 +150,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
             </div>
         </aside>
     </div>
-
     <!-- Scripts -->
-    <script src="assets/js/sidebar_staf.js"></script>
+    <script src="sidebar.js"></script>
 </body>
 
 </html>

@@ -90,3 +90,37 @@ submenuButtons.forEach(subBtn => {
     nav.style.setProperty("--top", `${index * 56}px`);
   });
 });
+
+
+// Logout confirmation with SweetAlert2
+function ensureSwal(callback) {
+  if (typeof Swal !== 'undefined') return callback();
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  s.onload = callback;
+  document.head.appendChild(s);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('logoutBtn');
+  if (!btn) return;
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    ensureSwal(function() {
+      Swal.fire({
+        title: 'Logout?',
+        text: 'Yakin ingin keluar dari sistem?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, keluar',
+        cancelButtonText: 'Batal'
+      }).then(function(result) {
+        if (result.isConfirmed) {
+          window.location.href = '../auth/logout.php';
+        }
+      });
+    });
+  });
+});

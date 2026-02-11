@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 session_start();
 
 include '../../includes/koneksi.php'; // Panggil koneksinya dulu
-include 'fungsi.php';  // Baru panggil fungsinya
+include '../partials/fungsi.php';  // Baru panggil fungsinya
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim(htmlspecialchars($_POST['username']));
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } elseif ($table === 'jamaah') {
                     $_SESSION['id_jamaah'] = $user['id_jamaah'];
                     $_SESSION['nomor_porsi'] = $user['nomor_porsi'];
-                    header("Location: dashboard_jamaah.php");
+                    header("Location: ../jamaah/dashboard_jamaah.php");
                 }
                 exit();
             } else {

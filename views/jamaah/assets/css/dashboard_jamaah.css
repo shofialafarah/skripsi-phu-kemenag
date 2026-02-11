@@ -1,0 +1,294 @@
+:root {
+  --dark-bg: #1e1b29;
+  --card-bg: #ffffff;
+  --text-light: #7a7b92;
+  --transition: all 0.3s ease;
+  --dashboard-bg: #7bd247;
+  --primary-color: #119630;
+  --card-jamaah: #119630;
+}
+.dashboard-wrapper {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dashboard-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.jamaah-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  padding: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow: hidden;
+  background: white;
+}
+
+.card::before { 
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 3px;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.card:hover {
+  box-shadow: 0 0 16px rgba(168, 228, 133, 0.5);
+  transform: translateY(-2px);
+}
+/* ========================= CARD KALENDER =================================================== */
+.kalender {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.header-kalender {
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--dark-bg);
+}
+
+.grid-kalender {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.hari {
+  text-align: center;
+  font-weight: 600;
+  color: var(--card-jamaah);
+  font-size: 0.9rem;
+}
+
+.tanggal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  font-size: 0.85rem;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.tanggal:hover {
+  background-color: #b1f0bb;
+  cursor: pointer;
+}
+
+.tanggal.today-fix {
+  background-color: var(--card-jamaah);
+  color: white;
+  font-weight: bold;
+}
+
+/* =================================================================== */
+.waktu-kerja {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.icon-waktuKerja {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+/* Working Time Card */
+.working-time-card {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+}
+
+.working-time-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.working-time-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.working-time-label {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.farming-activities {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  height: 150px;
+}
+
+.farming-activity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 60px;
+  padding: 12px;
+}
+.working-bar-wrapper {
+  position: relative;
+  width: 50px;
+  height: 100px;
+  margin-bottom: 8px;
+}
+
+.working-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 30px;
+}
+
+.bar-base {
+  height: 100%;
+  background-color: var(--dashboard-bg); /* Base layer, full height */
+}
+
+.bar-overlay {
+  background-color: var(--card-jamaah); /* Overlay color */
+}
+
+.height-low { height: 50%; }
+.height-medium { height: 70%; }
+.height-high { height: 90%; }
+
+
+.working-name {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--text-light);
+  margin-top: 10px;
+  text-align: center;  /* Center text */
+  padding: 5px;
+}
+/* ============================ CARD CUACA =============================================== */
+.cuaca {
+  grid-column: 3;
+  grid-row: 1;
+
+}
+
+.temperature {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.date-info {
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+.pembatas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.profil-jamaah {
+  margin-top: 20px;
+}
+
+.profil-jamaah-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  outline: 1px red;
+}
+
+.jamaah-foto {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.jamaah-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nama-jamaah {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--dark-bg);
+}
+
+.nomor-porsi {
+  font-size: 1rem;
+  color: var(--dark-bg);
+}
+.titik-tiga {
+  cursor: pointer;
+  font-size: 24px;
+  padding-left: 50px;
+  color: var(--text-light);
+}
+
+.popup-form {
+  display: none;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1000;
+  width: 300px;
+}
+
+.popup-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup-form input {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: var(--dashboard-bg);
+}

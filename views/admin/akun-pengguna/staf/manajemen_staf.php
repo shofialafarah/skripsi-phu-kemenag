@@ -102,7 +102,7 @@ if (!$result) {
                                     echo "<td class='text-center'>";
                                     echo "<div class='d-flex justify-content-center gap-2'>";
                                     echo "<a href='edit_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-warning me-1 mb-1' title='Edit'><i class='fas fa-edit'></i></a>";
-                                    echo "<a href='/phu-kemenag-banjar-copy/hapus_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-danger delete-link mb-1' data-name='" . htmlspecialchars($row['nama_staf']) . "' title='Hapus'><i class='fas fa-trash'></i></a>";
+                                    echo "<a href='hapus_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-danger delete-link mb-1' data-name='" . htmlspecialchars($row['nama_staf']) . "' title='Hapus'><i class='fas fa-trash'></i></a>";
                                     echo "<a href='profil_staf.php?id=" . $row['id_staf'] . "' class='btn btn-sm btn-success me-1 mb-1' title='Lihat Profile Staf'><i class='fas fa-user'></i></a>";
                                     echo "</div>";
                                     echo "</td>";

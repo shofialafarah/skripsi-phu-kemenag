@@ -1,5 +1,5 @@
 <?php
-include '../../includes/koneksi.php'; // pastikan koneksi database terhubung
+include_once __DIR__ . '/../../includes/koneksi.php'; // pastikan koneksi database terhubung
 
 function updateAktivitasPengguna($id_pengguna, $role, $tipe_aktivitas, $deskripsi) {
     global $koneksi;
