@@ -1,0 +1,253 @@
+/* Main Dashboard Styles */
+:root {
+  /* Sidebar width variables */
+  --sidebar-width-open: 280px;
+  --sidebar-width-closed: 84px;
+
+  --primary-color: #1b5e20;
+  --primary-light: #1a8e4e;
+  --primary-dark: #0a5a31;
+  --text-color: #333333;
+  --background: #656aff;
+  --dark-bg: #1e1b29;
+  --card-bg: #ffffff;
+  --text-dark: #333333;
+  --text-light: #7a7b92;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --border-color: #e0e0e0;
+  --info-color: #17a2b8;
+  --pending-color: #f7931e;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --card-radius: 12px;
+  --transition: all 0.3s ease;
+  --cerah: #ffffff;
+}
+/* ========================================
+   3. Card Styles
+======================================== */
+.estimasi-wrapper {
+  overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
+  -ms-overflow-style: none;  /* Menghilangkan scrollbar di IE/Edge */
+  scrollbar-width: none;     /* Menghilangkan scrollbar di Firefox */
+}
+
+.estimasi-wrapper::-webkit-scrollbar {
+  display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+.estimasi {
+  position: relative;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+}
+
+.estimasi::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* tebal border */
+  background: linear-gradient(135deg, #a8e485, #012c01);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white-color);
+  text-align: center;
+  margin-bottom: 25px;
+  position: relative;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title:after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 4px;
+  background: var(--accent-color);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 5px;
+}
+
+.search-container {
+  display: flex;
+  margin-bottom: 30px;
+  background: rgba(32, 189, 52, 0.445);
+  border-radius: 10px;
+  padding: 5px;
+  position: relative;
+  border: 1px solid var(--primary-color);
+}
+
+.search-container label {
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  padding: 10px;
+  color: var(--dark-bg);
+  background: rgba(0, 0, 0, 0.226);
+  border-radius: 8px 0 0 8px;
+}
+
+.search-container input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 15px;
+  color: var(--white-color);
+  font-size: 16px;
+}
+
+.search-container input::placeholder {
+  color: var(--primary-color);
+}
+
+.search-container button {
+  background: var(--primary-color);
+  border: none;
+  color: var(--card-bg);
+  padding: 10px 20px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-container button:hover {
+  background: var(--card-bg);
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 30px 0 15px;
+  color: var(--dark-bg);
+  position: relative;
+  padding-left: 0px;
+}
+
+.subtitle:before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 20px;
+  background: var(--accent-color);
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 5px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.info-estimasi {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.info-estimasi label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--dark-bg);
+  text-transform: bold;
+}
+
+.info-estimasi .value {
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+}
+
+.badge {
+  background: var(--primary-color);
+  color: var(--card-bg);
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge i {
+  font-size: 12px;
+}
+
+.pulse {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a8e485, #9ef19e);
+  margin-right: 5px;
+  animation: pulse 1.5s infinite;
+}
+
+.waiting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px dashed var(--primary-color);
+}
+
+.waiting-estimasi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.waiting-estimasi span:first-child {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--primary-color);
+}
+
+.waiting-estimasi span:last-child {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.kaaba-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}

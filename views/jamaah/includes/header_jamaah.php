@@ -1,13 +1,14 @@
 <?php
 include_once __DIR__ . '/../../../includes/koneksi.php';
 
-// Cek apakah session id_admin sudah diset
-if (!isset($_SESSION['id_admin'])) {
-
-    $id = 1; // sementara fallback (tidak disarankan untuk live)
-} else {
-    $id = $_SESSION['id_admin'];
+// Ambil ID jamaah dari session yang benar (biasanya id_jamaah, bukan id_admin)
+if (!isset($_SESSION['id_jamaah'])) {
+    // Jika tidak ada session, arahkan ke login atau beri nilai default
+    header("Location: ../../auth/login.php"); 
+    exit();
 }
+
+$id_session = $_SESSION['id_jamaah'];
 
 // Ambil data jamaah
 $sql_jamaah = "SELECT nama FROM jamaah WHERE id_jamaah = ?";
@@ -242,15 +243,15 @@ $keyword = $koneksi->real_escape_string($keyword);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
 
-    <link rel="stylesheet" href="../assets/css/global_style.css">
-    <link rel="stylesheet" href="../assets/css/header.css" />
-    <link rel="stylesheet" href="../assets/css/sidebar.css" />
-    <link rel="stylesheet" href="../assets/css/entry.css">
-    <link rel="stylesheet" href="../assets/css/dashboard_jamaah.css">
-    <link rel="stylesheet" href="../assets/css/pendaftaran_jamaah.css">
-    <link rel="stylesheet" href="../assets/css/pembatalan_jamaah.css">
-    <link rel="stylesheet" href="../assets/css/pelimpahan_jamaah.css">
-    <link rel="stylesheet" href="../assets/css/estimasi.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/global_style.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/header.css" />
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/sidebar.css" />
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/entry.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/dashboard_jamaah.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pendaftaran_jamaah.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pembatalan_jamaah.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pelimpahan_jamaah.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/estimasi.css">
     <style>
         .dropdown-menu.scrollable-dropdown {
             max-height: 300px;
@@ -272,7 +273,7 @@ $keyword = $koneksi->real_escape_string($keyword);
         <header>
             <div class="header">
                 <div class="header-welcome">
-                    <h1>Selamat Datang, <?= htmlspecialchars($jamaah['nama']) ?></h1>
+                    <h1>Selamat Datang, <?= htmlspecialchars($jamaah['nama'] ?? 'Jamaah') ?></h1>
                     <div class="date-time-section">
                         <div class="current-date" id="currentDate">Kamis, 1 Mei 2025</div>
                         <div class="current-time" id="currentTime">07:30</div>
@@ -329,25 +330,7 @@ $keyword = $koneksi->real_escape_string($keyword);
         </header>
     </div>
 
-    <script>
-        function updateDate() {
-            const now = new Date();
-            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-            ];
-            document.getElementById('currentDate').textContent =
-                `${hari[now.getDay()]}, ${now.getDate()} ${bulan[now.getMonth()]} ${now.getFullYear()}`;
-        }
-        function updateTime() {
-            const now = new Date();
-            let hours = now.getHours().toString().padStart(2, '0');
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
-        }
-        updateDate(); updateTime();
-        setInterval(updateTime, 30000);
-    </script>
+    <script src="../assets/js/waktu_header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -128,17 +128,17 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
                             <p>Pendaftaran Haji</p>
                         </a>
                         <!-- Menu Cek Estimasi Keberangkatan Haji -->
-                        <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/estimasi_jamaah.php') ? 'active' : '' ?>">
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">schedule</span>
                             <p>Estimasi Haji</p>
                         </a>
                         <!-- Menu Pembatalan Haji -->
-                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pembatalan.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pembatalan_jamaah_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pembatalan_jamaah_meninggal.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan_keperluan_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/edit_pembatalan_keperluan_ekonomi.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/tambah_pembatalan_meninggal_dunia.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/edit_pembatalan_meninggal_dunia.php') ? 'active' : '' ?>">
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pembatalan/pembatalan.php" class="<?= ($currentPage == 'pembatalan_jamaah_ekonomi.php' || $currentPage == 'pembatalan_jamaah_meninggal.php' || $currentPage == 'tambah_pembatalan.php' || $currentPage == 'tambah_pembatalan_keperluan_ekonomi.php' || $currentPage == 'edit_pembatalan_keperluan_ekonomi.php' || $currentPage == 'tambah_pembatalan_meninggal_dunia.php' || $currentPage == 'edit_pembatalan_meninggal_dunia.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">cancel</span>
                             <p>Pembatalan Haji</p>
                         </a>
                         <!-- Menu Pelimpahan Haji -->
-                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pelimpahan.php" class="<?= ($currentPage == 'pelimpahan_jamaah_sakit.php' || $currentPage == 'pelimpahan_jamaah_meninggal.php' || $currentPage == 'tambah_pelimpahan.php' || $currentPage == 'tambah_pelimpahan_sakit_permanen.php' || $currentPage == 'edit_pelimpahan_sakit_permanen.php' || $currentPage == 'tambah_pelimpahan_meninggal_dunia.php' || $currentPage == 'edit_pelimpahan_meninggal_dunia.php') ? 'active' : '' ?>">
+                        <a href="/phu-kemenag-banjar-copy/views/jamaah/pelimpahan/pelimpahan.php" class="<?= ($currentPage == 'pelimpahan_jamaah_sakit.php' || $currentPage == 'pelimpahan_jamaah_meninggal.php' || $currentPage == 'tambah_pelimpahan.php' || $currentPage == 'tambah_pelimpahan_sakit_permanen.php' || $currentPage == 'edit_pelimpahan_sakit_permanen.php' || $currentPage == 'tambah_pelimpahan_meninggal_dunia.php' || $currentPage == 'edit_pelimpahan_meninggal_dunia.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">swap_horiz</span>
                             <p>Pelimpahan Haji</p>
                         </a>
