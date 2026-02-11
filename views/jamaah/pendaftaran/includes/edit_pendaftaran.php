@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alis = $_POST['alis'] ?? '';
     $hidung = $_POST['hidung'] ?? '';
 
-    $target_dir = "uploads/pendaftaran/pengajuan/";
+    $target_dir = "../assets/berkas/pengajuan/";
     if (!is_dir($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
@@ -223,21 +223,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
-
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
-        <?php include_once __DIR__ . '/../includes/sidebar_jamaah.php'; ?>
+        <?php include_once __DIR__ . '/../../includes/sidebar_jamaah.php'; ?>
     </div>
     <!-- MAIN AREA -->
     <div class="layout-content">
-        <?php include_once __DIR__ . '/../includes/header_jamaah.php'; ?>
-
+        <?php include_once __DIR__ . '/../../includes/header_jamaah.php'; ?>
             <main class="pendaftaran-wrapper">
                 <div class="pendaftaran">
                     <div class="pendaftaran-header" style="background-color: #1b5e20; color: white;">
-                        <i class="fas fa-edit me-1"></i> Edit Pendaftaran Haji
+                        Edit Pendaftaran Haji
                     </div>
                     <div class="pendaftaran-body" style="color: #1b5e20;">
 
@@ -595,8 +592,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <hr>
                             <div class="action-buttons">
-                                <button type="submit" class="btn btn-success">PERBARUI</button>
-                                <a href="pendaftaran_jamaah.php" class="btn btn-secondary">BATAL</a>
+                                <button type="submit" class="btn btn-success">EDIT DATA PENDAFTARAN</button>
+                                <a href="../pendaftaran_jamaah.php" class="btn btn-secondary">KEMBALI</a>
                             </div>
                         </form>
                     </div>
@@ -605,26 +602,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </main>
         </div>
     </div>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-    <!-- DataTables Responsive -->
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-    <!-- DataTables Buttons JS -->
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-
-    <script src="phu-kemenag-banjar-copy/views/jamaah/pendaftaran/assets/js/tambah_data.js"></script>
-    <script src="phu-kemenag-banjar-copy/views/jamaah/pendaftaran/assets/js/tambah_data_ktp.js"></script>
+    <script src="../../assets/js/sidebar.js"></script>
+    <script src="/../../includes/link_script.php"></script>
+    <script src="../assets/js/tambah_data.js"></script>
 </body>
 
 </html>
