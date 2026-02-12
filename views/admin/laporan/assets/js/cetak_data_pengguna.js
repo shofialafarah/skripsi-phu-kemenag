@@ -1,4 +1,11 @@
-// Script untuk tombol cetak - PERBAIKAN UTAMA
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+// Script untuk tombol cetak
 document
   .getElementById("print-report-btn")
   .addEventListener("click", function (e) {

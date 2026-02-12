@@ -1,4 +1,11 @@
 <?php
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 session_start();
 include '../../../includes/koneksi.php';
 include '../../partials/fungsi.php';
@@ -9,7 +16,6 @@ if (!isset($_SESSION['id_jamaah'])) {
 }
 
 $id_jamaah = $_SESSION['id_jamaah'];
-// ✅ Catat aktivitas hanya jika data berhasil ditemukan
 updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pembatalan', 'Membuka halaman pilihan jenis pembatalan haji');
 
 ?>
@@ -45,7 +51,6 @@ updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pembatalan', 'Membuka halaman pil
         </div>
     </div>
     <script src="../assets/js/sidebar.js"></script>
-    <script src="pendaftaran_jamaah.js"></script>
 </body>
 
 </html>

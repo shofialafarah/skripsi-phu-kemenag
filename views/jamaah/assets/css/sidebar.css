@@ -1,3 +1,10 @@
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 .sidebar {
   width: var(--sidebar-closed);
   min-width: 20px;
@@ -260,7 +267,6 @@ button.toggle {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  background: #f44336;
   color: white;
   border-radius: 50%;
   width: 56px;

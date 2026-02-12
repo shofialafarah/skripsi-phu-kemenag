@@ -1,3 +1,10 @@
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 document.addEventListener("DOMContentLoaded", function() {
             const apiKey = "10fc461BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX";
             const city = "Martapura,ID"; // Kota dan kode negara (ID untuk Indonesia)
@@ -16,11 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Menampilkan nama kota dan provinsi
                     document.querySelector(".date-info").textContent = "Martapura, Kalimantan Selatan";
-
-                    // Update elemen lainnya (jika perlu)
-                    // document.querySelectorAll(".weather-details div")[0].lastElementChild.textContent = `Humidity: ${humidity}%`;
-                    // document.querySelectorAll(".weather-details div")[1].lastElementChild.textContent = `Pressure: ${pressure} hPa`;
-                    // document.querySelectorAll(".weather-details div")[2].lastElementChild.textContent = `Wind: ${wind} Km/h`;
                 })
                 .catch(error => {
                     console.error("Gagal ambil data cuaca:", error);

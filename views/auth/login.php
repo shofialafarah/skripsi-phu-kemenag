@@ -1,4 +1,11 @@
 <?php
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
@@ -59,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: ../admin/dashboard_administrator.php");
                 } elseif ($table === 'kepala_seksi') {
                     $_SESSION['id_kepala'] = $user['id_kepala'];
-                    header("Location: dashboard_kepala_seksi.php");
+                    header("Location: ../kepala-seksi/dashboard_kepala_seksi.php");
                 } elseif ($table === 'staf') {
                     $_SESSION['id_staf'] = $user['id_staf'];
                     $_SESSION['user_logged_in'] = true;
-                    header("Location: dashboard_staf.php");
+                    header("Location: ../staf/dashboard_staf.php");
                 } elseif ($table === 'jamaah') {
                     $_SESSION['id_jamaah'] = $user['id_jamaah'];
                     $_SESSION['nomor_porsi'] = $user['nomor_porsi'];

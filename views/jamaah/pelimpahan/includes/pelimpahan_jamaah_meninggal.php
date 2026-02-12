@@ -1,4 +1,11 @@
 <?php
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 session_start();
 include '../../../../includes/koneksi.php';
 include '../../../partials/fungsi.php';
@@ -36,9 +43,8 @@ if (isset($_SESSION['id_jamaah'])) {
     exit();
 }
 
-
 // Cek dokumen KTP misalnya
-$folder = 'uploads/pembatalan/pengajuan/ktp/';
+$folder = '../assets/berkas/pengajuan/ktp/';
 $file_path = $folder . basename($limpah['dokumen_ktp'] ?? '');
 $dokumen_ktp_ada = !empty($limpah['dokumen_ktp']) && file_exists($file_path);
 
@@ -487,41 +493,16 @@ $dokumen_ktp_ada = !empty($limpah['dokumen_ktp']) && file_exists($file_path);
                             <i class="fas fa-exclamation-triangle"></i>
                             <h4>Data Pelimpahan Tidak Ditemukan</h4>
                             <p>Silakan daftar terlebih dahulu.</p>
-                            <a href="tambah_pelimpahan.php" class="btn btn-primary">Daftar Sekarang</a>
+                            <a href="../tambah_pelimpahan.php" class="btn btn-primary">Daftar Sekarang</a>
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_jamaah.php'; ?>
             </div>
-
-            <!-- Floating Help Button -->
-            <div class="floating-help" onclick="alert('Hubungi Call Center Haji: 14045 atau WhatsApp: 0812-3456-7890')">
-                <i class="fas fa-question"></i>
-            </div>
+        </main>
     </div>
-    </main>
-</div>
 </div>
 <script src="../../assets/js/sidebar.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-<!-- DataTables Responsive -->
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-<!-- DataTables Buttons JS -->
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script src="../../assets/js/jamaah.js"></script>
 
 </body>

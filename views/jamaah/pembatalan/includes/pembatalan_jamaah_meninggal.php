@@ -1,4 +1,11 @@
 <?php
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
 session_start();
 include '../../../../includes/koneksi.php';
 include '../../../partials/fungsi.php';
@@ -479,7 +486,7 @@ $dokumen_ktp_ada = !empty($batal['dokumen_ktp']) && file_exists($file_path);
                             </a>
 
 
-                            <a href="edit_pembatalan_meninggal_dunia.php?id_pembatalan=<?= $batal['id_pembatalan'] ?>" class="btn btn-secondary">
+                            <a href="pembatalan-meninggal/edit_pembatalan_meninggal_dunia.php?id_pembatalan=<?= $batal['id_pembatalan'] ?>" class="btn btn-secondary">
                                 <i class="fas fa-edit"></i> Edit Data
                             </a>
                         </div>
