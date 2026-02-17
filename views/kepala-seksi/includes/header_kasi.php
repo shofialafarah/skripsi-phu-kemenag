@@ -24,7 +24,7 @@ $staff = $staffQuery->fetch_assoc();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halaman Kepala Seksi</title>
-    <link rel="icon" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/img/logo_kemenag.png">
+    <link rel="icon" href="../assets/img/logo_kemenag.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome untuk icon -->
@@ -45,9 +45,8 @@ $staff = $staffQuery->fetch_assoc();
     <!-- css halaman tampil -->
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/entry.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/dashboard_kepala_seksi.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/pendaftaran_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/pembatalan_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/pelimpahan_jamaah.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/verifikasi_kepala_seksi.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/laporan_kepala_seksi.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/estimasi.css">
 </head>
 

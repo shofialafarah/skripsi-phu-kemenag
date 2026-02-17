@@ -1,0 +1,64 @@
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+/* ======================== HALAMAN LAPORAN ADMIN ========================================== */
+.laporan-wrapper {
+  overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
+  -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
+  scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
+}
+
+.laporan-wrapper::-webkit-scrollbar {
+  display: none; /* Menghilangkan scrollbar di Chrome/Safari */
+}
+
+.laporan {
+  position: relative;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  border-radius: 16px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
+  overflow-x: auto; /* Biarkan tabel scroll horizontal saat perlu */
+  overflow-y: hidden;
+}
+
+.laporan table {
+  min-width: 100%; /* Tabel minimal lebar container */
+  width: 100%;
+  table-layout: auto;
+  font-size: 14px;
+  border: 1px var(--primary-color);
+}
+
+.laporan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px; /* tebal border */
+  background: linear-gradient(135deg, #a8e485, #012c01);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.laporan:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.laporan-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}

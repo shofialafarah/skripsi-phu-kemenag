@@ -110,7 +110,7 @@ $result = mysqli_query($koneksi, $query);
                 <div class="verifikasi-header" style="background-color: #1b5e20; color: white;">
                     <i class="fas fa-table me-1"></i> Verifikasi Pelimpahan Jamaah Haji
                 </div>
-                <div class="verifikasi-body" style="color: #1b5e20;">
+                <div class="verifikasi-body">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                         <div id="tanggal-filter" class="d-flex gap-2 flex-wrap align-items-end">
                             <div>
@@ -152,7 +152,7 @@ $result = mysqli_query($koneksi, $query);
                     <?php if ($result && mysqli_num_rows($result) > 0): ?>
 
                         <div class="table-responsive">
-                            <table id="tabelVerifikasi" class="table table-striped table-hover">
+                            <table id="tabelVerifikasi" class="table table-striped table-bordered table-hover">
                                 <thead class="bg-success text-white">
                                     <tr>
                                         <th>No</th>
@@ -268,9 +268,7 @@ $result = mysqli_query($koneksi, $query);
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../includes/footer_kasi.php'; ?>
             </div>
         </main>
     </div>

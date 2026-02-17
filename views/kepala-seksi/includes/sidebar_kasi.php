@@ -134,11 +134,11 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $cetakPages) ? 'open' : '' ?>" id="entrySubmenu">
-                            <a href="laporan_pendaftaran.php" class="<?= ($currentPage == 'laporan_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                            <a href="laporan_estimasi.php" class="<?= ($currentPage == 'laporan_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
-                            <a href="laporan_pembatalan.php" class="<?= ($currentPage == 'laporan_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                            <a href="laporan_pelimpahan.php" class="<?= ($currentPage == 'laporan_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
-                            <a href="laporan_rekapitulasi.php" class="<?= ($currentPage == 'laporan_rekapitulasi.php') ? 'active' : '' ?>">Rekapitulasi</a>
+                            <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pendaftaran.php" class="<?= ($currentPage == 'laporan_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_estimasi.php" class="<?= ($currentPage == 'laporan_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pembatalan.php" class="<?= ($currentPage == 'laporan_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pelimpahan.php" class="<?= ($currentPage == 'laporan_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_rekapitulasi.php" class="<?= ($currentPage == 'laporan_rekapitulasi.php') ? 'active' : '' ?>">Rekapitulasi</a>
                         </div>
                     </nav>
                     <a href="<?= BASE_URL ?>views/auth/logout.php" class="logout-btn">

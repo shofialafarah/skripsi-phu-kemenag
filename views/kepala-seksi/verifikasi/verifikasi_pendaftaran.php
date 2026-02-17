@@ -139,7 +139,7 @@ $total_data = mysqli_num_rows($result);
                     <!-- Tabel Data Pendaftaran -->
                     <?php if ($result && $total_data > 0): ?>
                         <div class="table-responsive">
-                            <table id="tabelVerifikasi" class="table table-striped table-hover">
+                            <table id="tabelVerifikasi" class="table table-striped table-bordered table-hover">
                                 <thead class="bg-success text-white">
                                     <tr>
                                         <th class="text-center">No</th>
@@ -242,9 +242,7 @@ $total_data = mysqli_num_rows($result);
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../includes/footer_kasi.php'; ?>
             </div>
         </main>
     </div>
