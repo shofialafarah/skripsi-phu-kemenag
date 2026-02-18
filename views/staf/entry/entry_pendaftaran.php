@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
 
             // 2. Tentukan Path lengkap ke folder /Entry/
             // Keluar dari views/staf/ menuju assets/berkas/pendaftaran/Nama_NIK/Entry/
-            $uploadDir = "../../assets/berkas/pendaftaran/" . $folder_utama . "/Entry/";
+            $uploadDir = __DIR__ . "/../../../assets/berkas/pendaftaran/" . $folder_utama . "/Entry/";
 
             // 3. Buat folder otomatis (Recursive)
             if (!is_dir($uploadDir)) {
@@ -260,6 +260,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
         </div>
     </div>
 </div>
+<?php if (isset($_SESSION['success_message'])): ?>
+    <div id="flash-success" style="display: none;"><?php echo $_SESSION['success_message']; ?></div>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['error_message'])): ?>
+    <div id="flash-error" style="display: none;"><?php echo $_SESSION['error_message']; ?></div>
+    <?php unset($_SESSION['error_message']); ?>
+<?php endif; ?>
 <script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -280,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/upload_pendaftaran.js"></script>
+<script src="assets/js/entry_pendaftaran.js"></script>
 <script src="assets/js/filterTanggal_pendaftaran.js"></script>
 </body>
 

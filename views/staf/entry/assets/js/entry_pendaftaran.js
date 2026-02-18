@@ -1,4 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const flashSuccess = document.getElementById("flash-success")?.innerText;
+  const flashError = document.getElementById("flash-error")?.innerText;
+
+  if (flashSuccess) {
+    Swal.fire({
+      icon: "success",
+      title: "Berhasil!",
+      text: flashSuccess,
+      timer: 3000,
+      showConfirmButton: false,
+    });
+  }
+
+  if (flashError) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal!",
+      text: flashError,
+    });
+  }
+
   const uploadButtons = document.querySelectorAll(".upload-doc-btn");
   uploadButtons.forEach((button) => {
     button.addEventListener("click", function () {
@@ -23,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `hapus_ePendaftaran.php?id_pendaftaran=${id_pendaftaran}`;
+          window.location.href = `includes/hapus_ePendaftaran.php?id_pendaftaran=${id_pendaftaran}`;
         }
       });
     });
