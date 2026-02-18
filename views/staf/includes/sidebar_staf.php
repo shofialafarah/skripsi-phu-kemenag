@@ -129,10 +129,10 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'entry_pelimpaha
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $entryPages) ? 'open' : '' ?>" id="entrySubmenu">
-                            <a href="entry_pendaftaran.php" class="<?= ($currentPage == 'entry_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                            <a href="entry_estimasi.php" class="<?= ($currentPage == 'entry_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
-                            <a href="entry_pembatalan.php" class="<?= ($currentPage == 'entry_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                            <a href="entry_pelimpahan.php" class="<?= ($currentPage == 'entry_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pendaftaran.php" class="<?= ($currentPage == 'entry_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_estimasi.php" class="<?= ($currentPage == 'entry_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pembatalan.php" class="<?= ($currentPage == 'entry_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pelimpahan.php" class="<?= ($currentPage == 'entry_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
                         </div>
                         <!-- <a href="pembatalan_haji.php" class="<?= ($currentPage == 'pembatalan_haji.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">cancel</span>
