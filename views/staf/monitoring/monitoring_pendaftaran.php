@@ -198,30 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'], $_P
     }
 }
 ?>
-<style>
-    /* Warna pembeda kategori */
-    .kategori-meninggal {
-        background-color: rgba(220, 53, 69, 0.1) !important;
-        /* Merah muda */
-        /* border-left: 4px solid #dc3545 !important; */
-    }
-
-    .kategori-sakit {
-        background-color: rgba(255, 193, 7, 0.1) !important;
-        /* Kuning muda */
-        /* border-left: 4px solid #ffc107 !important; */
-    }
-
-    .badge-kategori-meninggal {
-        background-color: #dc3545 !important;
-        color: white !important;
-    }
-
-    .badge-kategori-sakit {
-        background-color: #ffc107 !important;
-        color: #212529 !important;
-    }
-</style>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -322,19 +298,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'], $_P
 
                                             if (!empty($file)) {
                                                 // Link untuk melihat dokumen
-                                                echo "<a href='{$file}' class='btn btn-success' target='_blank'>";
+                                                echo "<a href='{$file}' class='btn btn-lihat-dok' target='_blank'>";
                                                 echo "<i class='fas fa-file'></i> $label</a>";
 
                                                 // Status dan tombol aksi
                                                 if ($doc_status == 'Terverifikasi') {
                                                     echo "<span class='badge bg-success'><i class='fas fa-check-circle'></i> Terverifikasi</span>";
-                                                    echo "<button class='btn btn-sm btn-outline-warning btn-change-status' data-bs-toggle='modal' data-bs-target='#$modal_id' title='Ubah ke Tidak Valid'>";
+                                                    echo "<div class='dokumen-actions'>"; // tambah ini
+                                                    echo "<button class='btn btn-outline-warning btn-change-status' data-bs-toggle='modal' data-bs-target='#$modal_id' title='Ubah ke Tidak Valid'>";
                                                     echo "<i class='fas fa-edit'></i></button>";
+                                                    echo "</div>"; // tutup di sini
+
                                                 } elseif ($doc_status == 'Unggah Ulang') {
                                                     echo "<span class='badge bg-danger'><i class='fas fa-times-circle'></i> Unggah Ulang</span>";
                                                     if (!empty($catatan_text)) {
                                                         echo "<small class='text-muted ms-1' title='$catatan_text'><i class='fas fa-info-circle'></i></small>";
                                                     }
+                                                    echo "<div class='dokumen-actions'>"; // tambah ini
                                                     echo "<form method='post' class='d-inline'>";
                                                     echo "<input type='hidden' name='validate_document' value='1'>";
                                                     echo "<input type='hidden' name='id_pendaftaran' value='" . $row['id_pendaftaran'] . "'>";
@@ -343,8 +323,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'], $_P
                                                     echo "<button type='submit' class='btn btn-sm btn-outline-success' title='Terverifikasi' onclick=\"return confirm('Ubah status dokumen $label menjadi TERVERIFIKASI?');\">";
                                                     echo "<i class='fas fa-check'></i></button>";
                                                     echo "</form>";
+                                                    echo "</div>"; // tutup di sini
+
                                                 } else { // Menunggu Verifikasi
                                                     echo "<span class='badge bg-warning text-dark'><i class='fas fa-clock'></i> Menunggu Verifikasi</span>";
+                                                    echo "<div class='dokumen-actions'>"; // tambah ini
                                                     echo "<form method='post' class='d-inline'>";
                                                     echo "<input type='hidden' name='validate_document' value='1'>";
                                                     echo "<input type='hidden' name='id_pendaftaran' value='" . $row['id_pendaftaran'] . "'>";
@@ -355,6 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'], $_P
                                                     echo "</form>";
                                                     echo "<button class='btn btn-sm btn-danger' data-bs-toggle='modal' data-bs-target='#$modal_id' title='Tolak Dokumen'>";
                                                     echo "<i class='fas fa-times'></i></button>";
+                                                    echo "</div>"; // tutup di sini
                                                 }
 
                                                 // Kumpulkan data modal
@@ -386,7 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'], $_P
                         </table>
                     </div>
                 </div>
-            <?php include_once __DIR__ . '/../includes/footer_staf.php'; ?>
+                <?php include_once __DIR__ . '/../includes/footer_staf.php'; ?>
             </div>
         </main>
     </div>

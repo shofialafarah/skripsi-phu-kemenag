@@ -95,21 +95,42 @@
 /* ========================================
      6. Button Styles
   ======================================== */
+.btn-lihat-dok {
+  background-color: var(--success-color);
+  color: white;
+  width: 180px;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-lihat-dok:hover {
+  background-color: var(--primary-dark); /* hijau lebih gelap saat hover */
+  color: white;
+}
 
 .btn-success {
   background-color: var(--success-color);
-  width: 150px;
+  width: auto;
+  padding: 6px 12px;
 }
 
 .dokumen-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
   padding: 10px 15px;
   background: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #dee2e6;
   margin-bottom: 8px;
+}
+
+.dokumen-actions {
+  display: flex;
+  gap: 2px;
 }
 
 .dokumen-item[data-status="Terverifikasi"] {

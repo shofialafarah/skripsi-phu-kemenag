@@ -118,9 +118,7 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard.css">
 
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard_staf.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring_pendaftaran.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring_pembatalan.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring_pelimpahan.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/entry.css">
     <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/notifikasi.css">
     <style>
