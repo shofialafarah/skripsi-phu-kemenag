@@ -271,26 +271,6 @@ function getBadgeClass($jenis)
     <div class="layout-content">
         <?php include 'includes/header_staf.php'; ?>
         <style>
-            .dokumen-tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            .dokumen-tag {
-                background-color: #e3f2fd;
-                color: #1976d2;
-                padding: 3px 8px;
-                border-radius: 12px;
-                font-size: 0.75rem;
-                font-weight: 500;
-                white-space: nowrap;
-                border: 1px solid #bbdefb;
-            }
-
-            .dokumen-tag:hover {
-                background-color: #bbdefb;
-            }
         </style>
 
         <main class="dashboard-wrapper">

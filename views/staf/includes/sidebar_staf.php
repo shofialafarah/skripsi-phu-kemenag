@@ -18,29 +18,29 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $app_name = $settings['app_name'] ?? 'PHU KEMENAG';
-$app_logo = $settings['app_logo'] ?? 'logo_kemenag.png';
+$app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
+
+$default_system_logo = '/phu-kemenag-banjar-copy/assets/sistem.png';
+if (empty($app_logo)) {
+    $app_logo_src = $default_system_logo;
+} elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
+    $app_logo_src = $app_logo;
+} elseif (strpos($app_logo, '/') === 0) {
+    $app_logo_src = $app_logo;
+} else {
+    $candidate = '/phu-kemenag-banjar-copy/assets/' . $app_logo;
+    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
+        $app_logo_src = $candidate;
+    } else {
+        $app_logo_src = $default_system_logo;
+    }
+}
 
 $monitoringPages = ['monitoring_pendaftaran.php', 'monitoring_pembatalan.php', 'monitoring_pelimpahan.php'];
 $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'entry_pelimpahan.php', 'entry_estimasi.php'];
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar Staf</title>
-    <link rel="stylesheet" href="kumpulan-css/global_style.css">
-    <link rel="stylesheet" href="kumpulan-css/header.css">
-    <link rel="stylesheet" href="kumpulan-css/sidebar.css">
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
-    <!-- Terapkan pengaturan warna teks -->
     <style>
         :root {
             --sidebar-text-color: <?= htmlspecialchars($theme_text_color); ?>;
@@ -90,11 +90,6 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'entry_pelimpaha
             background-color: rgba(255, 255, 255, 0.1);
         }
     </style>
-</head>
-
-<body>
-
-    <!-- SIDEBAR langsung di sini (karena baru satu) -->
     <div class="sidebar-wrapper">
         <aside class="sidebar">
             <button class="toggle" type="button" onclick="toggleOpen()">
@@ -123,9 +118,9 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'entry_pelimpaha
                             <span class="material-symbols-outlined arrow">expand_more</span>
                         </a>
                         <div class="submenu <?= in_array($currentPage, $monitoringPages) ? 'open' : '' ?>" id="monitoringSubmenu">
-                            <a href="monitoring_pendaftaran.php" class="<?= ($currentPage == 'monitoring_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                            <a href="monitoring_pembatalan.php" class="<?= ($currentPage == 'monitoring_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                            <a href="monitoring_pelimpahan.php" class="<?= ($currentPage == 'monitoring_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pendaftaran.php" class="<?= ($currentPage == 'monitoring_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pembatalan.php" class="<?= ($currentPage == 'monitoring_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                            <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pelimpahan.php" class="<?= ($currentPage == 'monitoring_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
                         </div>
                         <!-- Entry -->
                         <a class="dropdown-toggle <?= in_array($currentPage, $entryPages) ? 'active' : '' ?>" onclick="toggleDropdown('entrySubmenu', this)">

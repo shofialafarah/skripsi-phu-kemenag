@@ -1,12 +1,7 @@
 :root {
-  /* Sidebar width variables */
-  --sidebar-width-open: 280px;
-  --sidebar-width-closed: 84px;
-
   --primary-color: #1b5e20;
   --primary-light: #1a8e4e;
   --primary-dark: #0a5a31;
-  --text-color: #333333;
   --background: #656aff;
   --dark-bg: #1e1b29;
   --card-bg: #ffffff;
@@ -19,96 +14,37 @@
   --info-color: #17a2b8;
   --pending-color: #f7931e;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --card-radius: 12px;
   --transition: all 0.3s ease;
-  --cerah: #ffffff;
 }
 
-.mPendaftaran-wrapper {
+.monitoring-wrapper {
   overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
   -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
   scrollbar-width: none; /* Menghilangkan scrollbar di Firefox */
 }
 
-.mPendaftaran-wrapper::-webkit-scrollbar {
+.monitoring-wrapper::-webkit-scrollbar {
   display: none; /* Menghilangkan scrollbar di Chrome/Safari */
 }
 
-.mPendaftaran {
+.monitoring {
   position: relative;
   border-radius: 16px;
   z-index: 1;
   box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
-  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+  overflow: hidden;
 }
 
-.mPendaftaran:hover {
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.mPendaftaran table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-  border-color: var(--primary-color);
-}
-.mPendaftaran-header {
+.monitoring-header {
   background-color: var(--primary-color);
-  color: var(--text-light);
+  color: var(--card-bg);
   font-weight: 600;
   padding: 15px 20px;
   margin-bottom: 10px;
 }
 
-.mPendaftaran-body {
-  padding: 0px;
-}
-
-.text-center button {
-  font-size: 12px;
-  padding: 4px 8px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-.btn-dokumen {
-  font-size: 12px;
-  background-color: #17a2b8; /* Warna biru muda (mirip btn-info) */
-  color: black;
-  padding: 4px 8px;
-  text-decoration: none;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.btn-dokumen i {
-  margin-right: 4px;
-}
-
-.btn-dokumen:hover {
-  background-color: #1eb5cd; /* Biru yang lebih terang dari #17a2b8 */
-  color: black; /* Pastikan tetap jelas */
-}
-
-a {
-  color: var(--primary-color);
-  transition: color 0.3s ease;
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary-dark);
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--primary-dark);
-  font-weight: 600;
+.monitoring-body {
+  margin-bottom: 20px;
 }
 
 /* ========================================
@@ -119,13 +55,15 @@ h6 {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-color: var(--primary-color);
 }
 
 .table thead th {
   background-color: var(--primary-color);
-  color: var(--cerah);
+  color: var(--card-bg);
   font-weight: 500;
-  border-bottom: none;
   padding: 12px;
 }
 
@@ -136,6 +74,7 @@ h6 {
 .table tbody td {
   padding: 12px;
   vertical-align: middle;
+  text-align: center;
 }
 
 .table tbody tr {
@@ -156,48 +95,37 @@ h6 {
 /* ========================================
      6. Button Styles
   ======================================== */
-.btn {
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-dark);
-  border-color: var(--primary-dark);
-}
 
 .btn-success {
   background-color: var(--success-color);
-  border-color: var(--success-color);
-  color: white;
+  width: 150px;
 }
 
-.btn-danger {
-  background-color: var(--danger-color);
-  border-color: var(--danger-color);
-  color: white;
+.dokumen-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 8px;
 }
 
-.btn-info {
-  background-color: var(--info-color);
-  border-color: var(--info-color);
-  color: var(--dark-bg);
+.dokumen-item[data-status="Terverifikasi"] {
+  background-color: rgba(25, 135, 84, 0.1);
+  border-color: #198754;
 }
 
+.dokumen-item[data-status="Unggah Ulang"] {
+  background-color: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+}
+
+.dokumen-item[data-status="Menunggu Verifikasi"] {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: #ffc107;
+}
 /* ========================================
    7. Forms & Badges
   ======================================== */
