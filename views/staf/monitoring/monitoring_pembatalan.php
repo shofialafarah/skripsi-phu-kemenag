@@ -266,17 +266,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['validate_document']))
 // Initialize modal list
 $modal_list = [];
 ?>
-<style>
-    .badge-kategori-meninggal {
-        background-color: #dc3545 !important;
-        color: white !important;
-    }
-
-    .badge-kategori-sakit {
-        background-color: #ffc107 !important;
-        color: #212529 !important;
-    }
-</style>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -325,10 +314,10 @@ $modal_list = [];
                         <thead class="table-dark">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Nama Pengaju</th>
-                                <th>Kategori</th>
-                                <th>Tanggal Pengajuan</th>
-                                <th>Tanggal Validasi</th>
+                                <th class="text-center">Nama Pengaju</th>
+                                <th class="text-center">Kategori</th>
+                                <th class="text-center">Tanggal Pengajuan</th>
+                                <th class="text-center">Tanggal Validasi</th>
                                 <th class="text-center">Dokumen</th>
                             </tr>
                         </thead>
@@ -358,7 +347,7 @@ $modal_list = [];
                                     // Tanggal validasi
                                     $all_verified = isAllDocumentsVerified($row, $doc_fields);
                                     if ($all_verified && !empty($row['tanggal_validasi'])) {
-                                        $tanggal_validasi = date('d-m-Y H:i', strtotime($row['tanggal_validasi']));
+                                        $tanggal_validasi = date('d-m-Y', strtotime($row['tanggal_validasi']));
                                         echo "<td><span class='badge bg-success'><i class='fas fa-check-circle'></i> " . $tanggal_validasi . "</span></td>";
                                     } else {
                                         echo "<td><span class='text-muted'>-</span></td>";

@@ -147,6 +147,16 @@
   background-color: rgba(255, 193, 7, 0.1);
   border-color: #ffc107;
 }
+
+.badge-kategori-merah {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+
+    .badge-kategori-kuning {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
 /* ========================================
    7. Forms & Badges
   ======================================== */
