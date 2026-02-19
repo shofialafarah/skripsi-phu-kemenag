@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -98,7 +99,7 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Header Staf</title>
-    <link rel="icon" href="../assets/img/logo_kemenag.png" type="image/png">
+    <link rel="icon" href="/phu-kemenag-banjar-copy/assets/logo_kemenag.png" type="image/png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome untuk icon -->
@@ -236,43 +237,4 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
             </div>
         </header>
     </div>
-    <script>
-        function updateDate() {
-            const now = new Date();
-            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-            ];
-
-            const namaHari = hari[now.getDay()];
-            const tanggal = now.getDate();
-            const namaBulan = bulan[now.getMonth()];
-            const tahun = now.getFullYear();
-
-            document.getElementById('currentDate').textContent = `${namaHari}, ${tanggal} ${namaBulan} ${tahun}`;
-        }
-        updateDate();
-    </script>
-
-    <script>
-        function updateTime() {
-            const now = new Date();
-
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-
-            if (hours < 10) hours = '0' + hours;
-            if (minutes < 10) minutes = '0' + minutes;
-
-            const timeString = `${hours}:${minutes}`;
-
-            document.getElementById('currentTime').textContent = timeString;
-        }
-
-        updateTime();
-        setInterval(updateTime, 30000);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+    <script src="/phu-kemenag-banjar-copy/views/staf/assets/js/waktu_header.js"></script>

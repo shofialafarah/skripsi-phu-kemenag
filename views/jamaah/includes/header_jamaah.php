@@ -338,7 +338,4 @@ $keyword = $koneksi->real_escape_string($keyword);
         </header>
     </div>
 
-    <script src="../assets/js/waktu_header.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <script src="/phu-kemenag-banjar-copy/views/jamaah/assets/js/waktu_header.js"></script>
