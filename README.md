@@ -1,7 +1,7 @@
 # SISTEM INFORMASI PELAYANAN IBADAH HAJI BERBASIS WEB PADA KEMENTERIAN AGAMA KABUPATEN BANJAR
 
 <div align="center">
-  <img src="https://id.wikipedia.org/wiki/Berkas:Logo-uniska-ok.png" alt="Logo UNISKA MAB" width="150">
+  <img src="assets/img/logo_uniska.png" alt="Logo UNISKA MAB" width="150">
   <br>
   
   **SKRIPSI** Diajukan Sebagai Persyaratan Untuk Menyelesaikan Program Sarjana (S-1)  
