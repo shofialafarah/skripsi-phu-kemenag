@@ -1,20 +1,25 @@
-<?php session_start();
-include 'koneksi.php';
+<?php
 
-// Cek apakah user sudah login
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+session_start();
+include_once __DIR__ . '/../../../includes/koneksi.php';
+include '../../partials/fungsi.php';
+
 if (!isset($_SESSION['id_staf']) || $_SESSION['role'] != 'staf') {
-    header("Location: login.php"); // Redirect ke login jika belum login atau session tidak ada
+    header("Location: ../auth/login.php");
     exit();
 }
-
-// Ambil ID staf dari session
 $id_staf = $_SESSION['id_staf'];
 
-// Initialize variables
 $data_pembatalan = [];
 $jumlah_data = 0;
 
-// PERBAIKAN: Query yang lebih baik untuk menggabungkan data
 $query = "
     SELECT p.*, 
        CASE 
@@ -42,30 +47,15 @@ function clean_input($data)
     $data = htmlspecialchars($data);
     return mysqli_real_escape_string($koneksi, $data);
 }
-
-
-
 ?>
-
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Halaman Staf</title>
-    <link rel="icon" href="logo_kemenag.png">
-</head>
-
-<body>
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include 'sidebar_staf.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include 'header_staf.php'; ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include_once __DIR__ . '/../includes/sidebar_staf.php'; ?>
+    </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include_once __DIR__ . '/../includes/header_staf.php'; ?>
 
             <main class="entry-wrapper">
                 <div class="entry">

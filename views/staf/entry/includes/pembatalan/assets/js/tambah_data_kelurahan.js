@@ -1,0 +1,378 @@
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+// Data kelurahan berdasarkan kecamatan
+const kelurahanData = {
+  "Aluh-Aluh": [
+    "Aluh-Aluh Besar",
+    "Aluh-Aluh Kecil",
+    "Aluh-Aluh Kecil Muara",
+    "Bakambat",
+    "Balimau",
+    "Bunipah",
+    "Handil Baru",
+    "Handil Bujur",
+    "Kuin Besar",
+    "Kuin Kecil",
+    "Labat Muara",
+    "Pemurus",
+    "Podok",
+    "Pulantan",
+    "Simpang Warga",
+    "Simpang Warga Dalam",
+    "Sungai Musang",
+    "Tanipah",
+    "Terapu",
+  ],
+  Aranio: [
+    "Apuai",
+    "Aranio",
+    "Artain",
+    "Belangian",
+    "Benua Riam",
+    "Kalaan",
+    "Paau",
+    "Rantau Balai",
+    "Rantau Bujur",
+    "Tiwingan Baru",
+    "Tiwingan Lama",
+  ],
+  Astambul: [
+    "Astambul Kota",
+    "Astambul Seberang",
+    "Banua Anyar DS",
+    "Banua Anyar ST",
+    "Danau Salak",
+    "Jati",
+    "Kalampaian Tengah",
+    "Kalampaian Ilir",
+    "Kalampaian Ulu",
+    "Kaliukan",
+    "Limamar",
+    "Lok Gabang",
+    "Munggu Raya",
+    "Pasar Jati",
+    "Pematang Hambawang",
+    "Pingaran Ilir",
+    "Pingaran Ulu",
+    "Sungai Alat",
+    "Sungai Tuan Ulu",
+    "Sungai Tuan Ilir",
+    "Tambak Danau",
+    "Tambangan",
+  ],
+  "Beruntung Baru": [
+    "Babirik",
+    "Handil Purai",
+    "Haur Kuning",
+    "Jambu Burung",
+    "Jambu Raya",
+    "Kampung Baru",
+    "Lawahan",
+    "Muara Halayung",
+    "Pindahan Baru",
+    "Rumpiang",
+    "Selat Makmur",
+    "Tambak Padi",
+  ],
+  "Cintapuri Darussalam": [
+    "Alalak Padang",
+    "Benua Anyar",
+    "Cintapuri",
+    "Garis Hanyar",
+    "Karya Makmur",
+    "Keramat Mina",
+    "Makmur Karya",
+    "Simpang Lima",
+    "Sindang Jaya",
+    "Sumber Sari",
+    "Surian Hanyar",
+  ],
+  Gambut: [
+    "Gambut",
+    "Gambut Barat",
+    "Banyu Hirang",
+    "Guntung Papuyu",
+    "Guntung Ujung",
+    "Kayu Bawang",
+    "Keladan Baru",
+    "Makmur",
+    "Malintang",
+    "Malintang Baru",
+    "Sungai Kupang",
+    "Tambak Sirang Baru",
+    "Tambak Sirang Darat",
+    "Tambak Sirang Laut",
+  ],
+  "Karang Intan": [
+    "Abirau",
+    "Awang Bangkal Barat",
+    "Awang Bangkal Timur",
+    "Balau",
+    "Bi'ih",
+    "Jingah Habang Ilir",
+    "Jingah Habang Ulu",
+    "Karang Intan",
+    "Kiram",
+    "Lihung",
+    "Lok Tangga",
+    "Mali-Mali",
+    "Mandi Angin Barat",
+    "Mandi Angin Timur",
+    "Mandi Kapau Barat",
+    "Mandi Kapau Timur",
+    "Padang Panjang",
+    "Pandak Daun",
+    "Pasar Lama",
+    "Penyambaran",
+    "Pulau Nyiur",
+    "Sungai Alang",
+    "Sungai Arfat",
+    "Sungai Asam",
+    "Sungai Besar",
+    "Sungai Landas",
+  ],
+  "Kertak Hanyar": [
+    "Kertak Hanyar I",
+    "Manarap Lama",
+    "Mandar Sari",
+    "Banua Hanyar",
+    "Kertak Hanyar II",
+    "Manarap Baru",
+    "Manarap Tengah",
+    "Mekar Raya",
+    "Pasar Kemis",
+    "Simpang Empat",
+    "Sungai Lakum",
+    "Tatah Belayung Baru",
+    "Tatah Pemangkih Laut",
+  ],
+  Mataraman: [
+    "Baru",
+    "Bawahan Pasar",
+    "Bawahan Seberang",
+    "Bawahan Selan",
+    "Gunung Ulin",
+    "Lok Tamu",
+    "Mangkalawat",
+    "Mataraman",
+    "Pasiraman",
+    "Pematang Danau",
+    "Simpang Tiga",
+    "Sungai Jati",
+    "Surian",
+    "Takuti",
+    "Tanah Abang",
+  ],
+  Martapura: [
+    "Jawa",
+    "Keraton",
+    "Murung Keraton",
+    "Pasayangan",
+    "Sekumpul",
+    "Sungai Paring",
+    "Tanjung Rema Darat",
+    "Bincau",
+    "Bincau Muara",
+    "Cindai Alus",
+    "Indra Sari",
+    "Jawa Laut",
+    "Labuan Tabu",
+    "Murung Kenanga",
+    "Pasayangan Barat",
+    "Pasayangan Selatan",
+    "Pasayangan Utara",
+    "Sungai Sipai",
+    "Tambak Baru",
+    "Tambak Baru Ilir",
+    "Tambak Baru Ulu",
+    "Tanjung Rema",
+    "Tunggul Irang",
+    "Tunggul Irang Ilir",
+    "Tunggul Irang Ulu",
+    "Tungkaran",
+  ],
+  "Martapura Barat": [
+    "Antasan Sutun",
+    "Keliling Benteng Tengah",
+    "Keliling Benteng Ulu",
+    "Penggalaman",
+    "Sungai Batang",
+    "Sungai Batang Ilir",
+    "Sungai Rangas",
+    "Sungai Rangas Hambuku",
+    "Sungai Rangas Tengah",
+    "Sungai Rangas Ulu",
+    "Tangkas",
+    "Teluk Selong",
+    "Teluk Selong Ulu",
+  ],
+  "Martapura Timur": [
+    "Akar Bagantung",
+    "Akar Baru",
+    "Antasan Senor",
+    "Antasan Senor Ilir",
+    "Dalam Pagar",
+    "Dalam Pagar Ulu",
+    "Keramat",
+    "Keramat Baru",
+    "Mekar",
+    "Melayu Ilir",
+    "Melayu Tengah",
+    "Melayu Ulu",
+    "Pekauman",
+    "Pekauman Dalam",
+    "Pekauman Ulu",
+    "Pematang Baru",
+    "Sungai Kitano",
+    "Tambak Anyar",
+    "Tambak Anyar Ilir",
+    "Tambak Anyar Ulu",
+  ],
+  Paramasan: ["Angkipih", "Paramasan Atas", "Paramasan Bawah", "Remo"],
+  Pengaron: [
+    "Alimukim",
+    "Antaraku",
+    "Ati'im",
+    "Benteng",
+    "Kertak Empat",
+    "Lobang Baru",
+    "Lok Tunggul",
+    "Lumpangi",
+    "Mangkauk",
+    "Maniapun",
+    "Panyiuran",
+    "Pengaron",
+  ],
+  "Sambung Makmur": [
+    "Baliangin",
+    "Batang Banyu",
+    "Batu Tanam",
+    "Gunung Batu",
+    "Madurejo",
+    "Pasar Baru",
+    "Sungai Lurus",
+  ],
+  "Simpang Empat": [
+    "Batu Balian",
+    "Berkat Mulia",
+    "Cabi",
+    "Lawiran",
+    "Lok Cantung",
+    "Paku",
+    "Paring Tali",
+    "Pasar Lama",
+    "Simpang Empat",
+    "Sungai Langsat",
+    "Sungai Raya",
+    "Sungai Tabuk",
+    "Sungkai",
+    "Sungkai Baru",
+    "Tanah Intan",
+  ],
+  "Sungai Pinang": [
+    "Belimbing Baru",
+    "Belimbing Lama",
+    "Hakim Makmur",
+    "Kahelaan",
+    "Kupang Rejo",
+    "Pakutik",
+    "Rantau Bakula",
+    "Rantau Nangka",
+    "Sumber Baru",
+    "Sumber Harapan",
+    "Sungai Pinang",
+  ],
+  "Sungai Tabuk": [
+    "Sungai Lulut",
+    "Abumbun Jaya",
+    "Gudang Hirang",
+    "Gudang Tengah",
+    "Keliling Benteng Hilir",
+    "Lok Baintan",
+    "Lok Baintan Dalam",
+    "Lok Buntar",
+    "Paku Alam",
+    "Pejambuan",
+    "Pemakuan",
+    "Pematang Panjang",
+    "Pembantanan",
+    "Sungai Bakung",
+    "Sungai Bangkal",
+    "Sungai Pinang Baru",
+    "Sungai Pinang Lama",
+    "Sungai Tabuk Keramat",
+    "Sungai Tabuk Kota",
+    "Sungai Tandipah",
+    "Tajau Landung",
+  ],
+  "Tatah Makmur": [
+    "Jaruju Laut",
+    "Layap Baru",
+    "Mekar Sari",
+    "Pandan Sari",
+    "Pemangkih Baru",
+    "Taibah Raya",
+    "Tampang Awang",
+    "Tatah Bangkal",
+    "Tatah Bangkal Tengah",
+    "Tatah Jaruju",
+    "Tatah Layap",
+    "Tatah Pemangkih Darat",
+    "Tatah Pemangkih Tengah",
+  ],
+  "Telaga Bauntung": ["Lok Tanah", "Rampah", "Rantau Bujur", "Telaga Baru"],
+};
+
+// Fungsi umum untuk update kelurahan berdasarkan kecamatan
+function updateKelurahanOptions(kecamatanID, kelurahanID) {
+  const kecamatan = document.getElementById(kecamatanID);
+  const kelurahan = document.getElementById(kelurahanID);
+
+  const selectedKecamatan = kecamatan.value;
+  kelurahan.innerHTML = '<option value="" disabled selected>--- Pilih Kelurahan ---</option>';
+
+  if (kelurahanData[selectedKecamatan]) {
+    kelurahanData[selectedKecamatan].forEach((namaKelurahan) => {
+      const option = document.createElement("option");
+      option.value = namaKelurahan;
+      option.textContent = namaKelurahan;
+      kelurahan.appendChild(option);
+    });
+  }
+}
+
+// =================== Event untuk KTP ===================
+document.getElementById("ktp_kecamatan").addEventListener("change", () => {
+  updateKelurahanOptions("ktp_kecamatan", "ktp_kelurahan");
+});
+
+// =================== Event untuk Domisili ===================
+document.getElementById("kecamatan").addEventListener("change", () => {
+  updateKelurahanOptions("kecamatan", "kelurahan");
+});
+
+// =================== Checkbox "Sama dengan alamat KTP" ===================
+document.getElementById("checkbox_sama").addEventListener("change", function () {
+  if (this.checked) {
+    // Salin alamat
+    document.getElementById("alamat").value = document.getElementById("ktp_alamat").value;
+
+    // Salin Kecamatan
+    const kecamatanKTP = document.getElementById("ktp_kecamatan").value;
+    document.getElementById("kecamatan").value = kecamatanKTP;
+
+    // Delay sedikit agar kelurahan terisi dulu sebelum dipilih
+    setTimeout(() => {
+      const kelurahanKTP = document.getElementById("ktp_kelurahan").value;
+      document.getElementById("kelurahan").value = kelurahanKTP;
+
+      // Trigger event agar kode pos juga muncul
+      document.getElementById("kelurahan").dispatchEvent(new Event("change"));
+    }, 100);
+  }
+});

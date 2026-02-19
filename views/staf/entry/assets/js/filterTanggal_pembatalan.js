@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const table = $('#tabelPendaftaran').DataTable({
+    const table = $('#tabelPembatalan').DataTable({
         responsive: true,
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/id.json",
@@ -26,7 +26,7 @@ $(document).ready(function () {
     $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         const startDate = $('#filter-start').val();
         const endDate = $('#filter-end').val();
-        const tanggalValidasiStr = data[5]; 
+        const tanggalValidasiStr = data[4]; 
 
         if (!tanggalValidasiStr) return false;
 

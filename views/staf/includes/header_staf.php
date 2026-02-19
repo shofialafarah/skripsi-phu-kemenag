@@ -98,8 +98,8 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Header Staf</title>
-    <link rel="icon" href="/phu-kemenag-banjar-copy/assets/logo_kemenag.png" type="image/png">
+    <title>Halaman Staf</title>
+    <link rel="icon" href="/phu-kemenag-banjar-copy/assets/img/logo_kemenag.png" type="image/png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome untuk icon -->
@@ -125,17 +125,14 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
     <style>
         .dropdown-menu.scrollable-dropdown {
             max-height: 300px;
-            /* batas tinggi dropdown */
             overflow-y: auto;
-            /* bikin scroll kalau isi banyak */
         }
 
-        /* Hover badge notifikasi (lonceng) */
         .header-actions .dropdown:hover .badge-notif {
             color: #fff;
-            /* warna teks */
         }
     </style>
+    
 </head>
 
 <body>
