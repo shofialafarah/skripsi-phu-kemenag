@@ -1,20 +1,25 @@
-# SISTEM INFORMASI PELAYANAN IBADAH HAJI BERBASIS WEB PADA KEMENTERIAN AGAMA KABUPATEN BANJAR
-
 <div align="center">
+  **SKRIPSI**
+  # SISTEM INFORMASI PELAYANAN IBADAH HAJI BERBASIS WEB PADA KEMENTERIAN AGAMA KABUPATEN BANJAR
   <img src="assets/img/logo_uniska.png" alt="Logo UNISKA MAB" width="150">
   <br>
   
-  **SKRIPSI** Diajukan Sebagai Persyaratan Untuk Menyelesaikan Program Sarjana (S-1)  
+  Diajukan Sebagai Persyaratan Untuk Menyelesaikan Program Sarjana (S-1)  
   Teknik Informatika
 
   ---
 
   ### Disusun Oleh:
-  **SHOFIA NABILA ELFA RAHMA** **NPM: 2110010113**
+  **SHOFIA NABILA ELFA RAHMA**
+  **NPM: 2110010113**
 
   ---
 
-  **PROGRAM STUDI S1 TEKNIK INFORMATIKA** **FAKULTAS TEKNOLOGI INFORMASI** **UNIVERSITAS ISLAM KALIMANTAN MUHAMMAD ARSYAD AL BANJARI** **BANJARMASIN** **2025**
+  **PROGRAM STUDI S1 TEKNIK INFORMATIKA**
+  **FAKULTAS TEKNOLOGI INFORMASI**
+  **UNIVERSITAS ISLAM KALIMANTAN MUHAMMAD ARSYAD AL BANJARI**
+  **BANJARMASIN**
+  **2025**
 
 </div>
 
@@ -40,4 +45,4 @@ Proyek ini merupakan sistem informasi berbasis web yang dirancang untuk mengelol
 ## ⚙️ Cara Instalasi
 1. Clone repository ini:
    ```bash
-   git clone [https://github.com/shofialafarah/skripsi-phu-kemenag.git](https://github.com/shofialafarah/skripsi-phu-kemenag.git)
+   git clone https://github.com/shofialafarah/skripsi-phu-kemenag.git
