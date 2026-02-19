@@ -1,0 +1,55 @@
+.cetak-estimasi-wrapper {
+            margin: 50px auto;
+            font-family: Calibri, sans-serif;
+        }
+
+        .cetak-estimasi-header {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 80 80'%3E%3Cg fill='%23d4d700' fill-opacity='0.2'%3E%3Cpath d='M0 0h80v80H0V0zm20 20h40v40H20V20z'/%3E%3Cpath d='M40 0l40 40-40 40L0 40 40 0zM0 0l20 20M80 0L60 20M80 80L60 60M0 80l20 60'/%3E%3C/g%3E%3C/svg%3E");
+            background-color: #388e3c;
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .cetak-estimasi-content {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            color: rgb(3, 77, 0);
+        }
+
+        .cetak-estimasi-column {
+            width: 48%;
+        }
+
+        .cetak-estimasi-field {
+            margin-bottom: 10px;
+        }
+
+        .cetak-estimasi-field span {
+            display: inline-block;
+            width: 160px;
+        }
+
+        .cetak-estimasi-ttd {
+            margin-top: 50px;
+            float: right;
+            width: 250px;
+            text-align: left;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .cetak-estimasi-ttd p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-ttd::after {
+            content: "";
+            clear: both;
+            display: table;
+        }

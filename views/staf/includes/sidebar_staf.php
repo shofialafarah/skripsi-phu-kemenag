@@ -107,7 +107,7 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'entry_pelimpaha
 
                 <div class="content-wrapper">
                     <nav class="menu">
-                        <a href="dashboard_staf.php" class="<?= ($currentPage == 'dashboard_staf.php') ? 'active' : '' ?>">
+                        <a href="/phu-kemenag-banjar-copy/views/staf/dashboard_staf.php" class="<?= ($currentPage == 'dashboard_staf.php') ? 'active' : '' ?>">
                             <span class="material-symbols-outlined">dashboard</span>
                             <p>Dashboard</p>
                         </a>

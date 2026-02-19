@@ -12,7 +12,6 @@
   --info-color: #17a2b8;
   --pending-color: #f7931e;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --card-radius: 12px;
   --cerah: #ffffff;
 }
 
@@ -44,6 +43,7 @@
   font-weight: 600;
   padding: 15px 20px;
   margin-bottom: 10px;
+  color: var(--cerah);
 }
 
 .entry-body {
@@ -66,7 +66,6 @@ h5 {
   -webkit-overflow-scrolling: touch;
 }
   .table {
-  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   width: 100%;

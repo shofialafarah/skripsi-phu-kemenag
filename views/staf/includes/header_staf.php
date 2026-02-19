@@ -98,7 +98,7 @@ $jumlah_notif_ditolak = count($notifikasi_ditolak);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Header Staf</title>
-    <link rel="icon" href="/phu-kemenag-banjar-copy/views/staf/assets/img/logo_kemenag.png">
+    <link rel="icon" href="../assets/img/logo_kemenag.png" type="image/png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome untuk icon -->
