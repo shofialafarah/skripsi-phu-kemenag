@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_query($koneksi, $query)) {
         updateAktivitasPengguna($id_staf, 'staf', 'Pembatalan', 'Menginput data pembatalan meninggal dunia');
-        
+
         $_SESSION['success_message'] = "Data pembatalan meninggal <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
         header("Location: ../../entry_pembatalan.php");
         exit;
@@ -398,6 +398,74 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <option value="<?php echo htmlspecialchars($data['kelurahan']); ?>" selected><?php echo htmlspecialchars($data['kelurahan']); ?></option>
                             </select>
                         </div>
+                        <script>
+                            // Data kelurahan berdasarkan kecamatan
+                            const kelurahanData = {
+                                "Aluh-Aluh": ["Aluh-Aluh Besar", "Aluh-Aluh Kecil", "Aluh-Aluh Kecil Muara", "Bakambat", "Balimau", "Bunipah", "Handil Baru", "Handil Bujur", "Kuin Besar", "Kuin Kecil", "Labat Muara", "Pemurus", "Podok", "Pulantan", "Simpang Warga", "Simpang Warga Dalam", "Sungai Musang", "Tanipah", "Terapu"],
+                                "Aranio": ["Apuai", "Aranio", "Artain", "Belangian", "Benua Riam", "Kalaan", "Paau", "Rantau Balai", "Rantau Bujur", "Tiwingan Baru", "Tiwingan Lama"],
+                                "Astambul": ["Astambul Kota", "Astambul Seberang", "Banua Anyar DS", "Banua Anyar ST", "Danau Salak", "Jati", "Kalampaian Tengah", "Kalampaian Ilir", "Kalampaian Ulu", "Kaliukan", "Limamar", "Lok Gabang", "Munggu Raya", "Pasar Jati", "Pematang Hambawang", "Pingaran Ilir", "Pingaran Ulu", "Sungai Alat", "Sungai Tuan Ulu", "Sungai Tuan Ilir", "Tambak Danau", "Tambangan"],
+                                "Beruntung Baru": ["Babirik", "Handil Purai", "Haur Kuning", "Jambu Burung", "Jambu Raya", "Kampung Baru", "Lawahan", "Muara Halayung", "Pindahan Baru", "Rumpiang", "Selat Makmur", "Tambak Padi"],
+                                "Cintapuri Darussalam": ["Alalak Padang", "Benua Anyar", "Cintapuri", "Garis Hanyar", "Karya Makmur", "Keramat Mina", "Makmur Karya", "Simpang Lima", "Sindang Jaya", "Sumber Sari", "Surian Hanyar"],
+                                "Gambut": ["Gambut", "Gambut Barat", "Banyu Hirang", "Guntung Papuyu", "Guntung Ujung", "Kayu Bawang", "Keladan Baru", "Makmur", "Malintang", "Malintang Baru", "Sungai Kupang", "Tambak Sirang Baru", "Tambak Sirang Darat", "Tambak Sirang Laut"],
+                                "Karang Intan": ["Abirau", "Awang Bangkal Barat", "Awang Bangkal Timur", "Balau", "Bi'ih", "Jingah Habang Ilir", "Jingah Habang Ulu", "Karang Intan", "Kiram", "Lihung", "Lok Tangga", "Mali-Mali", "Mandi Angin Barat", "Mandi Angin Timur", "Mandi Kapau Barat", "Mandi Kapau Timur", "Padang Panjang", "Pandak Daun", "Pasar Lama", "Penyambaran", "Pulau Nyiur", "Sungai Alang", "Sungai Arfat", "Sungai Asam", "Sungai Besar", "Sungai Landas"],
+                                "Kertak Hanyar": ["Kertak Hanyar I", "Manarap Lama", "Mandar Sari", "Banua Hanyar", "Kertak Hanyar II", "Manarap Baru", "Manarap Tengah", "Mekar Raya", "Pasar Kemis", "Simpang Empat", "Sungai Lakum", "Tatah Belayung Baru", "Tatah Pemangkih Laut"],
+                                "Mataraman": ["Baru", "Bawahan Pasar", "Bawahan Seberang", "Bawahan Selan", "Gunung Ulin", "Lok Tamu", "Mangkalawat", "Mataraman", "Pasiraman", "Pematang Danau", "Simpang Tiga", "Sungai Jati", "Surian", "Takuti", "Tanah Abang"],
+                                "Martapura": ["Jawa", "Keraton", "Murung Keraton", "Pasayangan", "Sekumpul", "Sungai Paring", "Tanjung Rema Darat", "Bincau", "Bincau Muara", "Cindai Alus", "Indra Sari", "Jawa Laut", "Labuan Tabu", "Murung Kenanga", "Pasayangan Barat", "Pasayangan Selatan", "Pasayangan Utara", "Sungai Sipai", "Tambak Baru", "Tambak Baru Ilir", "Tambak Baru Ulu", "Tanjung Rema", "Tunggul Irang", "Tunggul Irang Ilir", "Tunggul Irang Ulu", "Tungkaran"],
+                                "Martapura Barat": ["Antasan Sutun", "Keliling Benteng Tengah", "Keliling Benteng Ulu", "Penggalaman", "Sungai Batang", "Sungai Batang Ilir", "Sungai Rangas", "Sungai Rangas Hambuku", "Sungai Rangas Tengah", "Sungai Rangas Ulu", "Tangkas", "Teluk Selong", "Teluk Selong Ulu"],
+                                "Martapura Timur": ["Akar Bagantung", "Akar Baru", "Antasan Senor", "Antasan Senor Ilir", "Dalam Pagar", "Dalam Pagar Ulu", "Keramat", "Keramat Baru", "Mekar", "Melayu Ilir", "Melayu Tengah", "Melayu Ulu", "Pekauman", "Pekauman Dalam", "Pekauman Ulu", "Pematang Baru", "Sungai Kitano", "Tambak Anyar", "Tambak Anyar Ilir", "Tambak Anyar Ulu"],
+                                "Paramasan": ["Angkipih", "Paramasan Atas", "Paramasan Bawah", "Remo"],
+                                "Pengaron": ["Alimukim", "Antaraku", "Ati'im", "Benteng", "Kertak Empat", "Lobang Baru", "Lok Tunggul", "Lumpangi", "Mangkauk", "Maniapun", "Panyiuran", "Pengaron"],
+                                "Sambung Makmur": ["Baliangin", "Batang Banyu", "Batu Tanam", "Gunung Batu", "Madurejo", "Pasar Baru", "Sungai Lurus"],
+                                "Simpang Empat": ["Batu Balian", "Berkat Mulia", "Cabi", "Lawiran", "Lok Cantung", "Paku", "Paring Tali", "Pasar Lama", "Simpang Empat", "Sungai Langsat", "Sungai Raya", "Sungai Tabuk", "Sungkai", "Sungkai Baru", "Tanah Intan"],
+                                "Sungai Pinang": ["Belimbing Baru", "Belimbing Lama", "Hakim Makmur", "Kahelaan", "Kupang Rejo", "Pakutik", "Rantau Bakula", "Rantau Nangka", "Sumber Baru", "Sumber Harapan", "Sungai Pinang"],
+                                "Sungai Tabuk": ["Sungai Lulut", "Abumbun Jaya", "Gudang Hirang", "Gudang Tengah", "Keliling Benteng Hilir", "Lok Baintan", "Lok Baintan Dalam", "Lok Buntar", "Paku Alam", "Pejambuan", "Pemakuan", "Pematang Panjang", "Pembantanan", "Sungai Bakung", "Sungai Bangkal", "Sungai Pinang Baru", "Sungai Pinang Lama", "Sungai Tabuk Keramat", "Sungai Tabuk Kota", "Sungai Tandipah", "Tajau Landung"],
+                                "Tatah Makmur": ["Jaruju Laut", "Layap Baru", "Mekar Sari", "Pandan Sari", "Pemangkih Baru", "Taibah Raya", "Tampang Awang", "Tatah Bangkal", "Tatah Bangkal Tengah", "Tatah Jaruju", "Tatah Layap", "Tatah Pemangkih Darat", "Tatah Pemangkih Tengah"],
+                                "Telaga Bauntung": ["Lok Tanah", "Rampah", "Rantau Bujur", "Telaga Baru"]
+                            };
+
+                            // Mendapatkan elemen select
+                            const kecamatanSelect = document.getElementById('kecamatan');
+                            const kelurahanSelect = document.getElementById('kelurahan');
+
+                            // Fungsi untuk memuat kelurahan berdasarkan kecamatan yang dipilih
+                            function loadKelurahan(selectedKecamatan) {
+                                // Mengosongkan dropdown kelurahan
+                                kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelurahan --</option>';
+
+                                // Jika ada kecamatan yang dipilih
+                                if (selectedKecamatan) {
+                                    // Mengambil data kelurahan untuk kecamatan yang dipilih
+                                    const kelurahanList = kelurahanData[selectedKecamatan];
+
+                                    // Menambahkan opsi kelurahan ke dropdown
+                                    kelurahanList.forEach(kelurahan => {
+                                        const option = document.createElement('option');
+                                        option.value = kelurahan;
+                                        option.textContent = kelurahan;
+                                        kelurahanSelect.appendChild(option);
+                                    });
+                                }
+                            }
+
+                            // Event listener untuk perubahan pada select kecamatan
+                            kecamatanSelect.addEventListener('change', function() {
+                                const selectedKecamatan = this.value;
+                                loadKelurahan(selectedKecamatan);
+                            });
+
+                            // Mengatur nilai default jika ada data sebelumnya (misalnya dari database)
+                            const selectedKecamatan = "<?php echo htmlspecialchars($data['kecamatan']); ?>";
+                            if (selectedKecamatan) {
+                                kecamatanSelect.value = selectedKecamatan;
+                                loadKelurahan(selectedKecamatan);
+                            }
+
+                            // Mengatur nilai default kelurahan berdasarkan data yang ada
+                            const selectedKelurahan = "<?php echo htmlspecialchars($data['kelurahan']); ?>";
+                            if (selectedKelurahan) {
+                                kelurahanSelect.value = selectedKelurahan;
+                            }
+                        </script>
                         <div class="form-group">
                             <label>Kode Pos:</label>
                             <input type="text" name="kode_pos" class="form-control" value="<?php echo htmlspecialchars($data['kode_pos']); ?>" required>
@@ -426,7 +494,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 <script src="../../../assets/js/sidebar.js"></script>
 <script src="assets/js/tambah_data_ahliwaris.js"></script>
-<script src="assets/js/tambah_data_kelurahan.js"></script>
 
 </body>
 

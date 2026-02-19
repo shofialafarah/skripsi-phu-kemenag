@@ -1,9 +1,22 @@
 <?php
-session_start();
-include 'koneksi.php';
-include 'fungsi.php';
 
-// Ambil ID tergantung dari metode request
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+session_start();
+include_once __DIR__ . '/../../../../../includes/koneksi.php';
+include '../../../../partials/fungsi.php';
+
+if (!isset($_SESSION['id_staf']) || $_SESSION['role'] != 'staf') {
+    header("Location: ../../../auth/login.php");
+    exit();
+}
+$id_staf = $_SESSION['id_staf'];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_batal_ekonomi = $_POST['id_batal_ekonomi'];
 } else {
@@ -13,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_batal_ekonomi = $_GET['id'];
 }
 
-// Ambil data dari database untuk ditampilkan atau diproses
 $query = "SELECT pe.*, p.kategori, p.tanggal_validasi
           FROM pembatalan_ekonomi pe
           JOIN pembatalan p ON pe.id_pembatalan = p.id_pembatalan
@@ -28,7 +40,6 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 $data = mysqli_fetch_assoc($result);
-// PERBAIKAN BAGIAN UPDATE DATA
 if (isset($_POST['update'])) {
     $nama_jamaah = $_POST['nama_jamaah'];
     $tempat_lahir = $_POST['tempat_lahir'];
@@ -85,179 +96,174 @@ if (isset($_POST['update'])) {
         $id_batal_ekonomi
     );
 
-    // PERBAIKAN: Gunakan mysqli_stmt_execute() bukan mysqli_query()
     if (mysqli_stmt_execute($stmt)) {
-        // ✅ Catat aktivitas hanya jika data berhasil ditemukan
         updateAktivitasPengguna($id_staf, 'staf', 'Pembatalan', 'Menginput data pembatalan keperluan ekonomi');
-        echo "<script>alert('Data berhasil diupdate!'); window.location.href='entry_pembatalan.php';</script>";
+        $_SESSION['success_message'] = "Data pembatalan ekonomi <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
+        header("Location: ../../entry_pembatalan.php");
         exit;
     } else {
-        echo "<script>alert('Error saat update: " . mysqli_error($koneksi) . "');</script>";
+        $_SESSION['error_message'] = "Gagal memperbarui data: " . mysqli_error($koneksi);
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit;
     }
-
-    mysqli_stmt_close($stmt);
 }
 ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include_once __DIR__ . '/../../../includes/sidebar_staf.php'; ?>
+    </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include_once __DIR__ . '/../../../includes/header_staf.php'; ?>
+        <link rel="stylesheet" href="../../assets/css/pembatalan.css">
+        <main class="pembatalan-wrapper">
+            <div class="pembatalan-container">
+                <div class="pembatalan-header">
+                    <h1>Pembatalan - Keperluan Ekonomi</h1>
+                    <div class="button-group">
+                        <button type="reset" form="form-data" class="btn btn-reset"><i class="fas fa-rotate-left"></i></button>
+                        <button type="button" class="btn btn-back" onclick="window.location.href='../../entry_pembatalan.php'">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <form class="form-edit-pembatalan" action="edit_pembatalan_ekonomi.php" method="POST" id="form-data">
+                    <input type="hidden" name="id_batal_ekonomi" value="<?php echo htmlspecialchars($data['id_batal_ekonomi']); ?>">
+                    <p class="judul-form">DATA JAMAAH</p>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Nama Lengkap:</label>
+                            <input type="text" name="nama_jamaah" class="form-control" value="<?php echo htmlspecialchars($data['nama_jamaah']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>BIN/BINTI:</label>
+                            <input type="text" name="bin_binti" class="form-control" value="<?php echo htmlspecialchars($data['bin_binti']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Porsi:</label>
+                            <input type="text" name="nomor_porsi" class="form-control" value="<?php echo htmlspecialchars($data['nomor_porsi']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Tempat Lahir:</label>
+                            <input type="text" name="tempat_lahir" class="form-control" value="<?php echo htmlspecialchars($data['tempat_lahir']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lahir:</label>
+                            <input type="date" name="tanggal_lahir" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_lahir']); ?>" required>
+                        </div>
+                    </div>
 
-<!DOCTYPE html>
-<html lang="en">
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Jenis Kelamin:</label>
+                            <select name="jenis_kelamin" class="form-control" required>
+                                <option value="" disabled selected>-- Pilih Jenis Kelamin --</option>
+                                <option value="Laki-Laki" <?php if ($data['jenis_kelamin'] == 'Laki-Laki') echo 'selected'; ?>>Laki-Laki</option>
+                                <option value="Perempuan" <?php if ($data['jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pekerjaan:</label>
+                            <select name="pekerjaan" class="form-control" required>
+                                <option value="" disabled selected>-- Pilih Pekerjaan --</option>
+                                <option value="Pelajar/Mahasiswa" <?php if ($data['pekerjaan'] == 'Pelajar/Mahasiswa') echo 'selected'; ?>>Pelajar/Mahasiswa</option>
+                                <option value="Pegawai Negeri" <?php if ($data['pekerjaan'] == 'Pegawai Negeri') echo 'selected'; ?>>Pegawai Negeri</option>
+                                <option value="Pegawai Swasta" <?php if ($data['pekerjaan'] == 'Pegawai Swasta') echo 'selected'; ?>>Pegawai Swasta</option>
+                                <option value="Ibu Rumah Tangga" <?php if ($data['pekerjaan'] == 'Ibu Rumah Tangga') echo 'selected'; ?>>Ibu Rumah Tangga</option>
+                                <option value="Pensiunan" <?php if ($data['pekerjaan'] == 'Pensiunan') echo 'selected'; ?>>Pensiunan</option>
+                                <option value="Polri" <?php if ($data['pekerjaan'] == 'Polri') echo 'selected'; ?>>Polri</option>
+                                <option value="Pedagang" <?php if ($data['pekerjaan'] == 'Pedagang') echo 'selected'; ?>>Pedagang</option>
+                                <option value="Tani" <?php if ($data['pekerjaan'] == 'Tani') echo 'selected'; ?>>Tani</option>
+                                <option value="Pegawai BUMN" <?php if ($data['pekerjaan'] == 'Pegawai BUMN') echo 'selected'; ?>>Pegawai BUMN</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Telepon:</label>
+                            <input type="text" name="no_telepon" class="form-control" value="<?php echo htmlspecialchars($data['no_telepon']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Nama Bank Penerima Setoran (BPS):</label>
+                            <select name="bps" class="form-control" required>
+                                <option value="" disabled>-- Pilih Bank Syariah di Kalsel --</option>
+                                <option value="451" <?php if (($data['bps'] ?? '') == '451') echo 'selected'; ?>>Bank Syariah Indonesia (451)</option>
+                                <option value="147" <?php if (($data['bps'] ?? '') == '147') echo 'selected'; ?>>Bank Muamalat (147)</option>
+                                <option value="506" <?php if (($data['bps'] ?? '') == '506') echo 'selected'; ?>>Bank Mega Syariah (506)</option>
+                                <option value="521" <?php if (($data['bps'] ?? '') == '521') echo 'selected'; ?>>Bank Syariah Bukopin (521)</option>
+                                <option value="011" <?php if (($data['bps'] ?? '') == '011') echo 'selected'; ?>>Bank Danamon (011)</option>
+                                <option value="122" <?php if (($data['bps'] ?? '') == '122') echo 'selected'; ?>>BPD Kalsel Syariah (122)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Rekening:</label>
+                            <input type="text" name="nomor_rek" class="form-control" value="<?php echo htmlspecialchars($data['nomor_rek']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nominal Setoran:</label>
+                            <input type="text" name="nominal_setoran" class="form-control" value="<?php echo htmlspecialchars($data['nominal_setoran']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>SPPH/Validasi:</label>
+                            <input type="text" name="spph_validasi" class="form-control" value="<?php echo htmlspecialchars($data['spph_validasi']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori:</label>
+                            <input type="text" name="kategori" class="form-control" value="<?php echo htmlspecialchars($data['kategori']); ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Register:</label>
+                            <input type="date" name="tanggal_register" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_register']); ?>" required>
+                        </div>
+                    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Staf</title>
-    <link rel="icon" href="logo_kemenag.png">
-    <link rel="stylesheet" href="tambah_pembatalan.css">
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Alamat:</label>
+                            <textarea name="alamat" class="form-control" required><?php echo htmlspecialchars($data['alamat']); ?></textarea>
+                        </div>
 
-<body>
-    <div class="background-atas">
-        <div class="header">
-            <h1>Pembatalan - Keperluan Ekonomi</h1>
-            <div class="button-group">
-                <button type="reset" form="form-data" class="btn btn-reset"><i class="fas fa-rotate-left"></i></button>
-                <button type="button" class="btn btn-back" onclick="window.location.href='entry_pembatalan.php'">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-            </div>
-        </div>
-        <form action="edit_pembatalan_ekonomi.php" method="POST" id="form-data">
-            <input type="hidden" name="id_batal_ekonomi" value="<?php echo htmlspecialchars($data['id_batal_ekonomi']); ?>">
-            <p>DATA JAMAAH</p>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Nama Lengkap:</label>
-                    <input type="text" name="nama_jamaah" class="form-control" value="<?php echo htmlspecialchars($data['nama_jamaah']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>BIN/BINTI:</label>
-                    <input type="text" name="bin_binti" class="form-control" value="<?php echo htmlspecialchars($data['bin_binti']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Nomor Porsi:</label>
-                    <input type="text" name="nomor_porsi" class="form-control" value="<?php echo htmlspecialchars($data['nomor_porsi']); ?>" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Tempat Lahir:</label>
-                    <input type="text" name="tempat_lahir" class="form-control" value="<?php echo htmlspecialchars($data['tempat_lahir']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Lahir:</label>
-                    <input type="date" name="tanggal_lahir" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_lahir']); ?>" required>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Jenis Kelamin:</label>
-                    <select name="jenis_kelamin" class="form-control" required>
-                        <option value="" disabled selected>-- Pilih Jenis Kelamin --</option>
-                        <option value="Laki-Laki" <?php if ($data['jenis_kelamin'] == 'Laki-Laki') echo 'selected'; ?>>Laki-Laki</option>
-                        <option value="Perempuan" <?php if ($data['jenis_kelamin'] == 'Perempuan') echo 'selected'; ?>>Perempuan</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Pekerjaan:</label>
-                    <select name="pekerjaan" class="form-control" required>
-                        <option value="" disabled selected>-- Pilih Pekerjaan --</option>
-                        <option value="Pelajar/Mahasiswa" <?php if ($data['pekerjaan'] == 'Pelajar/Mahasiswa') echo 'selected'; ?>>Pelajar/Mahasiswa</option>
-                        <option value="Pegawai Negeri" <?php if ($data['pekerjaan'] == 'Pegawai Negeri') echo 'selected'; ?>>Pegawai Negeri</option>
-                        <option value="Pegawai Swasta" <?php if ($data['pekerjaan'] == 'Pegawai Swasta') echo 'selected'; ?>>Pegawai Swasta</option>
-                        <option value="Ibu Rumah Tangga" <?php if ($data['pekerjaan'] == 'Ibu Rumah Tangga') echo 'selected'; ?>>Ibu Rumah Tangga</option>
-                        <option value="Pensiunan" <?php if ($data['pekerjaan'] == 'Pensiunan') echo 'selected'; ?>>Pensiunan</option>
-                        <option value="Polri" <?php if ($data['pekerjaan'] == 'Polri') echo 'selected'; ?>>Polri</option>
-                        <option value="Pedagang" <?php if ($data['pekerjaan'] == 'Pedagang') echo 'selected'; ?>>Pedagang</option>
-                        <option value="Tani" <?php if ($data['pekerjaan'] == 'Tani') echo 'selected'; ?>>Tani</option>
-                        <option value="Pegawai BUMN" <?php if ($data['pekerjaan'] == 'Pegawai BUMN') echo 'selected'; ?>>Pegawai BUMN</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Nomor Telepon:</label>
-                    <input type="text" name="no_telepon" class="form-control" value="<?php echo htmlspecialchars($data['no_telepon']); ?>" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Nama Bank Penerima Setoran (BPS):</label>
-                    <select name="bps" class="form-control" required>
-                        <option value="" disabled>-- Pilih Bank Syariah di Kalsel --</option>
-                        <option value="451" <?php if (($data['bps'] ?? '') == '451') echo 'selected'; ?>>Bank Syariah Indonesia (451)</option>
-                        <option value="147" <?php if (($data['bps'] ?? '') == '147') echo 'selected'; ?>>Bank Muamalat (147)</option>
-                        <option value="506" <?php if (($data['bps'] ?? '') == '506') echo 'selected'; ?>>Bank Mega Syariah (506)</option>
-                        <option value="521" <?php if (($data['bps'] ?? '') == '521') echo 'selected'; ?>>Bank Syariah Bukopin (521)</option>
-                        <option value="011" <?php if (($data['bps'] ?? '') == '011') echo 'selected'; ?>>Bank Danamon (011)</option>
-                        <option value="122" <?php if (($data['bps'] ?? '') == '122') echo 'selected'; ?>>BPD Kalsel Syariah (122)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Nomor Rekening:</label>
-                    <input type="text" name="nomor_rek" class="form-control" value="<?php echo htmlspecialchars($data['nomor_rek']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Nominal Setoran:</label>
-                    <input type="text" name="nominal_setoran" class="form-control" value="<?php echo htmlspecialchars($data['nominal_setoran']); ?>" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>SPPH/Validasi:</label>
-                    <input type="text" name="spph_validasi" class="form-control" value="<?php echo htmlspecialchars($data['spph_validasi']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Kategori:</label>
-                    <input type="text" name="kategori" class="form-control" value="<?php echo htmlspecialchars($data['kategori']); ?>" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Register:</label>
-                    <input type="date" name="tanggal_register" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_register']); ?>" required>
-                </div>
-            </div>
+                        <div class="form-group">
+                            <label>Kecamatan:</label>
+                            <select name="kecamatan" id="kecamatan" class="form-control" required>
+                                <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                                <option value="Aluh-Aluh" <?php if ($data['kecamatan'] == 'Aluh-Aluh') echo 'selected'; ?>>Aluh-Aluh</option>
+                                <option value="Aranio" <?php if ($data['kecamatan'] == 'Aranio') echo 'selected'; ?>>Aranio</option>
+                                <option value="Astambul" <?php if ($data['kecamatan'] == 'Astambul') echo 'selected'; ?>>Astambul</option>
+                                <option value="Beruntung Baru" <?php if ($data['kecamatan'] == 'Beruntung Baru') echo 'selected'; ?>>Beruntung Baru</option>
+                                <option value="Cintapuri Darussalam" <?php if ($data['kecamatan'] == 'Cintapuri Darussalam') echo 'selected'; ?>>Cintapuri Darussalam</option>
+                                <option value="Gambut" <?php if ($data['kecamatan'] == 'Gambut') echo 'selected'; ?>>Gambut</option>
+                                <option value="Karang Intan" <?php if ($data['kecamatan'] == 'Karang Intan') echo 'selected'; ?>>Karang Intan</option>
+                                <option value="Kertak Hanyar" <?php if ($data['kecamatan'] == 'Kertak Hanyar') echo 'selected'; ?>>Kertak Hanyar</option>
+                                <option value="Mataraman" <?php if ($data['kecamatan'] == 'Mataraman') echo 'selected'; ?>>Mataraman</option>
+                                <option value="Martapura" <?php if ($data['kecamatan'] == 'Martapura') echo 'selected'; ?>>Martapura</option>
+                                <option value="Martapura Barat" <?php if ($data['kecamatan'] == 'Martapura Barat') echo 'selected'; ?>>Martapura Barat</option>
+                                <option value="Martapura Timur" <?php if ($data['kecamatan'] == 'Martapura Timur') echo 'selected'; ?>>Martapura Timur</option>
+                                <option value="Paramasan" <?php if ($data['kecamatan'] == 'Paramasan') echo 'selected'; ?>>Paramasan</option>
+                                <option value="Pengaron" <?php if ($data['kecamatan'] == 'Pengaron') echo 'selected'; ?>>Pengaron</option>
+                                <option value="Sambung Makmur" <?php if ($data['kecamatan'] == 'Sambung Makmur') echo 'selected'; ?>>Sambung Makmur</option>
+                                <option value="Simpang Empat" <?php if ($data['kecamatan'] == 'Simpang Empat') echo 'selected'; ?>>Simpang Empat</option>
+                                <option value="Sungai Pinang" <?php if ($data['kecamatan'] == 'Sungai Pinang') echo 'selected'; ?>>Sungai Pinang</option>
+                                <option value="Sungai Tabuk" <?php if ($data['kecamatan'] == 'Sungai Tabuk') echo 'selected'; ?>>Sungai Tabuk</option>
+                                <option value="Tatah Makmur" <?php if ($data['kecamatan'] == 'Tatah Makmur') echo 'selected'; ?>>Tatah Makmur</option>
+                                <option value="Telaga Bauntung" <?php if ($data['kecamatan'] == 'Telaga Bauntung') echo 'selected'; ?>>Telaga Bauntung</option>
+                            </select>
+                        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Alamat:</label>
-                    <textarea name="alamat" class="form-control" required><?php echo htmlspecialchars($data['alamat']); ?></textarea>
-                </div>
+                        <div class="form-group">
+                            <label>Kelurahan:</label>
+                            <select name="kelurahan" id="kelurahan" class="form-control" required>
+                                <option value="" disabled selected>-- Pilih Kelurahan --</option>
+                            </select>
+                        </div>
 
-                <div class="form-group">
-                    <label>Kecamatan:</label>
-                    <select name="kecamatan" id="kecamatan" class="form-control" required>
-                        <option value="" disabled selected>-- Pilih Kecamatan --</option>
-                        <option value="Aluh-Aluh" <?php if ($data['kecamatan'] == 'Aluh-Aluh') echo 'selected'; ?>>Aluh-Aluh</option>
-                        <option value="Aranio" <?php if ($data['kecamatan'] == 'Aranio') echo 'selected'; ?>>Aranio</option>
-                        <option value="Astambul" <?php if ($data['kecamatan'] == 'Astambul') echo 'selected'; ?>>Astambul</option>
-                        <option value="Beruntung Baru" <?php if ($data['kecamatan'] == 'Beruntung Baru') echo 'selected'; ?>>Beruntung Baru</option>
-                        <option value="Cintapuri Darussalam" <?php if ($data['kecamatan'] == 'Cintapuri Darussalam') echo 'selected'; ?>>Cintapuri Darussalam</option>
-                        <option value="Gambut" <?php if ($data['kecamatan'] == 'Gambut') echo 'selected'; ?>>Gambut</option>
-                        <option value="Karang Intan" <?php if ($data['kecamatan'] == 'Karang Intan') echo 'selected'; ?>>Karang Intan</option>
-                        <option value="Kertak Hanyar" <?php if ($data['kecamatan'] == 'Kertak Hanyar') echo 'selected'; ?>>Kertak Hanyar</option>
-                        <option value="Mataraman" <?php if ($data['kecamatan'] == 'Mataraman') echo 'selected'; ?>>Mataraman</option>
-                        <option value="Martapura" <?php if ($data['kecamatan'] == 'Martapura') echo 'selected'; ?>>Martapura</option>
-                        <option value="Martapura Barat" <?php if ($data['kecamatan'] == 'Martapura Barat') echo 'selected'; ?>>Martapura Barat</option>
-                        <option value="Martapura Timur" <?php if ($data['kecamatan'] == 'Martapura Timur') echo 'selected'; ?>>Martapura Timur</option>
-                        <option value="Paramasan" <?php if ($data['kecamatan'] == 'Paramasan') echo 'selected'; ?>>Paramasan</option>
-                        <option value="Pengaron" <?php if ($data['kecamatan'] == 'Pengaron') echo 'selected'; ?>>Pengaron</option>
-                        <option value="Sambung Makmur" <?php if ($data['kecamatan'] == 'Sambung Makmur') echo 'selected'; ?>>Sambung Makmur</option>
-                        <option value="Simpang Empat" <?php if ($data['kecamatan'] == 'Simpang Empat') echo 'selected'; ?>>Simpang Empat</option>
-                        <option value="Sungai Pinang" <?php if ($data['kecamatan'] == 'Sungai Pinang') echo 'selected'; ?>>Sungai Pinang</option>
-                        <option value="Sungai Tabuk" <?php if ($data['kecamatan'] == 'Sungai Tabuk') echo 'selected'; ?>>Sungai Tabuk</option>
-                        <option value="Tatah Makmur" <?php if ($data['kecamatan'] == 'Tatah Makmur') echo 'selected'; ?>>Tatah Makmur</option>
-                        <option value="Telaga Bauntung" <?php if ($data['kecamatan'] == 'Telaga Bauntung') echo 'selected'; ?>>Telaga Bauntung</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Kelurahan:</label>
-                    <select name="kelurahan" id="kelurahan" class="form-control" required>
-                        <option value="" disabled selected>--- Pilih Kelurahan ---</option>
-                    </select>
-
-                    <script>
-                        // Data kelurahan berdasarkan kecamatan
+                        <script>
+    // Data kelurahan berdasarkan kecamatan
                         const kelurahanData = {
                             "Aluh-Aluh": ["Aluh-Aluh Besar", "Aluh-Aluh Kecil", "Aluh-Aluh Kecil Muara", "Bakambat", "Balimau", "Bunipah", "Handil Baru", "Handil Bujur", "Kuin Besar", "Kuin Kecil", "Labat Muara", "Pemurus", "Podok", "Pulantan", "Simpang Warga", "Simpang Warga Dalam", "Sungai Musang", "Tanipah", "Terapu"],
                             "Aranio": ["Apuai", "Aranio", "Artain", "Belangian", "Benua Riam", "Kalaan", "Paau", "Rantau Balai", "Rantau Bujur", "Tiwingan Baru", "Tiwingan Lama"],
@@ -323,30 +329,33 @@ if (isset($_POST['update'])) {
                         if (selectedKelurahan) {
                             kelurahanSelect.value = selectedKelurahan;
                         }
-                    </script>
-                </div>
-                <div class="form-group">
-                    <label>Kode Pos:</label>
-                    <input type="text" name="kode_pos" class="form-control" value="<?php echo htmlspecialchars($data['kode_pos']); ?>" required>
-                </div>
+</script>
+                        <div class="form-group">
+                            <label>Kode Pos:</label>
+                            <input type="text" name="kode_pos" class="form-control" value="<?php echo htmlspecialchars($data['kode_pos']); ?>" required>
+                        </div>
+                    </div>
+                    <p class="judul-form">KETERANGAN SURAT</p>
+                    <div class="baris-form">
+                        <div class="form-group">
+                            <label>Tanggal Surat:</label>
+                            <input type="date" name="tanggal_surat" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_surat']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Surat:</label>
+                            <input type="text" name="nomor_surat" class="form-control" value="<?php echo htmlspecialchars($data['nomor_surat']); ?>" required>
+                        </div>
+                    </div>
+                    <!-- tombol edit data -->
+                    <div>
+                        <button type="submit" name="update" class="edit-data"><i class="fas fa-edit"></i> Edit Data</button>
+                    </div>
+                </form>
             </div>
-            <p>KETERANGAN SURAT</p>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Tanggal Surat:</label>
-                    <input type="date" name="tanggal_surat" class="form-control" value="<?php echo htmlspecialchars($data['tanggal_surat']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Nomor Surat:</label>
-                    <input type="text" name="nomor_surat" class="form-control" value="<?php echo htmlspecialchars($data['nomor_surat']); ?>" required>
-                </div>
-            </div>
-            <!-- tombol edit data -->
-            <div>
-                <button type="submit" name="update" class="simpan">Simpan Data</button>
-            </div>
-        </form>
+        </main>
     </div>
+</div>
+<script src="../../../assets/js/sidebar.js"></script>
 </body>
 
 </html>

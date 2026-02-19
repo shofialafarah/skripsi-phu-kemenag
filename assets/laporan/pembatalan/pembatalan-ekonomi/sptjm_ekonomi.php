@@ -10,7 +10,6 @@
 session_start();
 include_once __DIR__ . '/../../../../includes/koneksi.php';
 
-// Fungsi untuk mengubah bulan ke Bahasa Indonesia
 function formatTanggalIndonesia($tanggal)
 {
     $bulan = array(
@@ -31,17 +30,16 @@ function formatTanggalIndonesia($tanggal)
     return $tanggalSplit[2] . ' ' . $bulan[(int)$tanggalSplit[1]] . ' ' . $tanggalSplit[0];
 }
 
-// Cek ID
 if (isset($_GET['id'])) {
-    $id_batal_meninggal = $_GET['id'];
+    $id_batal_ekonomi = $_GET['id'];
 
     // Query untuk mengambil data
-    $query = "SELECT pm.*, p.kategori 
-          FROM pembatalan_meninggal pm 
-          LEFT JOIN pembatalan p ON pm.id_pembatalan = p.id_pembatalan 
-          WHERE pm.id_batal_meninggal = ?";
+    $query = "SELECT pe.*, p.kategori 
+          FROM pembatalan_ekonomi pe 
+          LEFT JOIN pembatalan p ON pe.id_pembatalan = p.id_pembatalan 
+          WHERE pe.id_batal_ekonomi = ?";
     $stmt = $koneksi->prepare($query);
-    $stmt->bind_param("i", $id_batal_meninggal);
+    $stmt->bind_param("i", $id_batal_ekonomi);
     $stmt->execute();
     $result = $stmt->get_result();
     $data = $result->fetch_assoc();
@@ -131,15 +129,19 @@ if (isset($_GET['id'])) {
     <table>
         <tr>
             <td>Nama</td>
-            <td style="text-transform: uppercase;">: <b><?php echo $data['nama_ahliwaris']; ?></b> </td>
+            <td>: <?php echo $data['nama_jamaah']; ?></td>
+        </tr>
+        <tr>
+            <td>Bin/Binti</td>
+            <td>: <?php echo $data['bin_binti']; ?></td>
         </tr>
         <tr>
             <td>TTL</td>
-            <td>: <?php echo $data['tempat_lahir_ahliwaris'] . ', ' . formatTanggalIndonesia($data['tanggal_lahir_ahliwaris']); ?></td>
+            <td>: <?php echo $data['tempat_lahir'] . ', ' . formatTanggalIndonesia($data['tanggal_lahir']); ?></td>
         </tr>
         <tr>
             <td>Alamat</td>
-            <td>: <?php echo $data['alamat_ahliwaris'] . ', Kec. ' . $data['kecamatan_ahliwaris'] . ', Kel. ' . $data['kelurahan_ahliwaris'] . ', ' . $data['kode_pos_ahliwaris'] . ', Kab. Banjar'; ?></td>
+            <td>: <?php echo $data['alamat'] . ', Kec. ' . $data['kecamatan'] . ',  Kel. ' .  $data['kelurahan'] . ', ' . $data['kode_pos'] . ', Kab. Banjar'; ?></td>
         </tr>
         <tr>
             <td>Jenis Kelamin</td>
@@ -147,28 +149,19 @@ if (isset($_GET['id'])) {
         </tr>
         <tr>
             <td>Pekerjaan</td>
-            <td>: <?php echo $data['pekerjaan_ahliwaris']; ?></td>
-        </tr>
-        <tr>
-            <td>Status</td>
-            <td>: <?php echo $data['status_dengan_jamaah']; ?></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <b>Dari</b>
-            </td>
-        </tr>
-        <tr>
-            <td>Nama</td>
-            <td style="text-transform: uppercase;">: <?php echo $data['nama_jamaah'] ?></td>
-        </tr>
-        <tr>
-            <td>Bin/Binti</td>
-            <td style="text-transform: uppercase;">: <?php echo $data['bin_binti']; ?></td>
+            <td>: <?php echo $data['pekerjaan']; ?></td>
         </tr>
         <tr>
             <td>Nomor Porsi/Validasi</td>
-            <td>: <?php echo $data['nomor_porsi']; ?> - <?php echo $data['spph_validasi']; ?></td>
+            <td>: <?php echo $data['nomor_porsi']; ?> / <?php echo $data['spph_validasi']; ?></td>
+        </tr>
+        <tr>
+            <td>BPS/BPIH</td>
+            <td>: <?php echo $data['bps']; ?></td>
+        </tr>
+        <tr>
+            <td>Nomor Rekening</td>
+            <td>: <?php echo $data['nomor_rek']; ?></td>
         </tr>
         <tr>
             <td>Sebab Pembatalan</td>
@@ -176,7 +169,7 @@ if (isset($_GET['id'])) {
         </tr>
         <tr>
             <td>Telp/HP</td>
-            <td>: <?php echo $data['no_telepon_ahliwaris']; ?></td>
+            <td>: <?php echo $data['no_telepon']; ?></td>
         </tr>
     </table>
 
@@ -184,13 +177,10 @@ if (isset($_GET['id'])) {
         Dengan ini menyatakan:
     </p>
     <ol>
-        <li>Bertanggung jawab atas kebenaran dan keabsahan seluruh dokumen pembatalan yang saya sampaikan kepada Kantor Kementerian Agama Kabupaten Banjar.</li>
-        <li>Bertanggung jawab sepenuhnya bahwa saya tidak akan melibatkan pihak Kantor Kementerian Agama Kab. Banjar, apabila terjadi sesuatu hal dan lainnya yang dapat menyebabkan adanya kerugian Negara atau kerugian lainnya.</li>
+        <li>Bertanggung jawab atas kebenaran dan keabsahan seluruh dokumen pembatalan yang saya sampaikan kepada Kantor Kementerian Agama Kabupaten Banjar;</li>
+        <li>Bertanggung jawab sepenuhnya apabila tidak ada kelalaian pihak Kantor Kementerian Agama Kab. Banjar, apabila terjadi sesuatu hal dan lainnya yang dapat menyebabkan adanya kerugian Negara atau kerugian lainnya;</li>
         <li>Bertanggung jawab sepenuhnya bahwa apabila dikemudian hari ditemukan data yang tidak benar atau timbul gugatan atas keabsahan seluruh dokumen yang ada, maka saya siap bertanggung jawab secara administrasi dan atau pidana.</li>
     </ol>
-    <p style="text-align: justify;">
-        Demikian pernyataan tanggung jawab mutlak ini saya buat dengan keadaaan dan penuh tanggung jawab.
-    </p>
     <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
         <table style="border: none; text-align: left; width: auto;">
             <tr>
@@ -199,7 +189,7 @@ if (isset($_GET['id'])) {
                     <p style="margin: 0;">Yang Membuat Pernyataan,</p>
                     <br><br><br><br>
                     <strong>
-                        <p style="margin: 0;"><?php echo $data['nama_ahliwaris']; ?></p>
+                        <p style="margin: 0;"><?php echo $data['nama_jamaah']; ?></p>
                     </strong>
                 </td>
             </tr>
