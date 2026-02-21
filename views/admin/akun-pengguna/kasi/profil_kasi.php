@@ -55,6 +55,7 @@ if ($result && $result->num_rows > 0) {
 }
 ?>
 <link rel="stylesheet" href="assets/css/kasi.css">
+<?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -63,6 +64,7 @@ if ($result && $result->num_rows > 0) {
     <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
+        
         <div class="profil-kasi-wrapper">
             <div class="profil-kasi-card">
                 <div class="profil-kasi-content">

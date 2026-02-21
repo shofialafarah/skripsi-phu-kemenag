@@ -24,7 +24,7 @@ $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
 // Tentukan src logo untuk sidebar (sama dengan logika di pengaturan)
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/sistem.png';
+$default_system_logo = '/phu-kemenag-banjar-copy/assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -32,7 +32,7 @@ if (empty($app_logo)) {
 } elseif (strpos($app_logo, '/') === 0) {
     $app_logo_src = $app_logo;
 } else {
-    $candidate = '/phu-kemenag-banjar-copy/assets/' . $app_logo;
+    $candidate = '/phu-kemenag-banjar-copy/assets/img/' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {
@@ -127,7 +127,7 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 
             <div class="content-wrapper">
                 <nav class="menu">
-                    <a href="../../dashboard_administrator.php" class="<?= ($currentPage == 'dashboard_administrator.php') ? 'active' : '' ?>">
+                    <a href="/phu-kemenag-banjar-copy/views/admin/dashboard_administrator.php" class="<?= ($currentPage == 'dashboard_administrator.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p>Dashboard</p>
                     </a>
@@ -138,9 +138,9 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $penggunaPages) ? 'open' : '' ?>" id="penggunaSubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/jamaah/manajemen_jamaah.php" class="<?= ($currentPage == 'akun-pengguna/jamaah/manajemen_jamaah.php' || $currentPage == 'tambah_jamaah.php' || $currentPage == 'edit_jamaah.php') ? 'active' : '' ?>">Jamaah</a>
-                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= ($currentPage == 'akun-pengguna/staf/manajemen_staf.php' || $currentPage == 'tambah_staf.php' || $currentPage == 'edit_staf.php' || $currentPage == 'profil_staf.php') ? 'active' : '' ?>">Staf PHU</a>
-                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= ($currentPage == 'akun-pengguna/kasi/manajemen_kasi.php' || $currentPage == 'edit_kasi.php' || $currentPage == 'profil_kasi.php') ? 'active' : '' ?>">Kepala Seksi</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/jamaah/manajemen_jamaah.php" class="<?= in_array($currentPage, ['manajemen_jamaah.php', 'tambah_jamaah.php', 'edit_jamaah.php']) ? 'active' : '' ?>">Jamaah</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/staf/manajemen_staf.php" class="<?= in_array($currentPage, ['manajemen_staf.php', 'tambah_staf.php', 'edit_staf.php', 'profil_staf.php']) ? 'active' : '' ?>">Staf PHU</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/akun-pengguna/kasi/manajemen_kasi.php" class="<?= in_array($currentPage, ['manajemen_kasi.php', 'edit_kasi.php', 'profil_kasi.php']) ? 'active' : '' ?>">Kepala Seksi</a>
                     </div>
                     <!-- Manajemen Sistem -->
                     <a class="dropdown-toggle <?= in_array($currentPage, $sistemPage) ? 'active' : '' ?>" onclick="toggleDropdown('sistemSubmenu', this)">
@@ -149,8 +149,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $sistemPage) ? 'open' : '' ?>" id="sistemSubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/pengaturan.php" class="<?= ($currentPage == 'kelola-sistem/pengaturan.php') ? 'active' : '' ?>">Pengaturan</a>
-                        <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/reset_password.php" class="<?= ($currentPage == 'kelola-sistem/reset_password.php') ? 'active' : '' ?>">Reset Password</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/pengaturan.php" class="<?= in_array($currentPage, ['pengaturan.php']) ? 'active' : '' ?>">Pengaturan</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/kelola-sistem/reset_password.php" class="<?= in_array($currentPage, ['reset_password.php']) ? 'active' : '' ?>">Reset Password</a>
                     </div>
                     <!-- Laporan Data Sistem -->
                     <a class="dropdown-toggle <?= in_array($currentPage, $cetakPage) ? 'active' : '' ?>" onclick="toggleDropdown('cetakSubmenu', this)">
@@ -159,8 +159,8 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $cetakPage) ? 'open' : '' ?>" id="cetakSubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_data_pengguna.php" class="<?= ($currentPage == 'laporan/laporan_data_pengguna.php') ? 'active' : '' ?>">Data Pengguna</a>
-                        <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_riwayat_aksi.php" class="<?= ($currentPage == 'laporan_riwayat_aksi.php') ? 'active' : '' ?>">Riwayat Aksi</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_data_pengguna.php" class="<?= in_array($currentPage, ['laporan/laporan_data_pengguna.php']) ? 'active' : '' ?>">Data Pengguna</a>
+                        <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_riwayat_aksi.php" class="<?= in_array($currentPage, ['laporan_riwayat_aksi.php']) ? 'active' : '' ?>">Riwayat Aksi</a>
                     </div>
                 </nav>
                 <a href="<?= BASE_URL ?>views/auth/logout.php" class="logout-btn">

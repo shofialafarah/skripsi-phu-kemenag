@@ -5,6 +5,14 @@
  * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
  * ==============================================================================
  */
+:root {
+    --header: #1b5e20;
+    --teks-putih: #fff;
+    --background-color: #f5f5f5;
+    --teks-hitam: #333;
+    --border-input: #7bd247;
+}
+
 .pengaturan-wrapper {
   overflow-y: scroll; /* Biarkan konten bisa di-scroll secara vertikal */
   -ms-overflow-style: none; /* Menghilangkan scrollbar di IE/Edge */
@@ -24,7 +32,7 @@
   border-radius: 16px;
   z-index: 1;
   box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
-  overflow: hidden; /* Pastikan tidak ada konten yang meluap */
+  overflow: hidden;
 }
 
 .pengaturan::before {
@@ -44,46 +52,32 @@
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.pengaturan table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-  border: 1px var(--primary-color);
-}
 .pengaturan-header {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--header);
+  color: var(--teks-putih);
   font-weight: 600;
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
 /* Container Styles */
-form {
+.pengaturan-form {
+    align-items: center;
     max-width: 600px;
-    margin: 30px auto;
-    background: #fff;
+    background: var(--background-color);
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 40px;
+    margin: 40px auto;
     animation: fadeIn 1.2s ease-out;
 }
 
-/* Form Header */
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-    color: #555;
-}
-
-/* Labels */
-label {
+.label-pengaturan {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
     font-weight: bold;
-    color: #444;
+    color: var(--teks-hitam);
 }
 
 /* Inputs and Textareas */
@@ -100,8 +94,8 @@ input[type="text"]:focus,
 input[type="email"]:focus, 
 textarea:focus, 
 select:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+    border-color: var(--border-input);
+    box-shadow: 0 0 8px rgba(111, 228, 87, 0.575);
     outline: none;
 }
 
@@ -111,28 +105,13 @@ input[type="file"] {
     padding: 0;
     margin-bottom: 15px;
 }
-
 /* Buttons */
-button {
-    display: inline-block;
-    background: #4a90e2;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-button:hover {
-    background: #357abd;
+.btn-success:hover {
     transform: translateY(-2px);
 }
 
-button:active {
-    transform: translateY(1px);
+.btn-secondary:hover {
+    transform: translateY(-2px);
 }
 
 /* Animations */

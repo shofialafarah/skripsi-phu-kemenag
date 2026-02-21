@@ -91,17 +91,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
 }
 ?>
 <link rel="stylesheet" href="assets/css/pengaturan.css">
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include '../includes/sidebar_admin.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include '../includes/header_admin.php'; ?>
+    <?php include '../includes/header_setup.php'; ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include '../includes/sidebar_admin.php'; ?>
+    </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include '../includes/header_admin.php'; ?>
             <main class="pengaturan-wrapper">
                 <div class="pengaturan">
-                    <div class="pengaturan-header" style="color: white;">
+                    <div class="pengaturan-header">
                         <i class="fas fa-table me-1"></i> Reset Password Pengguna
                     </div>
                     <div class="pengaturan-body">
@@ -136,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset_password'])) {
                                 ?>
                             </select>
                             <br>
-                            <div style="display: flex; justify-content: center; align-items: center;">
+                            <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px; margin-bottom: 20px;">
                                 <button type="submit" name="reset_password" class="btn btn-success">Reset Password</button>
                             </div>
                             

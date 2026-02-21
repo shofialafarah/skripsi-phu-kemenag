@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 <link rel="stylesheet" href="assets/css/jamaah.css">
+<?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -96,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
-
+        
         <main class="jamaah-wrapper">
             <div class="jamaah">
                 <div class="jamaah-header" style="color: white;">

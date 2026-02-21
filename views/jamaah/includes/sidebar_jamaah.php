@@ -24,7 +24,7 @@ $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
 // Tentukan src logo untuk sidebar (sama dengan logika di pengaturan)
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/sistem.png';
+$default_system_logo = '/phu-kemenag-banjar-copy/assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -32,7 +32,7 @@ if (empty($app_logo)) {
 } elseif (strpos($app_logo, '/') === 0) {
     $app_logo_src = $app_logo;
 } else {
-    $candidate = '/phu-kemenag-banjar-copy/assets/' . $app_logo;
+    $candidate = '/phu-kemenag-banjar-copy/assets/img' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {

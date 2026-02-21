@@ -321,7 +321,7 @@ function formatWaktuDariHari($total_hari)
                                         echo "<button class='btn btn-danger btn-sm me-2' onclick='hapusData(\"" . $row['id_estimasi'] . "\", \"" . $row['nomor_porsi'] . "\", \"" . addslashes($row['nama_jamaah']) . "\")' title='Hapus'><i class='fas fa-trash'></i></button>";
 
                                         // Tombol Cetak
-                                        echo "<a href='includes/cetak_estimasi.php?id_estimasi=" . $row['id_pendaftaran'] . "' target='_blank' class='btn btn-sm btn-success' title='Cetak'><i class='fas fa-print'></i></a>";
+                                        echo "<a href='includes/estimasi/cetak_estimasi.php?id_estimasi=" . $row['id_pendaftaran'] . "' target='_blank' class='btn btn-sm btn-success' title='Cetak'><i class='fas fa-print'></i></a>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
@@ -347,7 +347,7 @@ function formatWaktuDariHari($total_hari)
                 <h5 class="modal-title" id="estimasiModalLabel">Tambah Data Estimasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
             </div>
-            <form action="tambah_estimasi.php" method="post">
+            <form action="includes/estimasi/tambah_estimasi.php" method="post">
                 <div class="modal-body">
 
                     <!-- Status Info -->
@@ -476,7 +476,7 @@ function formatWaktuDariHari($total_hari)
                 <h5 class="modal-title" id="editModalLabel">Edit Data Estimasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
             </div>
-            <form action="edit_estimasi.php" method="post" id="editForm">
+            <form action="includes/estimasi/edit_estimasi.php" method="post" id="editForm">
                 <div class="modal-body">
                     <input type="hidden" name="id_estimasi" id="edit_id_estimasi">
                     <input type="hidden" name="id_pendaftaran" id="edit_id_pendaftaran">

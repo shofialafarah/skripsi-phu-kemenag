@@ -1,17 +1,14 @@
 <?php
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
- * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
- * Copyright (c) 2025. All Rights Reserved.
- * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
  * ==============================================================================
  */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-include '../../includes/koneksi.php'; // Panggil koneksinya dulu
-include '../partials/fungsi.php';  // Baru panggil fungsinya
+include '../../includes/koneksi.php'; 
+include '../partials/fungsi.php';  
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim(htmlspecialchars($_POST['username']));
@@ -36,31 +33,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user_found = true;
             $user = $result->fetch_assoc();
 
+            // Cek Status Banned/Nonaktif
             if ($table !== 'administrator') {
                 if ($user['status_pengguna'] === 'banned') {
-                    echo "<script>alert('Akun Anda telah dibanned. Hubungi admin.');  window.location.href='login.php';</script>";
+                    $_SESSION['error_message'] = "Akun Anda telah dibanned. Hubungi admin.";
+                    header("Location: login.php");
                     exit();
                 } elseif ($user['status_pengguna'] === 'nonaktif') {
-                    echo "<script>alert('Akun Anda nonaktif karena tidak aktif lebih dari seminggu.');  window.location.href='login.php';</script>";
+                    $_SESSION['error_message'] = "Akun Anda nonaktif karena tidak aktif lebih dari seminggu.";
+                    header("Location: login.php");
                     exit();
                 }
             }
+
             if (password_verify($password, $user['password'])) {
-                // Reset login_attempts dan update last_login_at (kecuali administrator)
+                // Update login info
                 if ($table !== 'administrator') {
                     $koneksi->query("UPDATE $table SET login_attempts = 0, last_login_at = NOW() WHERE $id_field = '{$user[$id_field]}'");
                 }
 
-                // Set session
+                // Set session umum
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = $table;
+                $_SESSION['login_success_msg'] = "Selamat Datang, " . $username . "!";
 
-                // Catat aktivitas login
-                if ($table !== 'administrator') {
-                    $id_pengguna = $user[$id_field];
-                    updateAktivitasPengguna($id_pengguna, $table, 'Login', 'Pengguna berhasil login ke sistem');
-                }
-
+                // Catat aktivitas & Redirect sesuai Role
                 if ($table === 'administrator') {
                     $_SESSION['user_logged_in'] = true;
                     header("Location: ../admin/dashboard_administrator.php");
@@ -78,70 +75,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 exit();
             } else {
-                // Salah password
+                // Gagal Password
                 if ($table !== 'administrator') {
                     $attempts = $user['login_attempts'] + 1;
                     if ($attempts >= 4) {
                         $koneksi->query("UPDATE $table SET login_attempts = $attempts, status_pengguna = 'banned' WHERE $id_field = '{$user[$id_field]}'");
-                        echo "<script>alert('Akun Anda dibanned karena gagal login lebih dari 3 kali.'); window.location.href='login.php';</script>";
-                        exit;
+                        $_SESSION['error_message'] = "Akun Anda dibanned karena gagal login lebih dari 3 kali.";
                     } else {
                         $koneksi->query("UPDATE $table SET login_attempts = $attempts WHERE $id_field = '{$user[$id_field]}'");
-                        echo "<script>alert('Password salah! Percobaan ke-$attempts'); window.location.href='login.php';</script>";
-                        exit;
+                        $_SESSION['error_message'] = "Password salah! Percobaan ke-$attempts";
                     }
                 } else {
-                    echo "<script>alert('Password salah!'); window.location.href='login.php';</script>";
-                    exit;
+                    $_SESSION['error_message'] = "Password Administrator salah!";
                 }
-
+                header("Location: login.php");
                 exit();
             }
         }
     }
 
     if (!$user_found) {
-        echo "<script>alert('Username tidak ditemukan!');</script>";
+        $_SESSION['error_message'] = "Username tidak ditemukan!";
+        header("Location: login.php");
+        exit();
     }
 }
-
-$koneksi->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Login</title>
-    <link rel="icon" href="../../assets/logo_kemenag.png">
+    <link rel="icon" href="../../assets/img/logo_kemenag.png" type="image/png">
     <link rel="stylesheet" href="assets/css/login.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container" id="container">
-        <!-- Masuk Form -->
         <div class="form-container sign-in-container">
-
-            <!-- Menampilkan pesan sukses registrasi jika ada -->
-            <?php
-            if (isset($_SESSION['registrasi_success'])) {
-                echo '<div class="success-message">' . $_SESSION['registrasi_success'] . '</div>';
-                unset($_SESSION['registrasi_success']); // Hapus session setelah ditampilkan
-            }
-            ?>
-
             <form method="POST" action="login.php">
-                <input type="hidden" name="action" value="login">
                 <h1>Masuk</h1>
                 <div class="social-container">
-                    <a href="https://www.instagram.com/shofialafarah" class="social" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://x.com/nellamyla17" class="social" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.linkedin.com/in/shofia-nabila-elfa-rahma" class="social" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>Atau gunakan akun Haji Anda</span>
                 <div class="form-group">
@@ -151,33 +130,48 @@ $koneksi->close();
                 <div class="form-group">
                     <input type="password" id="password" name="password" placeholder=" " required />
                     <label for="password">Password</label>
-                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i> <!-- Icon Mata -->
+                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
                 </div>
                 <a href="lupa_password.php">Lupa Password?</a>
                 <button type="submit">Masuk</button>
             </form>
         </div>
 
-        <!-- Overlay Content -->
         <div class="overlay-container">
             <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <img src="../../assets/logo_kemenag.png" height="100" width="100" alt="" srcset="">
-                    <h1>Selamat Datang!</h1>
-                    <p>Silakan masuk dengan akun yang sudah terdaftar.</p>
-                    <button class="ghost" id="signIn">Masuk</button>
-                </div>
                 <div class="overlay-panel overlay-right">
-                    <img src="../../assets/logo_kemenag.png" height="100" width="100" alt="" srcset="">
+                    <img src="../../assets/img/logo_kemenag.png" height="100" width="100">
                     <h1>Assalamualaikum!</h1>
-                    <p>Silakan masuk dengan akun yang sudah terdaftar.</p>
-
+                    <p>Silakan masuk untuk mengakses sistem informasi pendaftaran haji.</p>
                     <button class="ghost" onclick="window.location.href='../../landing-page/index.php';">Kembali</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="assets/js/login.js"></script>
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/login.js"></script>
+
+    <?php if (isset($_SESSION['error_message'])): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '<?= $_SESSION['error_message']; ?>',
+            confirmButtonColor: '#2e7d32'
+        });
+    </script>
+    <?php unset($_SESSION['error_message']); endif; ?>
+
+    <?php if (isset($_SESSION['registrasi_success'])): ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Alhamdulillah',
+            text: '<?= $_SESSION['registrasi_success']; ?>',
+            confirmButtonColor: '#2e7d32'
+        });
+    </script>
+    <?php unset($_SESSION['registrasi_success']); endif; ?>
+</body>
 </html>

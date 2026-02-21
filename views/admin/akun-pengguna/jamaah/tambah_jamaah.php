@@ -215,6 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <link rel="stylesheet" href="assets/css/jamaah.css">
 
+<?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

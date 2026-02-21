@@ -6,21 +6,10 @@
  * ==============================================================================
  */
 :root {
-  --sidebar-open: 260px;
-  --sidebar-closed: 64px;
-  --dark-bg: #1e1b29;
   --card-bg: #ffffff;
   --text-dark: #333333;
-  --text-light: #7a7b92;
-  --success-color: #28a745;
-  --warning-color: #ffc107;
-  --danger-color: #dc3545;
-  --pending-color: #f7931e;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --card-radius: 12px;
-  --transition: all 0.3s ease;
-  --dashboard-bg: #7bd247;
-  --sidebar-offset: 34px;
   --judul: #1d7716;
 }
 
@@ -29,40 +18,35 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-
   padding: 25px;
   background-color: var(--card-bg);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow);
 }
-.header-welcome h1 {
+
+.ucapan {
   font-size: 24px;
+  font-weight: 600;
   color: var(--judul);
   margin: 0;
-}
-
-.header-welcome p {
-  font-size: 14px;
-  color: var(--text-light);
-  margin: 4px 0 0 0;
 }
 
 .date-time-section {
   display: flex;
   align-items: center;
-  gap: 12px; /* spasi antara tanggal & waktu */
+  gap: 12px;
   margin-top: 4px;
 }
 
 .current-date {
   font-size: 16px;
   color: var(--text-dark);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .current-time {
-  font-size: 22px;
-  color: var(--primary-color);
+  font-size: 24px;
+  color: var(--judul);
   font-weight: 600;
 }
 
@@ -72,73 +56,4 @@
   gap: 12px;
   flex-shrink: 0;
   margin-left: 10rem;
-}
-
-/* ========================= kolom pencarian =================================== */
-.header-cari {
-  position: relative; /* penting untuk posisi ikon */
-  display: inline-block;
-}
-
-/* Input pencarian */
-.header-input-cari {
-  padding: 8px 12px 8px 36px; /* sisakan space kiri untuk ikon */
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  width: 250px;
-}
-
-/* Ikon pencarian */
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #aaa;
-  pointer-events: none; /* biar klik tetap ke input */
-}
-
-/* Placeholder teks */
-.header-input-cari::placeholder {
-  color: #aaa;
-  font-size: 14px;
-}
-
-/* Icon pesan dan notifikasi, dengan border hitam */
-.header-icon {
-  background: none;
-  border: 1px solid #ccc; /* Border hitam */
-  border-radius: 30%;
-  padding: 8px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover effect untuk ikon pesan dan notif */
-.header-icon:hover {
-  background-color: #f5f5f5; /* Warna latar belakang saat hover */
-}
-
-/* Untuk menambahkan jarak dan border pada tombol pesan dan notifikasi */
-.header-icon + .header-icon {
-  margin-left: 12px; /* Memberi jarak antar icon */
-}
-
-/* Styling untuk pesan dan notifikasi icons */
-.header-icon span {
-  display: block;
-  font-size: 18px; /* Ukuran font ikon */
-  color: #444;
-}
-
-/* Tombol hover effect */
-.header-icon:hover span {
-  color: var(--judul); /* Warna ikon saat hover */
 }

@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Mengunggah logo aplikasi jika ada file yang diupload
         if (!empty($_FILES['app_logo']['name'])) {
             // Gunakan path absolut pada filesystem agar move_uploaded_file bekerja
-            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/assets/';
+            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/assets/img/';
 
             // Buat direktori jika belum ada
             if (!is_dir($upload_dir)) {
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
             $file_extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-                    if (in_array($file_extension, $allowed_types)) {
+            if (in_array($file_extension, $allowed_types)) {
                 // Pindahkan file yang diunggah
                 if (move_uploaded_file($_FILES['app_logo']['tmp_name'], $target_file)) {
                     // Cek apakah key app_logo sudah ada
@@ -70,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Insert jika belum ada
                         $stmt = $koneksi->prepare("INSERT INTO pengaturan (key_name, value) VALUES ('app_logo', ?)");
                     }
-                    $stmt->bind_param('s', $file_name);
+                    $relative_path = 'assets/img/' . $file_name;
+                    $stmt->bind_param('s', $relative_path);
                     $stmt->execute();
                     $stmt->close();
                 } else {
@@ -101,7 +103,7 @@ $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
 // Tentukan src logo untuk ditampilkan dan fallback ke sistem.png jika tidak ada
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/sistem.png';
+$default_system_logo = '../../../assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -111,7 +113,7 @@ if (empty($app_logo)) {
     $app_logo_src = $app_logo;
 } else {
     // Anggap nama file di folder assets
-    $candidate = '/phu-kemenag-banjar-copy/assets/' . $app_logo;
+    $candidate = '../../../assets/img/' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {
@@ -120,7 +122,7 @@ if (empty($app_logo)) {
 }
 
 if (isset($_POST['reset_default'])) {
-    // Set default nilai (simpan hanya nama file, tampilan akan mencari di /assets/)
+    // Set default nilai (simpan hanya nama file, tampilan akan mencari di /assets/img/)
     $default_logo = 'sistem.png';
     $default_color = '#7bd247';
 
@@ -136,70 +138,68 @@ if (isset($_POST['reset_default'])) {
 ?>
 <link rel="stylesheet" href="assets/css/pengaturan.css">
 
-    <!-- Terapkan warna teks dari pengaturan -->
-    <style>
-        :root {
-            --sidebar-text-color: <?= htmlspecialchars($theme_text_color); ?>;
-        }
+<!-- Terapkan warna teks dari pengaturan -->
+<style>
+    :root {
+        --sidebar-text-color: <?= htmlspecialchars($theme_text_color); ?>;
+    }
 
-        /* Override warna teks sidebar */
-        .sidebar h1,
-        .sidebar .menu a p,
-        .sidebar .menu a .material-symbols-outlined {
-            color: var(--sidebar-text-color) !important;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include '../includes/sidebar_admin.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include '../includes/header_admin.php'; ?>
-
-            <main class="pengaturan-wrapper">
-                <div class="pengaturan">
-                    <div class="pengaturan-header" style="color: white;">
-                        <i class="fas fa-table me-1"></i> Pengaturan Sistem
-                    </div>
-                    <div class="pengaturan-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            <label>Nama Aplikasi:</label>
-                            <input type="text" name="app_name" value="<?= htmlspecialchars($app_name); ?>" required>
-
-                            <label>Logo Aplikasi:</label>
-                            <input type="file" name="app_logo" accept="image/*">
-                            <p>Logo saat ini:
-                                <img class="logo"
-                                    src="<?= htmlspecialchars($app_logo_src); ?>"
-                                    alt="Logo Kemenag"
-                                    style="width: 50px; height: 50px; object-fit: contain;">
-                            </p>
-
-                            <label>Warna Teks Sidebar:</label>
-                            <input type="color" name="theme_text_color" value="<?= htmlspecialchars($theme_text_color); ?>">
-
-                            <br><br>
-                            <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
-                                <button type="submit" name="update_settings" class="btn btn-success" style="align-items: center; justify-content: center;">Simpan</button>
-                                <button type="submit" name="reset_default" class="btn btn-secondary" style="align-items: center; justify-content: center;">Default</button>
-                            </div>
-
-                        </form>
-                    </div>
-                    <?php include_once __DIR__ . '/../includes/footer_admin.php'; ?>
-                </div>
-            </main>
-        </div>
+    /* Override warna teks sidebar */
+    .sidebar h1,
+    .sidebar .menu a p,
+    .sidebar .menu a .material-symbols-outlined {
+        color: var(--sidebar-text-color) !important;
+    }
+</style>
+<?php include '../includes/header_setup.php'; ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include '../includes/sidebar_admin.php'; ?>
     </div>
-    <script src="../assets/js/sidebar.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/pengaturan.js"></script>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include '../includes/header_admin.php'; ?>
+
+        <main class="pengaturan-wrapper">
+            <div class="pengaturan">
+                <div class="pengaturan-header" style="color: white;">
+                    <i class="fas fa-table me-1"></i> Pengaturan Sistem
+                </div>
+                <div class="pengaturan-body">
+                    <form class="pengaturan-form" method="POST" action="" enctype="multipart/form-data">
+                        <label class="label-pengaturan">Nama Aplikasi:</label>
+                        <input type="text" name="app_name" value="<?= htmlspecialchars($app_name); ?>" required>
+
+                        <label class="label-pengaturan">Logo Aplikasi:</label>
+                        <input type="file" name="app_logo" accept="image/*">
+                        <p>Logo saat ini:
+                            <img class="logo"
+                                src="<?= htmlspecialchars($app_logo_src); ?>"
+                                alt="Logo Kemenag"
+                                style="width: 50px; height: 50px; object-fit: contain;">
+                        </p>
+
+                        <label class="label-pengaturan">Warna Teks Sidebar:</label>
+                        <input type="color" name="theme_text_color" value="<?= htmlspecialchars($theme_text_color); ?>">
+
+                        <br><br>
+                        <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                            <button type="submit" name="update_settings" class="btn btn-success" style="align-items: center; justify-content: center;">Simpan</button>
+                            <button type="submit" name="reset_default" class="btn btn-secondary" style="align-items: center; justify-content: center;">Default</button>
+                        </div>
+
+                    </form>
+                </div>
+                <?php include_once __DIR__ . '/../includes/footer_admin.php'; ?>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="../assets/js/sidebar.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/pengaturan.js"></script>
 </body>
 
 </html>

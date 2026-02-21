@@ -56,7 +56,7 @@
       data-wow-delay="0.1s"
     >
       <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
-        <div class="col-lg-6 px-5 text-start">
+        <div class="col-lg-6 px-5 text-start text-white">
           <small
             ><i class="fa fa-map-marker-alt me-2"></i>Jl. Sekumpul No. 72-73
             Kelurahan Jawa
@@ -92,7 +92,7 @@
         data-wow-delay="0.1s"
       >
         <a href="index.php" class="navbar-brand ms-4 ms-lg-0">
-          <h1 class="fw-bold text-black m-0">
+          <h1 class="fw-bold text-primary m-0">
             Kementerian<span class="text-primary-green"> Agama</span>
           </h1>
         </a>
@@ -137,7 +137,7 @@
             <!-- Tombol Login -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="../views/auth/login.php"
+              href="../views/auth/login.php" title="Login Aplikasi"
             >
               <small class="fa fa-user text-body"></small>
             </a>
@@ -145,7 +145,7 @@
             <!-- Tombol Register -->
             <a
               class="btn-sm-square bg-white rounded-circle ms-3"
-              href="../views/auth/register.php"
+              href="../views/auth/register.php" title="Daftar Akun"
             >
               <small class="fa fa-user-plus text-body"></small>
             </a>

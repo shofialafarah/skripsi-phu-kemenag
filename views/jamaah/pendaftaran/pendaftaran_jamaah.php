@@ -27,8 +27,7 @@ if (isset($_SESSION['id_jamaah'])) {
     // Ambil data jika ada
     if ($result->num_rows > 0) {
         $pendaftar = $result->fetch_assoc();
-        $status_verifikasi = explode(' - ', $pendaftar['status_verifikasi'])[0]; // Ambil status utama
-        // ✅ Catat aktivitas hanya jika data berhasil ditemukan
+        $status_verifikasi = explode(' - ', $pendaftar['status_verifikasi'])[0];
         updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pendaftaran', 'Melihat data pendaftaran');
     }
 
@@ -453,7 +452,7 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
                         Cetak Data
                     </a>
 
-                    <a href="edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>" class="btn btn-secondary">
+                    <a href="includes/edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>" class="btn btn-secondary">
                         <i class="fas fa-edit"></i> Edit Data
                     </a>
                 </div>

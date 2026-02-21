@@ -61,7 +61,7 @@ html, body {
 .layout {
   display: flex;
   height: 100vh;
-  overflow: hidden; /* agar tidak muncul scroll bar global */
+  overflow: hidden;
 }
 
 /* Sidebar */
