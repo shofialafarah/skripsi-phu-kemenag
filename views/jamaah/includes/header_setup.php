@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -6,16 +7,24 @@
  * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
  * ==============================================================================
  */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once __DIR__ . '/../../../includes/koneksi.php';
 
-// Ambil ID jamaah dari session yang benar (biasanya id_jamaah, bukan id_admin)
+// Ambil ID jamaah dari session
 if (!isset($_SESSION['id_jamaah'])) {
     // Jika tidak ada session, arahkan ke login atau beri nilai default
     header("Location: ../../auth/login.php"); 
     exit();
 }
 
-$id_session = $_SESSION['id_jamaah'];
+// Cek session
+if (!isset($_SESSION['id_jamaah'])) {
+    $id_jamaah = 1; // Fallback sementara
+} else {
+    $id_jamaah = $_SESSION['id_jamaah'];
+}
 
 // Ambil data jamaah
 $sql_jamaah = "SELECT nama FROM jamaah WHERE id_jamaah = ?";
@@ -108,20 +117,23 @@ $stmt_bell->execute();
 $result_bell = $stmt_bell->get_result();
 
 $notif_bell = [];
-function tambahNotif($pesan, $jenis_pelayanan, &$notif_bell) {
-    $warnaBadge = '';
-    switch ($jenis_pelayanan) {
-        case 'Pendaftaran':
-            $warnaBadge = 'bg-success'; // hijau
-            break;
-        case 'Pembatalan':
-            $warnaBadge = 'bg-danger'; // merah
-            break;
-        case 'Pelimpahan':
-            $warnaBadge = 'bg-warning text-dark'; // kuning
-            break;
+if (!function_exists('tambahNotif')) {
+    function tambahNotif($pesan, $jenis_pelayanan, &$notif_bell)
+    {
+        $warnaBadge = '';
+        switch ($jenis_pelayanan) {
+            case 'Pendaftaran':
+                $warnaBadge = 'bg-success';
+                break;
+            case 'Pembatalan':
+                $warnaBadge = 'bg-danger';
+                break;
+            case 'Pelimpahan':
+                $warnaBadge = 'bg-warning text-dark';
+                break;
+        }
+        $notif_bell[] = "<span class=\"badge {$warnaBadge}\">{$jenis_pelayanan}</span> {$pesan}";
     }
-    $notif_bell[] = "<span class=\"badge {$warnaBadge}\">{$jenis_pelayanan}</span> {$pesan}";
 }
 
 while ($data_bell = $result_bell->fetch_assoc()) {
@@ -220,7 +232,7 @@ while ($row = $result_mail->fetch_assoc()) {
             $warnaBadge = 'bg-secondary';
             break;
     }
-    
+
     $notif_mail[] = [
         'pesan' => "<span class=\"badge {$warnaBadge}\">{$jenis_pelayanan}</span> Berkas sudah tersedia untuk diunduh.",
         'link'  => $row['link']
@@ -232,16 +244,31 @@ $jumlah_notif_mail = count($notif_mail);
 $keyword = $_GET['search'] ?? '';
 $keyword = $koneksi->real_escape_string($keyword);
 $base_url = "http://localhost/phu-kemenag-banjar-copy/";
+
+// AMBIL DATA PENGATURAN (Sangat Penting!)
+$result_settings = $koneksi->query("SELECT * FROM pengaturan");
+$settings = [];
+while ($row = $result_settings->fetch_assoc()) {
+    $settings[$row['key_name']] = $row['value'];
+}
+$app_logo = $settings['app_logo'] ?? '';
+
+// Tentukan src logo
+if (empty($app_logo)) {
+    $favicon_path = "https://www.google.com/favicon.ico";
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halaman Jamaah</title>
 
-    <link rel="icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
-    <link rel="shortcut icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+    <link rel="icon" href="<?= $favicon_path ?>?v=<?= time(); ?>" type="image/png">
+    <link rel="shortcut icon" href="<?= $favicon_path ?>?v=<?= time(); ?>" type="image/png">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
@@ -254,29 +281,26 @@ $base_url = "http://localhost/phu-kemenag-banjar-copy/";
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
 
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/global_style.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/header.css" />
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/sidebar.css" />
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/entry.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/dashboard_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pendaftaran_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pembatalan_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/pelimpahan_jamaah.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/jamaah/assets/css/estimasi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/header.css" />
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/sidebar.css" />
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/entry.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/dashboard_jamaah.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pendaftaran_jamaah.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pembatalan_jamaah.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pelimpahan_jamaah.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/estimasi.css">
     <style>
         .dropdown-menu.scrollable-dropdown {
             max-height: 300px;
-            /* batas tinggi dropdown */
             overflow-y: auto;
-            /* bikin scroll kalau isi banyak */
         }
 
-        /* Hover badge notifikasi (lonceng) */
         .header-actions .dropdown:hover .badge-notif {
             color: #fff;
-            /* warna teks */
         }
     </style>
-    
+
 </head>
+
 <body>

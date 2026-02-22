@@ -60,14 +60,14 @@ $format_tanggal = $tanggal . ' ' . $bulan[$bulan_angka] . ' ' . $tahun;
 <head>
     <meta charset="UTF-8">
     <title>Cetak Rekapitulasi Jamaah</title>
-    <link rel="icon" href="../assets/img/logo_kemenag.png">
+    <link rel="icon" href="../../../../assets/img/logo_kemenag.png">
     <link rel="stylesheet" href="../assets/css/cetak.css">
 </head>
 
 <body>
     <div class="cetak-wrapper">
         <div class="kop-surat">
-            <img align="left" src="../assets/img/logo_kemenag.png" alt="Logo Kemenag">
+            <img align="left" src="../../../../assets/img/logo_kemenag.png" alt="Logo Kemenag">
             <h2>KEMENTERIAN AGAMA REPUBLIK INDONESIA <br>
                 KANTOR KEMENTERIAN AGAMA KABUPATEN BANJAR</h2>
             <p>Jl. Sekumpul No. 72-73 Kelurahan Jawa Martapura, Banjar 70614 <br>

@@ -97,6 +97,7 @@ $query = "SELECT * FROM ( $query ) AS gabungan ORDER BY tanggal_validasi DESC";
 $result = mysqli_query($koneksi, $query);
 
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

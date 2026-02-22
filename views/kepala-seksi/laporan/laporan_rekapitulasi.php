@@ -35,6 +35,7 @@ if ($result && $result->num_rows > 0) {
     }
 }
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

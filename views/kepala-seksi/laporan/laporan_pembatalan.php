@@ -69,6 +69,7 @@ function clean_input($data)
 }
 
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

@@ -300,6 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pelimpahan'], $_PO
 // Initialize modal list
 $modal_list = [];
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

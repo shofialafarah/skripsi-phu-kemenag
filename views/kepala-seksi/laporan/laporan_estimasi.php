@@ -46,6 +46,7 @@ function clean_input($data)
     return mysqli_real_escape_string($koneksi, $data);
 }
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

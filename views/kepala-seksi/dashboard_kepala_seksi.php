@@ -10,6 +10,11 @@
 session_start();
 include '../../includes/koneksi.php';
 
+//Proteksi Halaman
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'kepala_seksi') {
+    header("Location: ../auth/login.php");
+    exit;
+}
 // ---------- 1. BELUM diverifikasi (status_verifikasi = 'Pending') ----------
 $queryJamaahBelumVerifikasi = "
     SELECT SUM(total) AS total_gabungan
@@ -297,6 +302,7 @@ function getBadgeClass($jenis)
         background-color: #bbdefb;
     }
 </style>
+<?php include 'includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

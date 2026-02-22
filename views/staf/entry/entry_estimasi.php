@@ -150,6 +150,7 @@ function formatWaktuDariHari($total_hari)
     return empty($hasil) ? '0 hari' : implode(', ', $hasil);
 }
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->

@@ -126,17 +126,17 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 
             <div class="content-wrapper">
                 <nav class="menu">
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php') ? 'active' : '' ?>">
+                    <a href="/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php" class="<?= ($currentPage == 'dashboard_jamaah.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p>Dashboard</p>
                     </a>
                     <!-- Menu Pendaftaran Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/tambah_pendaftaran.php' || $currentPage == '/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/edit_pendaftaran.php') ? 'active' : '' ?>">
+                    <a href="/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php" class="<?= ($currentPage == 'pendaftaran_jamaah.php' || $currentPage == 'tambah_pendaftaran.php' || $currentPage == 'edit_pendaftaran.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">assignment_add</span>
                         <p>Pendaftaran Haji</p>
                     </a>
                     <!-- Menu Cek Estimasi Keberangkatan Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php" class="<?= ($currentPage == '/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php') ? 'active' : '' ?>">
+                    <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php" class="<?= ($currentPage == 'estimasi_jamaah.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">schedule</span>
                         <p>Estimasi Haji</p>
                     </a>

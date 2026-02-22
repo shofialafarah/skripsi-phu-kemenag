@@ -42,14 +42,15 @@ function clean_input($data)
 
 ?>
 <link rel="stylesheet" href="assets/css/laporan.css">
-    <div class="layout">
-        <div class="layout-sidebar">
-            <!-- SIDEBAR -->
-            <?php include '../includes/sidebar_admin.php'; ?>
-        </div>
-        <!-- MAIN AREA -->
-        <div class="layout-content">
-            <?php include '../includes/header_admin.php'; ?>
+<?php include '../includes/header_setup.php'; ?>
+<div class="layout">
+    <div class="layout-sidebar">
+        <!-- SIDEBAR -->
+        <?php include '../includes/sidebar_admin.php'; ?>
+    </div>
+    <!-- MAIN AREA -->
+    <div class="layout-content">
+        <?php include '../includes/header_admin.php'; ?>
 
             <main class="laporan-wrapper">
                 <div class="laporan">

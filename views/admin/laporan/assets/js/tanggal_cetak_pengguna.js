@@ -37,7 +37,7 @@ function parseDateTimeDMYHM(str) {
 
 
 $(document).ready(function () {
-  console.log("staf.js loaded");
+  console.log("tanggal_cetak_pengguna.js loaded");
 
   // ====== INITIALIZE DATA TABLE ======
   const TGL_COL = 6; // kolom tanggal validasi
@@ -77,10 +77,10 @@ $(document).ready(function () {
 
     columnDefs: [
       {
-        targets: 5, // Ganti 5 dengan indeks kolom "Dokumen" kamu (mulai dari 0)
+        targets: 5,
         visible: true,
         className: "text-center",
-        responsivePriority: 1, // Berikan prioritas tinggi agar tidak disembunyikan
+        responsivePriority: 1,
       },
     ],
     language: {

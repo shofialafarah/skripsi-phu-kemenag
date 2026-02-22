@@ -25,12 +25,12 @@
   border-radius: 16px;
   z-index: 1;
   box-shadow: 0 4px 16px rgba(0, 128, 0, 0.15);
-  overflow-x: auto; /* Biarkan tabel scroll horizontal saat perlu */
+  overflow-x: auto;
   overflow-y: hidden;
 }
 
 .laporan table {
-  min-width: 100%; /* Tabel minimal lebar container */
+  min-width: 100%;
   width: 100%;
   table-layout: auto;
   font-size: 14px;
@@ -42,7 +42,7 @@
   position: absolute;
   inset: 0;
   border-radius: 16px;
-  padding: 2px; /* tebal border */
+  padding: 2px;
   background: linear-gradient(135deg, #a8e485, #012c01);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
@@ -61,4 +61,33 @@
   padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+.dataTables_wrapper .row:first-child {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-bottom: 20px !important;
+}
+
+.dataTables_length label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+}
+
+.dataTables_filter label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+}
+
+.dataTables_filter input {
+    width: auto !important;
+    display: inline-block !important;
+    border: 1px solid #4caf50 !important;
+    border-radius: 4px !important;
 }

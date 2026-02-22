@@ -484,7 +484,7 @@ $dokumen_ktp_ada = !empty($limpah['dokumen_ktp']) && file_exists($file_path);
                                     <i class="fas fa-print"></i> Cetak Data
                                 </a>
 
-                                <a href="edit_pelimpahan_sakit_permanen.php?id_pelimpahan=<?= $limpah['id_pelimpahan'] ?>" class="btn btn-secondary">
+                                <a href="pelimpahan-sakit/edit_pelimpahan_sakit_permanen.php?id_pelimpahan=<?= $limpah['id_pelimpahan'] ?>" class="btn btn-secondary">
                                     <i class="fas fa-edit"></i> Edit Data
                                 </a>
                             </div>

@@ -7,9 +7,9 @@
  * ==============================================================================
  */
 session_start();
-include_once __DIR__ . '/../../../includes/koneksi.php';
+include_once __DIR__ . '/../../../../includes/koneksi.php';
 
-include '../../partials/fungsi.php';
+include '../../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_jamaah'])) {
     header("Location: login.php");
@@ -522,7 +522,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </form>
                     </div>
-                    <?php include_once __DIR__ . '/../includes/footer_jamaah.php'; ?>
+                    <?php include_once __DIR__ . '/../../includes/footer_jamaah.php'; ?>
                 </div>
             </main>
         </div>

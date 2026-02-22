@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_query($koneksi, $query)) {
         updateAktivitasPengguna($id_staf, 'staf', 'Pembatalan', 'Menginput data pembatalan meninggal dunia');
 
-        $_SESSION['success_message'] = "Data pembatalan meninggal <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
+        $_SESSION['success_message'] = "Data pembatalan meninggal dunia, <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
         header("Location: ../../entry_pembatalan.php");
         exit;
     } else {

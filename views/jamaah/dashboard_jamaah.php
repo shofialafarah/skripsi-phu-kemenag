@@ -75,6 +75,7 @@ if ($result && $row = $result->fetch_assoc()) {
     }
 }
 ?>
+<?php include_once 'includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -190,6 +191,7 @@ if ($result && $row = $result->fetch_assoc()) {
                     </div>
                 </div>
             </div>
+            <?php include_once __DIR__ . '../includes/footer_jamaah.php'; ?>
         </main>
     </div>
 </div>

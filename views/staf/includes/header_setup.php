@@ -1,0 +1,150 @@
+<?php
+/** =============================================================================
+ * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
+ * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
+ * Copyright (c) 2025. All Rights Reserved.
+ * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
+ * ==============================================================================
+ */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once __DIR__ . '/../../../includes/koneksi.php';
+
+// Ambil ID jamaah dari session
+if (!isset($_SESSION['id_staf'])) {
+    // Jika tidak ada session, arahkan ke login atau beri nilai default
+    header("Location: ../../auth/login.php"); 
+    exit();
+}
+
+// Cek session
+if (!isset($_SESSION['id_staf'])) {
+    $id_staf = 1; // Fallback sementara
+} else {
+    $id_staf = $_SESSION['id_staf'];
+}
+
+$sql_staf = "SELECT nama_staf FROM staf WHERE id_staf = ?";
+$stmt = $koneksi->prepare($sql_staf);
+$stmt->bind_param("i", $id_staf);
+$stmt->execute();
+$result = $stmt->get_result();
+$staf = $result->fetch_assoc();
+
+// ======================================
+// Notifikasi untuk berkas yang belum divalidasi
+// ======================================
+$sql_notif_validasi = "
+    -- Notifikasi untuk Pendaftaran yang belum divalidasi
+    SELECT nama_jamaah, 'Pendaftaran' AS jenis_pelayanan
+    FROM pendaftaran
+    WHERE tanggal_validasi IS NULL
+
+    UNION ALL
+
+    -- Notifikasi untuk Pembatalan yang belum divalidasi
+    SELECT j.nama AS nama_jamaah, 'Pembatalan' AS jenis_pelayanan
+    FROM pembatalan b
+    JOIN jamaah j ON b.id_jamaah = j.id_jamaah
+    WHERE b.tanggal_validasi IS NULL
+
+    UNION ALL
+
+    -- Notifikasi untuk Pelimpahan yang belum divalidasi
+    SELECT j.nama AS nama_jamaah, 'Pelimpahan' AS jenis_pelayanan
+    FROM pelimpahan l
+    JOIN jamaah j ON l.id_jamaah = j.id_jamaah
+    WHERE l.tanggal_validasi IS NULL
+";
+$stmt_notif = $koneksi->prepare($sql_notif_validasi);
+
+$stmt_notif->execute();
+$result_notif = $stmt_notif->get_result();
+
+$notifikasi_validasi = [];
+while ($row = $result_notif->fetch_assoc()) {
+    $notifikasi_validasi[] = $row;
+}
+$jumlah_notif_validasi = count($notifikasi_validasi);
+
+// ======================================
+// Notifikasi untuk berkas yang ditolak kepala seksi
+// ======================================
+$sql_notif_ditolak = "
+    SELECT nama_jamaah, 'Pendaftaran' AS jenis_pelayanan
+    FROM pendaftaran
+    WHERE status_verifikasi = 'Ditolak'
+
+    UNION ALL
+
+    SELECT j.nama AS nama_jamaah, 'Pembatalan' AS jenis_pelayanan
+    FROM pembatalan b
+    JOIN jamaah j ON b.id_jamaah = j.id_jamaah
+    WHERE b.status_verifikasi = 'Ditolak'
+
+    UNION ALL
+
+    SELECT j.nama AS nama_jamaah, 'Pelimpahan' AS jenis_pelayanan
+    FROM pelimpahan l
+    JOIN jamaah j ON l.id_jamaah = j.id_jamaah
+    WHERE l.status_verifikasi = 'Ditolak'
+";
+$stmt_notif_ditolak = $koneksi->prepare($sql_notif_ditolak);
+$stmt_notif_ditolak->execute();
+$result_notif_ditolak = $stmt_notif_ditolak->get_result();
+
+$notifikasi_ditolak = [];
+while ($row = $result_notif_ditolak->fetch_assoc()) {
+    $notifikasi_ditolak[] = $row;
+}
+$jumlah_notif_ditolak = count($notifikasi_ditolak);
+$base_url = "http://localhost/phu-kemenag-banjar-copy/";
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman Staf</title>
+    
+    <link rel="icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+    <link rel="shortcut icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome untuk icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+    <!-- css -->
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/global_style.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/header.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard.css">
+
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard_staf.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/entry.css">
+    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/notifikasi.css">
+    <style>
+        .dropdown-menu.scrollable-dropdown {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .header-actions .dropdown:hover .badge-notif {
+            color: #fff;
+        }
+    </style>
+    
+</head>
+
+<body>

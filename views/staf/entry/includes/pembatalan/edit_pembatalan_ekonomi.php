@@ -98,7 +98,7 @@ if (isset($_POST['update'])) {
 
     if (mysqli_stmt_execute($stmt)) {
         updateAktivitasPengguna($id_staf, 'staf', 'Pembatalan', 'Menginput data pembatalan keperluan ekonomi');
-        $_SESSION['success_message'] = "Data pembatalan ekonomi <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
+        $_SESSION['success_message'] = "Data pembatalan keperluan ekonomi, <b>" . $nama_jamaah . "</b> </br> berhasil diperbarui!";
         header("Location: ../../entry_pembatalan.php");
         exit;
     } else {

@@ -11,6 +11,7 @@ if (!$result) {
     die("Query error: " . mysqli_error($koneksi));
 }
 ?>
+<link rel="stylesheet" href="assets/css/jamaah.css">
 <?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
@@ -21,14 +22,14 @@ if (!$result) {
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
-        <main class="pPendaftaran-wrapper">
-            <div class="pPendaftaran">
-                <div class="pPendaftaran-header" style="color: white;">
+        <main class="jamaah-wrapper">
+            <div class="jamaah">
+                <div class="jamaah-header" style="color: white;">
                     <i class="fas fa-table me-1"></i> Manajemen Akun Jamaah Haji
                 </div>
-                <div class="pPendaftaran-body">
+                <div class="jamaah-body">
                     <div class="d-flex flex-wrap align-items-center mb-3">
-                        <div class="mb-3 ms-auto">
+                        <div class="ms-auto">
                             <a href="tambah_jamaah.php" class="btn btn-success">
                                 <i class="fas fa-user-plus me-1"></i> Tambah Jamaah
                             </a>
@@ -91,11 +92,8 @@ if (!$result) {
                             ?>
                         </tbody>
                     </table>
-
                 </div>
-                <div class="footer" style="color: white; text-align: center;">
-                    <p style="margin: 0;">&copy; UNISKA_<?= date('Y'); ?> | Shofia Nabila Elfa Rahma. 2110010113.</p>
-                </div>
+                <?php include_once __DIR__ . '/../../includes/footer_admin.php'; ?>
             </div>
         </main>
     </div>
@@ -108,6 +106,7 @@ if (!$result) {
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/jamaah.js"></script>
+
 </body>
 
 </html>

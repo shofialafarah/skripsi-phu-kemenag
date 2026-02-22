@@ -70,6 +70,7 @@ $(document).ready(function () {
     language: {
       url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/id.json",
     },
+    dom: '<"d-flex justify-content-between align-items-center mb-3"lf>rt<"d-flex justify-content-between align-items-center mt-3"ip>',
   });
 
   // Filter buttons

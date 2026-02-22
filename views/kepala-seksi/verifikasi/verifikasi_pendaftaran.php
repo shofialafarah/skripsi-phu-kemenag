@@ -101,6 +101,7 @@ if (!$result) {
 // Debug: Hitung jumlah data
 $total_data = mysqli_num_rows($result);
 ?>
+<?php include '../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
