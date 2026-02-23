@@ -544,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row g-3">
                                 <!-- Buku Setoran Awal Haji -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Buku Setoran Awal Haji (PDF)</label>
+                                    <label class="form-label">Buku Setoran Awal Haji (PDF)</label> <br>
                                     <?php if (!empty($data['dokumen_setor_awal'])): ?>
                                         <small>File saat ini: <a href="<?php echo htmlspecialchars($data['dokumen_setor_awal']); ?>" target="_blank"><?php echo basename($data['dokumen_setor_awal']); ?></a></small><br>
                                     <?php else: ?>
@@ -554,7 +554,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <!-- KTP atau KIA -->
                                 <div class="col-md-6">
-                                    <label class="form-label">KTP atau KIA (PDF)</label>
+                                    <label class="form-label">KTP atau KIA (PDF)</label> <br>
                                     <?php if (!empty($data['dokumen_ktp'])): ?>
                                         <small>File saat ini: <a href="<?php echo htmlspecialchars($data['dokumen_ktp']); ?>" target="_blank"><?php echo basename($data['dokumen_ktp']); ?></a></small><br>
                                     <?php else: ?>
@@ -565,7 +565,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <!-- Kartu Keluarga -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Kartu Keluarga (PDF)</label>
+                                    <label class="form-label">Kartu Keluarga (PDF)</label> <br>
                                     <?php if (!empty($data['dokumen_kk'])): ?>
                                         <small>File saat ini: <a href="<?php echo htmlspecialchars($data['dokumen_kk']); ?>" target="_blank"><?php echo basename($data['dokumen_kk']); ?></a></small><br>
                                     <?php else: ?>
@@ -576,7 +576,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <!-- Akta Lahir / Ijazah / Buku Nikah -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Akta Lahir / Ijazah / Buku Nikah (PDF)</label>
+                                    <label class="form-label">Akta Lahir / Ijazah / Buku Nikah (PDF)</label> <br>
                                     <?php if (!empty($data['dokumen_lain'])): ?>
                                         <small>File saat ini: <a href="<?php echo htmlspecialchars($data['dokumen_lain']); ?>" target="_blank"><?php echo basename($data['dokumen_lain']); ?></a></small><br>
                                     <?php else: ?>
@@ -586,7 +586,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <!-- Foto Wajah -->
                                 <div class="col-md-12">
-                                    <label class="form-label">Foto Wajah 80% (JPG/PNG)</label>
+                                    <label class="form-label">Foto Wajah 80% (JPG/PNG)</label> <br>
                                     <?php if (!empty($data['foto_wajah'])): ?>
                                         <small>File saat ini: <a href="<?php echo htmlspecialchars($data['foto_wajah']); ?>" target="_blank"><?php echo basename($data['foto_wajah']); ?></a></small><br>
                                     <?php else: ?>

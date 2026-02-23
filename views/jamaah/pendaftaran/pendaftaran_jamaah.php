@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -443,7 +444,10 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a href="<?= $status_verifikasi == 'Disetujui' ? $file_path : '#' ?>"
+                    <!-- Tombol Cetak hanya aktif jika status verifikasi adalah "Disetujui" -->
+                    <a href="<?= $status_verifikasi == 'Disetujui'
+                                    ? '/phu-kemenag-banjar-copy/' . $file_path
+                                    : '#' ?>"
                         class="btn btn-primary <?= $status_verifikasi != 'Disetujui' ? 'disabled' : '' ?>"
                         <?= $status_verifikasi != 'Disetujui'
                             ? 'onclick="return false;" title="Data belum disetujui"'
@@ -451,29 +455,53 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
                         <i class="fas fa-print"></i>
                         Cetak Data
                     </a>
-
-                    <a href="includes/edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>" class="btn btn-secondary">
-                        <i class="fas fa-edit"></i> Edit Data
-                    </a>
+                    <?php
+                        echo $status_verifikasi;
+                        echo $pendaftar['status'];
+                    ?>
+                    <!-- Tombol Edit hanya muncul jika status belum disetujui -->
+                    <?php if ($pendaftar['status'] != 'Disetujui') : ?>
+                        <a href="includes/edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>"
+                            class="btn btn-secondary">
+                            <i class="fas fa-edit"></i> Edit Data
+                        </a>
+                    <?php else : ?>
+                        <button class="btn btn-secondary" disabled title="Data sudah diverifikasi oleh Kepala">
+                            <i class="fas fa-lock"></i> Data Terkunci
+                        </button>
+                    <?php endif; ?>
                 </div>
 
-                <?php else: ?>
+            <?php else: ?>
                 <div class="alert alert-warning text-center">
                     <i class="fas fa-exclamation-triangle"></i>
                     <h4>Data Pendaftaran Tidak Ditemukan</h4>
                     <p>Silakan daftar terlebih dahulu.</p>
                     <a href="includes/tambah_pendaftaran.php" class="btn btn-primary">Daftar Sekarang</a>
                 </div>
-                <?php endif; ?>
-                <?php include_once __DIR__ . '/../includes/footer_jamaah.php'; ?>
+            <?php endif; ?>
+            <?php include_once __DIR__ . '/../includes/footer_jamaah.php'; ?>
             </div>
         </main>
     </div>
+</div>
 
-    <script src="../assets/js/sidebar.js"></script>
-    <?php include_once __DIR__ . '/../includes/link_script.php'; ?>
-    <script src="assets/js/jamaah.js"></script>
+<script src="../assets/js/sidebar.js"></script>
+<?php include_once __DIR__ . '/../includes/link_script.php'; ?>
+<script src="assets/js/jamaah.js"></script>
+<?php if (isset($_SESSION['success_message'])): ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '<?= $_SESSION['success_message']; ?>',
+                confirmButtonColor: '#1b5e20'
+            });
+        });
+    </script>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+</body>
 
-    </body>
-
-    </html>
+</html>

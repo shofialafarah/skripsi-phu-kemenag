@@ -181,12 +181,14 @@ $total_data = mysqli_num_rows($result);
 
                                         // Dokumen
                                         if (!empty($row['upload_doc'])) {
-                                            echo "<td><a href='" . htmlspecialchars($row['upload_doc']) . "' target='_blank' class='btn btn-sm btn-outline-primary'>
-        <i class='fas fa-file-pdf'></i> Lihat
-    </a></td>";
-                                        } else {
-                                            echo "<td class='text-center'>-</td>";
-                                        }
+                                        echo "<td class='text-center'>
+                                            <a href='/phu-kemenag-banjar-copy/" . htmlspecialchars($row['upload_doc']) . "' 
+                                            class='btn btn-sm btn-outline-primary' target='_blank'>
+                                            <i class='fas fa-file-pdf'></i> Lihat</a>
+                                        </td>";
+                                    } else {
+                                        echo "<td class='text-center'>-</td>";
+                                    }
 
 
                                         //Status Verifikasi

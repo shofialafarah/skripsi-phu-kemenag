@@ -36,7 +36,7 @@ switch ($role) {
 }
 
 if ($table) {
-    $query = "SELECT $id_column AS id, username FROM $table WHERE status_pengguna = 'aktif' ORDER BY username ASC";
+    $query = "SELECT $id_column AS id, username FROM $table ORDER BY username ASC";
     $result = $koneksi->query($query);
 
     echo '<option value="" disabled selected>-- Pilih Username --</option>';

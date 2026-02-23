@@ -8,19 +8,19 @@
  */
 session_start();
 include_once __DIR__ . '/../../../../includes/koneksi.php';
-
 include '../../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_jamaah'])) {
-    header("Location: login.php");
+    header("Location: ../../../auth/login.php");
     exit();
 }
-
 $id_jamaah = $_SESSION['id_jamaah'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Ambil data dari POST
+    // =========================
+    // AMBIL DATA FORM
+    // =========================
     $nama_jamaah = $_POST['nama_jamaah'] ?? '';
     $nik = $_POST['nik'] ?? '';
     $nama_ayah = $_POST['nama_ayah'] ?? '';
@@ -50,32 +50,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alis = $_POST['alis'] ?? '';
     $hidung = $_POST['hidung'] ?? '';
 
-    // ✅ Upload Dokumen
-    function uploadDokumen($fileFieldName, $target_dir)
+    $tanggal_pengajuan = date('Y-m-d');
+// =========================
+    // BUAT FOLDER OTOMATIS
+    // =========================
+
+    // Amankan nama folder
+    $nama_folder = preg_replace('/[^A-Za-z0-9\-]/', '_', $nama_jamaah);
+    $folder_jamaah = $nama_folder . '-' . $nik;
+
+    $base_dir = "../../../../uploads/pendaftaran/pengajuan-jamaah/";
+    $target_dir = $base_dir . $folder_jamaah . "/";
+
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0755, true);
+    }
+
+    // =========================
+    // FUNCTION UPLOAD FILE
+    // =========================
+    function uploadDokumen($fileFieldName, $target_dir, $prefix, $nama_jamaah)
     {
         if (!isset($_FILES[$fileFieldName]) || $_FILES[$fileFieldName]['error'] !== UPLOAD_ERR_OK) {
             return null;
         }
 
-        $file_name = $_FILES[$fileFieldName]['name'];
-        $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-        $unique_file_name = uniqid() . '.' . $file_ext;
-        $target_path = $target_dir . $unique_file_name;
+        $file_ext = strtolower(pathinfo($_FILES[$fileFieldName]['name'], PATHINFO_EXTENSION));
 
-        // Validasi hanya PDF kecuali untuk foto_wajah
+        // Validasi MIME
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $_FILES[$fileFieldName]['tmp_name']);
         finfo_close($finfo);
 
         if ($fileFieldName === 'foto_wajah') {
             if (!in_array($mime, ['image/jpeg', 'image/png'])) {
-                die("foto_wajah harus berupa gambar JPEG atau PNG.");
+                die("Foto wajah harus JPG atau PNG.");
             }
         } else {
             if ($mime !== 'application/pdf') {
                 die("File $fileFieldName harus berupa PDF.");
             }
         }
+
+        // Amankan nama jamaah untuk nama file
+        $safe_nama = preg_replace('/[^A-Za-z0-9\-]/', '_', $nama_jamaah);
+
+        $new_file_name = $prefix . '_' . $safe_nama . '.' . $file_ext;
+        $target_path = $target_dir . $new_file_name;
 
         if (!move_uploaded_file($_FILES[$fileFieldName]['tmp_name'], $target_path)) {
             die("Gagal upload file $fileFieldName.");
@@ -84,28 +105,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return $target_path;
     }
 
-    $target_dir = "../assets/berkas/pengajuan/";
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true);
-    }
+    // =========================
+    // UPLOAD FILE
+    // =========================
+   
+    $dokumen_setor_awal = uploadDokumen('dokumen_setor_awal', $target_dir, 'SetorAwal', $nama_jamaah);
+    $dokumen_ktp        = uploadDokumen('dokumen_ktp', $target_dir, 'KTP', $nama_jamaah);
+    $dokumen_kk         = uploadDokumen('dokumen_kk', $target_dir, 'KK', $nama_jamaah);
+    $dokumen_lain       = uploadDokumen('dokumen_lain', $target_dir, 'DokumenLain', $nama_jamaah);
+    $foto_wajah         = uploadDokumen('foto_wajah', $target_dir, 'FotoWajah', $nama_jamaah);
 
-    $dokumen_setor_awal = uploadDokumen('dokumen_setor_awal', $target_dir);
-    $dokumen_ktp        = uploadDokumen('dokumen_ktp', $target_dir);
-    $dokumen_kk         = uploadDokumen('dokumen_kk', $target_dir);
-    $dokumen_lain       = uploadDokumen('dokumen_lain', $target_dir);
-    $foto_wajah         = uploadDokumen('foto_wajah', $target_dir); // bisa image
+    // =========================
+    // INSERT DATABASE
+    // =========================
 
-    $tanggal_pengajuan = date('Y-m-d');
-
-    // Perbaikan query - menambahkan ktp_alamat yang hilang
     $query = "INSERT INTO pendaftaran (
-        id_jamaah, nama_jamaah, nik, nama_ayah, tempat_lahir, tanggal_lahir, 
-        pendidikan, pekerjaan, kewarganegaraan, goldar, telp_rumah, no_telepon, 
-        status_perkawinan, status_pergi_haji, 
+        id_jamaah, nama_jamaah, nik, nama_ayah, tempat_lahir, tanggal_lahir,
+        pendidikan, pekerjaan, kewarganegaraan, goldar, telp_rumah, no_telepon,
+        status_perkawinan, status_pergi_haji,
         ktp_alamat, ktp_kecamatan, ktp_kelurahan, ktp_kode_pos,
-        alamat, kecamatan, kelurahan, kode_pos, jenis_kelamin, wajah, 
-        tinggi_badan, berat_badan, rambut, alis, hidung, 
-        dokumen_setor_awal, dokumen_ktp, dokumen_kk, dokumen_lain, foto_wajah, 
+        alamat, kecamatan, kelurahan, kode_pos, jenis_kelamin, wajah,
+        tinggi_badan, berat_badan, rambut, alis, hidung,
+        dokumen_setor_awal, dokumen_ktp, dokumen_kk, dokumen_lain, foto_wajah,
         tanggal_pengajuan
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -115,8 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Prepare failed: " . $koneksi->error);
     }
 
-    // Perbaikan types - mengurangi satu karakter karena ada 35 parameter, bukan 36
-    $types = "issssssssssssssssssssssssiissssssss"; // 35 karakter
+    $types = "issssssssssssssssssssssssiissssssss"; 
 
     $stmt->bind_param(
         $types,
@@ -134,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $no_telepon,
         $status_perkawinan,
         $status_pergi_haji,
-        $ktp_alamat,            // Parameter yang hilang di bind_param
+        $ktp_alamat,            
         $ktp_kecamatan,
         $ktp_kelurahan,
         $ktp_kode_pos,
@@ -144,8 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $kode_pos,
         $jenis_kelamin,
         $wajah,
-        $tinggi_badan,          // i
-        $berat_badan,           // i
+        $tinggi_badan,          
+        $berat_badan,           
         $rambut,
         $alis,
         $hidung,
@@ -158,12 +178,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmt->execute()) {
-        // ✅ Catat aktivitas pengguna terlebih dahulu
         updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pendaftaran', 'Menambahkan data pendaftaran baru');
 
-        // Baru redirect
         $_SESSION['success_message'] = "Pengajuan pendaftaran berhasil dikirim.";
-        header("Location: pendaftaran_jamaah.php");
+        header("Location: ../pendaftaran_jamaah.php");
         exit();
     } else {
         echo "Execute failed: " . $stmt->error;

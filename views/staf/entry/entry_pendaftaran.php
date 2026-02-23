@@ -55,6 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
             header("Location: entry_pendaftaran.php");
             exit;
         }
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $fileTmp);
+        finfo_close($finfo);
+
+        if ($mime !== 'application/pdf') {
+            $_SESSION['error_message'] = "File harus berupa PDF asli.";
+            header("Location: entry_pendaftaran.php");
+            exit;
+        }
 
         // Validasi ukuran file (5MB)
         if ($fileSize > 5 * 1024 * 1024) {
@@ -68,17 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
         // 1. Ambil data jamaah untuk membuat folder unik
         $query_jamaah = "SELECT nama_jamaah, nik FROM pendaftaran WHERE id_pendaftaran = '$id_pendaftaran'";
         $result_jamaah = mysqli_query($koneksi, $query_jamaah);
-        
+
         if ($result_jamaah && mysqli_num_rows($result_jamaah) > 0) {
             $row_jam = mysqli_fetch_assoc($result_jamaah);
-            
+
             // Bersihkan nama jamaah untuk folder
             $nama_jamaah_clean = str_replace(' ', '_', preg_replace('/[^a-zA-Z0-9 ]/', '', $row_jam['nama_jamaah']));
             $folder_utama = $nama_jamaah_clean . "_" . $row_jam['nik'];
 
-            // 2. Tentukan Path lengkap ke folder /Entry/
-            // Keluar dari views/staf/ menuju assets/berkas/pendaftaran/Nama_NIK/Entry/
-            $uploadDir = __DIR__ . "/../../../assets/berkas/pendaftaran/" . $folder_utama . "/Entry/";
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/phu-kemenag-banjar-copy/uploads/pendaftaran/dokumen-staf/" . $folder_utama . "/";
 
             // 3. Buat folder otomatis (Recursive)
             if (!is_dir($uploadDir)) {
@@ -93,23 +100,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
             $nama_staf_clean = str_replace(' ', '_', preg_replace('/[^a-zA-Z0-9 ]/', '', $row_staf['nama_staf']));
             $nip_staf = $row_staf['nip'];
 
-            // 5. Nama File: Entry_NamaStaf_NIP.pdf
-            $newFileName = "Entry_" . $nama_staf_clean . "_" . $nip_staf . ".pdf";
+            $newFileName = "SPH_" . $nama_staf_clean . "_" . $nip_staf . "_" . time() . ".pdf";
             $targetPath = $uploadDir . $newFileName;
 
             // 6. Pindahkan File
             if (move_uploaded_file($fileTmp, $targetPath)) {
                 // Path yang disimpan ke DB (untuk dipanggil di link href)
-                $dbPath = "assets/berkas/pendaftaran/" . $folder_utama . "/Entry/" . $newFileName;
-                
+                $dbPath = "uploads/pendaftaran/dokumen-staf/" . $folder_utama . "/" . $newFileName;
+
                 $sql = "UPDATE pendaftaran SET 
-                        upload_doc = '$dbPath', 
-                        tanggal_validasi = NOW() 
-                        WHERE id_pendaftaran = $id_pendaftaran";
+                    upload_doc = '$dbPath',
+                    status = 'Tervalidasi',
+                    tanggal_validasi = NOW() 
+                    WHERE id_pendaftaran = '$id_pendaftaran'";
 
                 if (mysqli_query($koneksi, $sql)) {
                     updateAktivitasPengguna($id_staf, 'staf', 'Pendaftaran', 'Mengupload data pendaftaran');
-                    $_SESSION['success_message'] = "Dokumen berhasil diupload ke folder " . $folder_utama . "/Entry";
+                    $_SESSION['success_message'] = "Dokumen SPH berhasil diupload.";
                 } else {
                     $_SESSION['error_message'] = "Gagal simpan ke database.";
                 }
@@ -187,8 +194,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
                                     echo "<td>" . htmlspecialchars($row['nik']) . "</td>";
                                     if (!empty($row['upload_doc'])) {
                                         echo "<td class='text-center'>
-                                            <a href='" . htmlspecialchars($row['upload_doc']) . "' class='btn-lihat-dokumen' target='_blank'>
-                                            <i class='fas fa-file-pdf'></i> Lihat</a></td>";
+                                            <a href='/phu-kemenag-banjar-copy/" . htmlspecialchars($row['upload_doc']) . "' 
+                                            class='btn-lihat-dokumen' target='_blank'>
+                                            <i class='fas fa-file-pdf'></i> Lihat</a>
+                                        </td>";
                                     } else {
                                         echo "<td class='text-center'>-</td>";
                                     }

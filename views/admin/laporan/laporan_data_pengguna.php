@@ -242,7 +242,35 @@ function clean_input($data)
 
 <script src="assets/js/cetak_data_pengguna.js"></script>
 <script src="assets/js/tanggal_cetak_pengguna.js"></script>
+<script>
+$(document).ready(function() {
+    // Fungsi ini berjalan saat pilihan Role berubah
+    $('#roleSelect').on('change', function() {
+        var role = $(this).val(); // Mengambil nilai role yang dipilih (jamaah/staf/kepala_seksi)
+        var usernameSelect = $('#usernameSelect');
 
+        // Tampilkan pesan loading sementara
+        usernameSelect.html('<option value="" disabled selected>-- Memuat... --</option>');
+
+        if (role) {
+            $.ajax({
+                // SESUAIKAN PATH INI: pastikan url-nya benar mengarah ke file ambil_username_by_role.php
+                url: 'proses/ambil_username_by_role.php', 
+                type: 'POST',
+                data: { role: role },
+                success: function(response) {
+                    // Masukkan hasil echo dari PHP tadi ke dalam dropdown username
+                    usernameSelect.html(response);
+                },
+                error: function() {
+                    alert('Gagal mengambil data username. Pastikan file ambil_username_by_role.php sudah benar.');
+                    usernameSelect.html('<option value="" disabled selected>-- Pilih Username --</option>');
+                }
+            });
+        }
+    });
+});
+</script>
 </body>
 
 </html>

@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_execute($stmt_update);
 
             // link reset password
-            $reset_link = "http://localhost/phu-kemenag-banjar-copy/auth/reset_pass.php?token=" . $token . "&type=" . $user_table;
+            $reset_link = "http://localhost/phu-kemenag-banjar-copy/views/auth/reset_pass.php?token=" . $token . "&type=" . $user_table;
 
             // --- Bagian Pengiriman Email dengan PHPMailer ---
             $mail = new PHPMailer(true);
