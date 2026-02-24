@@ -11,16 +11,6 @@
 * {
 	box-sizing: border-box;
 }
-/* Responsiveness */
-@media screen and (max-width: 768px) {
-    .container {
-        width: 90%;
-        min-height: auto;
-    }
-    .form-container {
-        width: 100%;
-    }
-}
 :root {
     --primary-green: #228B22;
     --secondary-green: #32CD32;

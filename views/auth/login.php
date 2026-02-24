@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * ==============================================================================
@@ -7,8 +8,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-include '../../includes/koneksi.php'; 
-include '../partials/fungsi.php';  
+include '../../includes/koneksi.php';
+include '../partials/fungsi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim(htmlspecialchars($_POST['username']));
@@ -104,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/login.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in-container">
@@ -153,25 +156,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="assets/js/login.js"></script>
 
     <?php if (isset($_SESSION['error_message'])): ?>
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '<?= $_SESSION['error_message']; ?>',
-            confirmButtonColor: '#2e7d32'
-        });
-    </script>
-    <?php unset($_SESSION['error_message']); endif; ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<?= $_SESSION['error_message']; ?>',
+                confirmButtonColor: '#2e7d32'
+            });
+        </script>
+    <?php unset($_SESSION['error_message']);
+    endif; ?>
 
     <?php if (isset($_SESSION['registrasi_success'])): ?>
-    <script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Alhamdulillah',
+                text: '<?= $_SESSION['registrasi_success']; ?>',
+                confirmButtonColor: '#2e7d32'
+            });
+        </script>
+    <?php unset($_SESSION['registrasi_success']);
+    endif; ?>
+
+    <?php
+    // Di bagian bawah file login.php sebelum tutup </body>
+    if (isset($_GET['pesan']) && $_GET['pesan'] == 'logout') {
+        echo "<script>
         Swal.fire({
             icon: 'success',
-            title: 'Alhamdulillah',
-            text: '<?= $_SESSION['registrasi_success']; ?>',
-            confirmButtonColor: '#2e7d32'
+            title: 'Berhasil Logout',
+            text: 'Anda telah keluar dari sistem.',
+            showConfirmButton: false,
+            timer: 2000
         });
-    </script>
-    <?php unset($_SESSION['registrasi_success']); endif; ?>
+    </script>";
+    }
+    ?>
 </body>
+
 </html>

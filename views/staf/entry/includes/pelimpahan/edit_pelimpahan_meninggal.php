@@ -179,6 +179,7 @@ WHERE id_limpah_meninggal = ?";
     mysqli_stmt_close($stmt);
 }
 ?>
+<?php include '../../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -194,7 +195,7 @@ WHERE id_limpah_meninggal = ?";
                     <h1>Pelimpahan - Meninggal Dunia</h1>
                     <div class="button-group">
                         <button type="reset" form="form-data" class="btn btn-reset"><i class="fas fa-rotate-left"></i></button>
-                        <button type="button" class="btn btn-back" onclick="window.location.href='entry_pelimpahan.php'">
+                        <button type="button" class="btn btn-back" onclick="window.location.href='../../entry_pelimpahan.php'">
                             <i class="fas fa-arrow-left"></i>
                         </button>
                     </div>

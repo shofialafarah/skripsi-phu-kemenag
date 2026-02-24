@@ -30,6 +30,7 @@ if (isset($_GET['id'])) {
     exit();
 }
 ?>
+<?php include '../../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -47,13 +48,13 @@ if (isset($_GET['id'])) {
 
                 <div class="btn-group">
                     <!-- Tombol untuk mencetak SPTJM -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-meninggal/sptjm_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-meninggal/sptjm_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
 
                     <!-- Tombol untuk mencetak Permohonan -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-meninggal/surat_permohonan_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-meninggal/surat_permohonan_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
 
                     <!-- Tombol untuk mencetak Surat Tanda Tangan Kasi -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-meninggal/surat_pembatalan_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pembatalan</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-meninggal/surat_pembatalan_meninggal.php?id=<?php echo $id_batal_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pembatalan</a>
                 </div>
 
 

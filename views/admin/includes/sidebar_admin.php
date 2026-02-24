@@ -163,7 +163,7 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
                         <a href="/phu-kemenag-banjar-copy/views/admin/laporan/laporan_riwayat_aksi.php" class="<?= in_array($currentPage, ['laporan_riwayat_aksi.php']) ? 'active' : '' ?>">Riwayat Aksi</a>
                     </div>
                 </nav>
-                <a href="<?= BASE_URL ?>views/auth/logout.php" class="logout-btn">
+                <a href="<?= BASE_URL ?>views/auth/logout.php" id="tombol-logout" class="logout-btn">
                     <span class="material-symbols-outlined">logout</span>
                 </a>
             </div>
@@ -172,7 +172,30 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 </div>
 
 <!-- Scripts -->
-<script src="assets/js/sidebar_staf.js"></script>
+<script src="../assets/js/sidebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('tombol-logout').addEventListener('click', function(e) {
+        e.preventDefault(); // Mencegah link pindah halaman langsung
+        const href = this.getAttribute('href');
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda akan keluar dari aplikasi ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika user klik Ya, arahkan ke logout.php
+                window.location.href = href;
+            }
+        })
+    });
+</script>
 </body>
 
 </html>

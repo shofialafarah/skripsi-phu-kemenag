@@ -29,6 +29,7 @@ if (isset($_GET['id'])) {
     exit();
 }
 ?>
+<?php include '../../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -46,13 +47,13 @@ if (isset($_GET['id'])) {
 
                 <div class="btn-group">
                     <!-- Tombol untuk mencetak SPTJM -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-ekonomi/sptjm_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-ekonomi/sptjm_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
 
                     <!-- Tombol untuk mencetak Permohonan -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-ekonomi/surat_permohonan_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-ekonomi/surat_permohonan_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
 
                     <!-- Tombol untuk mencetak Surat Permohonan Pembatalan -->
-                    <a href="/phu-kemenag-banjar-copy/assets/laporan/pembatalan/pembatalan-ekonomi/surat_pembatalan_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak Surat Pembatalan</a>
+                    <a href="/phu-kemenag-banjar-copy/uploads/pembatalan/dokumen-staf/pembatalan-ekonomi/surat_pembatalan_ekonomi.php?id=<?php echo $id_batal_ekonomi; ?>" class="btn-cetak" target="_blank">Cetak Surat Pembatalan</a>
                 </div>
             </div>
         </main>
