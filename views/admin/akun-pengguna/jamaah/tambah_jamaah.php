@@ -2,7 +2,7 @@
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
- * Copyright (c) 2025. All Rights Reserved.
+ * Copyright (c) 2026. All Rights Reserved.
  * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
  * ==============================================================================
  */
@@ -27,15 +27,15 @@ function generateRandomPassword($length = 12)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $validasi_bank = $_POST['validasi_bank'];
-    $nomor_telepon = $_POST['nomor_telepon'];
+    $nomor_telepon = $_POST['no_telepon']; // Sesuaikan dengan atribut name di input
     $email = $_POST['email'];
     $username = $_POST['username'];
-    $foto = ''; // default kosong
+    $foto_db = NULL; // default di database NULL
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "<script>alert('Format email tidak valid!');</script>";
     } else {
-        // Cek duplikasi username atau email sebelum upload
+        // Cek duplikasi username
         $cek = $koneksi->prepare("SELECT id_jamaah FROM jamaah WHERE username=?");
         $cek->bind_param("s", $username);
         $cek->execute();
@@ -46,27 +46,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        // Upload foto jika ada
+        // --- PENYESUAIAN PENYIMPANAN FOTO ---
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
             $file_info = pathinfo($_FILES['foto']['name']);
             $file_extension = strtolower($file_info['extension']);
-
-            // Validasi ekstensi file
             $allowed_extensions = ['jpg', 'jpeg', 'png'];
+
             if (!in_array($file_extension, $allowed_extensions)) {
                 echo "<script>alert('Format file harus JPG atau PNG!');</script>";
             } else {
-                // Nama file baru berdasarkan username
-                $new_filename = 'Jamaah_' . $username . '.' . $file_extension;
-                $target_path = 'assets/img/' . $new_filename;
-
-                // Pastikan direktori img ada
-                if (!is_dir('assets/img/')) {
-                    mkdir('assets/img/', 0777, true);
+                // Path tujuan sesuai folder upload terpusat
+                $dir_tujuan = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/uploads/akun-pengguna/jamaah/';
+                
+                if (!is_dir($dir_tujuan)) {
+                    mkdir($dir_tujuan, 0777, true);
                 }
 
+                $new_filename = 'Jamaah_' . $username . '_' . time() . '.' . $file_extension;
+                $target_path = $dir_tujuan . $new_filename;
+
                 if (move_uploaded_file($_FILES['foto']['tmp_name'], $target_path)) {
-                    $foto = $target_path;
+                    $foto_db = $new_filename; // Simpan NAMA FILE saja ke DB
                 } else {
                     echo "<script>alert('Gagal mengunggah foto!');</script>";
                 }
@@ -78,18 +78,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $hashed_password = password_hash($password_plain, PASSWORD_DEFAULT);
 
         $stmt = $koneksi->prepare("INSERT INTO jamaah (nama, validasi_bank, nomor_telepon, email, username, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-        $stmt->bind_param("sssssss", $nama, $validasi_bank, $nomor_telepon, $email, $username, $hashed_password, $foto);
+        $stmt->bind_param("sssssss", $nama, $validasi_bank, $nomor_telepon, $email, $username, $hashed_password, $foto_db);
 
         if ($stmt->execute()) {
             $mail = new PHPMailer(true);
-
             try {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'phukemenagbanjar@gmail.com';  // Email pengirim
-                $mail->Password = 'fulp gmia ztvl mjxz';            // App Password dari Gmail
+                $mail->Username = 'phukemenagbanjar@gmail.com';
+                $mail->Password = 'fulp gmia ztvl mjxz';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
@@ -97,108 +95,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->addAddress($email, $nama);
 
                 $mail->isHTML(true);
-                // Kirim email ke jamaah dengan template HTML yang menarik
                 $mail->Subject = "Akun Anda Telah Dibuat!";
-
                 $mail->Body = <<<HTML
-
                 <style>
-                    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+                    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
                     .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-                    .header { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 40px 30px; text-align: center; position: relative; }
-                    .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><circle cx=\"20\" cy=\"20\" r=\"2\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"80\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"40\" cy=\"80\" r=\"2\" fill=\"rgba(255,255,255,0.1)\"/></svg>'); }
-                    .logo { width: 80px; height: 80px; background: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); position: relative; z-index: 1; }
-                    .logo img { width: 50px; height: 50px; object-fit: contain; }
-                    .welcome-text { font-size: 28px; font-weight: bold; margin: 0; position: relative; z-index: 1; }
-                    .subtitle { font-size: 16px; opacity: 0.9; margin: 10px 0 0 0; position: relative; z-index: 1; }
+                    .header { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 40px 30px; text-align: center; }
                     .content { padding: 40px 30px; }
-                    .greeting { font-size: 20px; color: #333; margin-bottom: 20px; }
-                    .highlight-name { color: #4CAF50; font-weight: bold; }
-                    .credentials-box { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; padding: 25px; margin: 25px 0; border-left: 5px solid #4CAF50; }
-                    .credentials-title { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 15px; display: flex; align-items: center; }
-                    .credentials-title::before { content: '🔐'; margin-right: 10px; }
-                    .credential-item { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-                    .credential-label { font-weight: bold; color: #555; }
-                    .credential-value { background: #4CAF50; color: white; padding: 5px 12px; border-radius: 6px; font-family: monospace; font-size: 14px; }
-                    .warning-box { background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); border-left: 5px solid #ffc107; padding: 20px; border-radius: 10px; margin: 20px 0; }
-                    .warning-text { color: #856404; font-weight: 500; display: flex; align-items: center; }
-                    .warning-text::before { content: '⚠️'; margin-right: 10px; }
-                    .action-button { display: inline-block; background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; margin: 20px 0; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3); transition: all 0.3s ease; }
-                    .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
-                    .footer-text { color: #666; font-size: 14px; margin: 5px 0; }
-                    .social-links { margin: 20px 0; }
-                    .social-links a { display: inline-block; margin: 0 10px; padding: 10px; background: #4CAF50; color: white; border-radius: 50%; text-decoration: none; width: 40px; height: 40px; line-height: 20px; }
+                    .credentials-box { background: #f8f9fa; border-radius: 15px; padding: 25px; margin: 25px 0; border-left: 5px solid #4CAF50; }
+                    .credential-item { display: flex; justify-content: space-between; margin: 10px 0; }
+                    .credential-value { font-weight: bold; color: #4CAF50; }
+                    .action-button { display: inline-block; background: #4CAF50; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; }
                 </style>
-
                 <div class='container'>
                     <div class='header'>
-                        <div class='logo'>
-                            <img src='https://cdn.kemenag.go.id/storage/archives/logo-kemenag-png-1png.png' alt='Logo Kemenag'>
-                        </div>
-                        <h1 class='welcome-text'>Assalamu'alaikum Jamaah!</h1>
-                        <p class='subtitle'>Akun Haji Anda Telah Berhasil Dibuat</p>
+                        <h1 style='margin:0;'>Assalamu'alaikum!</h1>
+                        <p>Akun Pelayanan Haji Anda Siap Digunakan</p>
                     </div>
-                    
                     <div class='content'>
-                        <div class='greeting'>
-                            Halo, <span class='highlight-name'>$nama</span>!
-                        </div>
-                        
-                        <p style='color: #666; line-height: 1.6; margin-bottom: 25px;'>
-                            Selamat! Akun Anda untuk sistem pelayanan Penyelenggaraan Haji dan Umroh (PHU) telah berhasil dibuat. 
-                            Anda sekarang dapat mengakses sistem dengan kredensial berikut:
-                        </p>
-                        
+                        <p>Halo <strong>$nama</strong>, akun Anda telah berhasil didaftarkan oleh Admin.</p>
                         <div class='credentials-box'>
-                            <div class='credentials-title'>Informasi Login Anda</div>
-                            <div class='credential-item'>
-                                <span class='credential-label'>Username:</span>
-                                <span class='credential-value'>$username</span>
-                            </div>
-                            <div class='credential-item'>
-                                <span class='credential-label'>Password:</span>
-                                <span class='credential-value'>$password_plain</span>
-                            </div>
+                            <div class='credential-item'><span>Username:</span> <span class='credential-value'>$username</span></div>
+                            <div class='credential-item'><span>Password:</span> <span class='credential-value'>$password_plain</span></div>
                         </div>
-                        
-                        <div class='warning-box'>
-                            <div class='warning-text'>
-                                Demi keamanan, silakan login dan segera ubah password Anda setelah login pertama kali.
-                            </div>
-                        </div>
-                        
-                        <div style='text-align: center; margin: 30px 0;'>
-                            <a href='http://localhost/phu-kemenag-banjar/login.php' class='action-button'>Login Sekarang</a>
-                        </div>
-                        
-                        <div style='background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 30px;'>
-                            <h3 style='color: #333; margin-top: 0;'>Langkah Selanjutnya:</h3>
-                            <ul style='color: #666; line-height: 1.6;'>
-                                <li>Login menggunakan kredensial di atas</li>
-                                <li>Ubah password default Anda</li>
-                                <li>Lengkapi profil Anda jika diperlukan</li>
-                                <li>Mulai menggunakan sistem pelayanan</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class='footer'>
-                        <div class='footer-text'>
-                            <strong>Kementerian Agama Republik Indonesia</strong><br>
-                            Direktorat Jenderal Penyelenggaraan Haji dan Umroh
-                        </div>
-                        <div class='footer-text' style='margin-top: 15px;'>
-                            Email ini dikirim secara otomatis, mohon tidak membalas.<br>
-                            Jika ada pertanyaan, silakan hubungi administrator sistem.
-                        </div>
-                        <div class='footer-text' style='margin-top: 20px; font-size: 12px; color: #999;'>
-                            © UNISKA_2025 Shofia Nabila Elfa Rahma. Semua hak dilindungi.
-                        </div>
+                        <p style='text-align:center;'><a href='http://localhost/phu-kemenag-banjar/login.php' class='action-button'>Login Sekarang</a></p>
                     </div>
                 </div>
-            </body>
-            </html>
-            HTML;
+HTML;
                 $mail->send();
                 header('Location: manajemen_jamaah.php?created=1&mail=1');
                 exit();
@@ -214,14 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 <link rel="stylesheet" href="assets/css/jamaah.css">
-
 <?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
-        <!-- SIDEBAR -->
         <?php include '../../includes/sidebar_admin.php'; ?>
     </div>
-    <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
 
@@ -246,7 +166,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                <!-- KIRI: FOTO + UPLOAD -->
                                 <div style="display: flex; align-items: center; gap: 15px;">
                                     <div>
                                         <img id="previewFoto" src="assets/img/profil.jpg"
@@ -255,12 +174,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div>
                                         <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                            <label for="foto" class="btn-upload-foto" style="margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px;">
+                                            <label for="foto" class="btn-upload-foto" style="margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px; background: #0d6efd; color: white; padding: 0 15px; border-radius: 5px;">
                                                 Upload
                                             </label>
                                             <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
 
-                                            <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger" style="width: 40px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: none;">
+                                            <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger" style="width: 40px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 5px; border: none; background: #dc3545; color: white;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -268,7 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
                             </div>
-
 
                             <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px; margin-top: 10px;">
                                 <div style="flex: 1;">
@@ -308,10 +226,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-<script src="../../assets/js/sidebar.js"></script>
-<script src="assets/js/jamaah.js"></script>
-<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
+<script>
+function previewGambar(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewFoto').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
+function hapusFoto() {
+    document.getElementById('previewFoto').src = 'assets/img/profil.jpg';
+    document.getElementById('foto').value = "";
+}
+</script>
+</body>
 </html>

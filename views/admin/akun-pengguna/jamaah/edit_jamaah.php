@@ -8,7 +8,15 @@
  */
 include_once __DIR__ . '/../../../../includes/koneksi.php';
 
-// Ambil data berdasarkan ID
+// 1. Definisikan Path Fisik (Agar tidak error Undefined di HTML)
+$dir_tujuan = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/uploads/akun-pengguna/jamaah/';
+
+// 2. Ambil data berdasarkan ID
+if (!isset($_GET['id'])) {
+    header('Location: manajemen_jamaah.php');
+    exit();
+}
+
 $id_jamaah = $_GET['id'];
 $stmt = $koneksi->prepare("SELECT * FROM jamaah WHERE id_jamaah = ?");
 $stmt->bind_param("i", $id_jamaah);
@@ -16,88 +24,67 @@ $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 
-// Proses edit data
+// 3. Proses edit data (saat tombol simpan diklik)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $validasi_bank = $_POST['validasi_bank'];
     $nomor_telepon = $_POST['nomor_telepon'];
     $email = $_POST['email'];
     $username = $_POST['username'];
-    $foto = $data['foto'];
+    
+    $foto_lama = $data['foto'];
+    $foto_db = $foto_lama; 
+    $hapus_foto_status = isset($_POST['hapus_foto_status']) ? $_POST['hapus_foto_status'] : '0';
 
-    // Validasi email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>alert('Format email tidak valid!');</script>";
-    } else {
-        // Proses upload foto jika ada
-        if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-            $file_tmp = $_FILES['foto']['tmp_name'];
-            $file_name = $_FILES['foto']['name'];
-            $file_size = $_FILES['foto']['size'];
-            $file_type = $_FILES['foto']['type'];
+    // Logika HAPUS FOTO
+    if ($hapus_foto_status == '1') {
+        if (!empty($foto_lama) && file_exists($dir_tujuan . $foto_lama)) {
+            unlink($dir_tujuan . $foto_lama);
+        }
+        $foto_db = NULL; 
+    }
 
-            // Validasi tipe file
-            $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
-            if (!in_array($file_type, $allowed_types)) {
-                echo "<script>alert('Format file harus JPG atau PNG!');</script>";
-            } else if ($file_size > 10 * 1024 * 1024) { // 10MB
-                echo "<script>alert('Ukuran file maksimal 10MB!');</script>";
-            } else {
-                // Buat direktori jika belum ada
-                $upload_dir = 'assets/img/';
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0755, true);
-                }
+    // Logika UPLOAD FOTO BARU
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+        $file_tmp = $_FILES['foto']['tmp_name'];
+        $file_name = $_FILES['foto']['name'];
+        $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
-                // Dapatkan ekstensi file
-                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+        // Nama file unik dengan time() agar tidak kena cache browser
+        $new_filename = 'Jamaah_' . $username . '_' . time() . '.' . $file_extension;
+        $target_path = $dir_tujuan . $new_filename;
 
-                // Buat nama file baru: Staf_username.extension
-                $new_filename = 'Jamaah_' . $username . '.' . $file_extension;
-                $target_path = $upload_dir . $new_filename;
-
-                // Hapus foto lama jika ada dan berbeda dengan foto baru
-                if (!empty($data['foto']) && file_exists($data['foto']) && $data['foto'] != $target_path) {
-                    unlink($data['foto']);
-                }
-
-                // Upload file baru
-                if (move_uploaded_file($file_tmp, $target_path)) {
-                    $foto = $target_path;
-                } else {
-                    echo "<script>alert('Gagal mengunggah foto!');</script>";
-                }
+        if (move_uploaded_file($file_tmp, $target_path)) {
+            $foto_db = $new_filename;
+            // Hapus fisik foto lama jika user ganti foto (bukan cuma hapus)
+            if (!empty($foto_lama) && file_exists($dir_tujuan . $foto_lama)) {
+                unlink($dir_tujuan . $foto_lama);
             }
         }
+    }
 
-        // Update data
-        $stmt = $koneksi->prepare("UPDATE jamaah SET 
-                  nama = ?, validasi_bank = ?, nomor_telepon = ?, email = ?,  
-                  username = ?, foto = ? 
-                  WHERE id_jamaah = ?");
-        $stmt->bind_param("ssssssi", $nama, $validasi_bank, $nomor_telepon, $email, $username, $foto, $id_jamaah);
+    // Update data ke Database
+    $stmt_update = $koneksi->prepare("UPDATE jamaah SET nama=?, validasi_bank=?, nomor_telepon=?, email=?, username=?, foto=? WHERE id_jamaah=?");
+    $stmt_update->bind_param("ssssssi", $nama, $validasi_bank, $nomor_telepon, $email, $username, $foto_db, $id_jamaah);
 
-        if ($stmt->execute()) {
-            header('Location: manajemen_jamaah.php?updated=1');
-            exit();
-        } else {
-            header('Location: manajemen_jamaah.php?updated=0');
-            exit();
-        }
+    if ($stmt_update->execute()) {
+        echo "<script>window.location.href='manajemen_jamaah.php?updated=1';</script>";
+        exit();
+    } else {
+        echo "<script>alert('Gagal memperbarui data!');</script>";
     }
 }
 ?>
+
 <link rel="stylesheet" href="assets/css/jamaah.css">
 <?php include '../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
-        <!-- SIDEBAR -->
         <?php include '../../includes/sidebar_admin.php'; ?>
     </div>
-    <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include '../../includes/header_admin.php'; ?>
-        
+
         <main class="jamaah-wrapper">
             <div class="jamaah">
                 <div class="jamaah-header" style="color: white;">
@@ -105,6 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="jamaah-body">
                     <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="hapus_foto_status" id="hapus_foto_status" value="0">
+
                         <div class="card-jamaah">
                             <div class="header">
                                 <div class="isi-header">
@@ -119,27 +108,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                <!-- KIRI: FOTO + UPLOAD -->
                                 <div style="display: flex; align-items: center; gap: 15px;">
                                     <div>
                                         <?php
-                                        // Tampilkan foto sesuai dengan path yang benar
-                                        if (!empty($data['foto']) && file_exists($data['foto'])) {
-                                            $foto = $data['foto'];
+                                        $path_preview = '../../../../uploads/akun-pengguna/jamaah/';
+                                        // Cek apakah file ada di folder fisik
+                                        if (!empty($data['foto']) && file_exists($dir_tujuan . $data['foto'])) {
+                                            $img_src = $path_preview . $data['foto'];
                                         } else {
-                                            $foto = 'assets/img/profil.jpg';
+                                            $img_src = 'assets/img/profil.jpg';
                                         }
                                         ?>
-                                        <img id="previewFoto" src="<?= htmlspecialchars($foto) ?>"
+                                        <img id="previewFoto" src="<?= htmlspecialchars($img_src) ?>"
                                             alt="Foto Jamaah"
                                             style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #ccc;">
                                     </div>
                                     <div>
                                         <label for="foto" style="font-weight: bold;">Foto Profil</label>
                                         <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
-                                            <label for="foto" class="btn-upload-foto">Upload</label>
+                                            <label for="foto" class="btn-upload-foto" style="cursor: pointer; background: #0d6efd; color: white; padding: 5px 15px; border-radius: 5px;">Upload</label>
                                             <input type="file" id="foto" name="foto" accept="image/*" onchange="previewGambar(this)" style="display: none;">
-                                            <button type="button" onclick="hapusFoto()" class="btn-hapus-foto btn-danger">
+                                            <button type="button" onclick="hapusFotoPreview()" class="btn-hapus-foto btn-danger" style="padding: 5px 10px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -162,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div style="flex: 1;">
                                     <label>No. Telepon:</label>
                                     <input type="text" name="nomor_telepon" value="<?= htmlspecialchars($data['nomor_telepon']) ?>" required>
-
                                 </div>
                                 <div style="flex: 1;">
                                     <label>Email:</label>
@@ -186,9 +174,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <script src="../../assets/js/sidebar.js"></script>
-<script src="assets/js/jamaah.js"></script>
-<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
 
+<script>
+// Fungsi Preview saat memilih file
+function previewGambar(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewFoto').src = e.target.result;
+            document.getElementById('hapus_foto_status').value = "0"; // Batal hapus jika pilih file baru
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Fungsi Hapus Foto dengan konfirmasi
+function hapusFotoPreview() {
+    Swal.fire({
+        title: 'Hapus Foto Profil?',
+        text: "Foto akan dikembalikan ke setelan default!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Ubah preview ke default
+            document.getElementById('previewFoto').src = 'assets/img/profil.jpg';
+            // Kosongkan input file agar tidak mengupload apa pun
+            document.getElementById('foto').value = "";
+            // Tandai status hapus untuk diproses PHP
+            document.getElementById('hapus_foto_status').value = "1";
+        }
+    })
+}
+</script>
+
+</body>
 </html>

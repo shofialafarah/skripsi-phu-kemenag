@@ -75,7 +75,16 @@ if (!$result) {
                                 echo "<td class='text-center'>" . (!empty($row['password']) ? '*****' : '-') . "</td>";
                                 echo "<td class='text-center'>";
                                 if (!empty($row['foto'])) {
-                                    echo "<img src='" . htmlspecialchars($row['foto']) . "' style='width:60px; height:60px; border-radius:50%; object-fit:cover;' />";
+                                    // Tambahkan path folder sebelum nama file foto
+                                    $path_foto = '../../../../uploads/akun-pengguna/jamaah/' . $row['foto'];
+
+                                    // Opsional: Cek apakah filenya benar-benar ada di folder tersebut
+                                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/uploads/akun-pengguna/jamaah/' . $row['foto'])) {
+                                        echo "<img src='" . htmlspecialchars($path_foto) . "' style='width:60px; height:60px; border-radius:50%; object-fit:cover;' />";
+                                    } else {
+                                        // Jika file tidak ada di folder fisik tapi ada namanya di database
+                                        echo "<img src='../../assets/img/profil.jpg' style='width:60px; height:60px; border-radius:50%; object-fit:cover;' title='File tidak ditemukan'/>";
+                                    }
                                 } else {
                                     echo "Tidak ada";
                                 }
