@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -12,17 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_jamaah = $_POST['id_jamaah'];
     $nama = $_POST['nama'];
     $nomor_porsi = $_POST['nomor_porsi'];
-    
+
     // Mulai transaksi
     $koneksi->begin_transaction();
-    
+
     try {
         // Update tabel jamaah
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
             $fotoTmp = $_FILES['foto']['tmp_name'];
             $fotoName = uniqid() . '-' . $_FILES['foto']['name'];
-            $fotoPath = '../assets/img/' . $fotoName;
+            // Tambahkan titik koma di bawah ini
+            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/uploads/akun-pengguna/jamaah/';
 
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+
+            $fotoPath = $upload_dir . $fotoName;
             move_uploaded_file($fotoTmp, $fotoPath);
 
             // Update jamaah dengan foto
@@ -35,28 +42,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $koneksi->prepare($sql);
             $stmt->bind_param("si", $nama, $id_jamaah);
         }
-        
+
         if (!$stmt->execute()) {
             throw new Exception("Gagal update tabel jamaah");
         }
-        
+
         // Update nomor_porsi di tabel pendaftaran (jika ada)
         $sql_pendaftaran = "UPDATE pendaftaran SET nomor_porsi = ? WHERE id_jamaah = ?";
         $stmt_pendaftaran = $koneksi->prepare($sql_pendaftaran);
         $stmt_pendaftaran->bind_param("si", $nomor_porsi, $id_jamaah);
-        
+
         // Tidak error jika tidak ada data di pendaftaran
         $stmt_pendaftaran->execute();
-        
+
         // Commit transaksi
         $koneksi->commit();
-        
-        echo "<script>alert('Data berhasil diperbarui!'); window.location.href='../dashboard_jamaah.php';</script>";
-        
+
+        $koneksi->commit();
+
+        // Simpan status sukses ke session
+        session_start();
+        $_SESSION['update_status'] = 'success';
+        header("Location: ../dashboard_jamaah.php");
+        exit;
     } catch (Exception $e) {
-        // Rollback jika ada error
         $koneksi->rollback();
-        echo "<script>alert('Gagal memperbarui data: " . $e->getMessage() . "'); window.location.href='../dashboard_jamaah.php';</script>";
+        session_start();
+        $_SESSION['update_status'] = 'error';
+        $_SESSION['update_msg'] = $e->getMessage();
+        header("Location: ../dashboard_jamaah.php");
+        exit;
     }
 }
-?>

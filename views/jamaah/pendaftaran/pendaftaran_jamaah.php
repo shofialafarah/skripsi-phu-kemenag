@@ -338,6 +338,12 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
                             $status = getDocumentStatus($status_value);
                             return ($status == 'Unggah Ulang' || $status == 'Pending');
                         }
+
+                        function getFileUrl($path)
+                        {
+                            if (empty($path)) return '#';
+                            return str_replace('../../../../', '/phu-kemenag-banjar-copy/', $path);
+                        }
                     ?>
                     <div class="progress-title">
                         <i class="fas fa-file-alt"></i>
@@ -345,10 +351,17 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
                     </div>
                     <div class="documents-grid">
                         <div class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-receipt"></i> <!-- Bukti Setor Awal -->
-                            </div>
-                            <div class="document-name">Bukti Setor Awal</div>
+                            <?php if (!empty($pendaftar['dokumen_setor_awal'])): ?>
+                                <a href="<?= getFileUrl($pendaftar['dokumen_setor_awal']) ?>" target="_blank" class="text-decoration-none">
+                                    <div class="document-icon">
+                                        <i class="fas fa-receipt"></i>
+                                    </div>
+                                    <div class="document-name">Bukti Setor Awal <i class="fas fa-external-link-alt fa-xs"></i></div>
+                                </a>
+                            <?php else: ?>
+                                <div class="document-icon text-muted"><i class="fas fa-receipt"></i></div>
+                                <div class="document-name text-muted">Bukti Setor Awal</div>
+                            <?php endif; ?>
                             <div class="document-status">
                                 <?= badgeStatus($pendaftar['dokumen_setor_awal_status']) ?>
                                 <?php
@@ -364,124 +377,148 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
                             </div>
                         </div>
                         <div class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-id-card"></i>
-                            </div>
-                            <div class="document-name">KTP/KIA</div>
-                            <div class="document-status">
-                                <?= badgeStatus($pendaftar['dokumen_ktp_status']) ?>
-                                <?php
-                                $catatan = getCatatanPenolakan($pendaftar['dokumen_ktp_status']);
-                                if (!empty($catatan)):
-                                ?>
-                                    <div class="catatan-penolakan mt-1">
-                                        <small class="text-danger">
-                                            <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
-                                        </small>
+                            <?php if (!empty($pendaftar['dokumen_ktp'])): ?>
+                                <a href="<?= getFileUrl($pendaftar['dokumen_ktp']) ?>" target="_blank" class="text-decoration-none">
+                                    <div class="document-icon">
+                                        <i class="fas fa-id-card"></i>
                                     </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-users"></i> <!-- Kartu Keluarga -->
-                            </div>
-                            <div class="document-name">Kartu Keluarga</div>
-                            <div class="document-status">
-                                <?= badgeStatus($pendaftar['dokumen_kk_status']) ?>
-                                <?php
-                                $catatan = getCatatanPenolakan($pendaftar['dokumen_kk_status']);
-                                if (!empty($catatan)):
-                                ?>
-                                    <div class="catatan-penolakan mt-1">
-                                        <small class="text-danger">
-                                            <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
-                                        </small>
+                                    <div class="document-name">KTP/KIA <i class="fas fa-external-link-alt fa-xs"></i></div>
+                                </a>
+                            <?php else: ?>
+                                <div class="document-icon text-muted"><i class="fas fa-id-card"></i></div>
+                                <div class="document-name text-muted">KTP/KIA<< /div>
+                                    <?php endif; ?>
+                                    <div class="document-status">
+                                        <?= badgeStatus($pendaftar['dokumen_ktp_status']) ?>
+                                        <?php
+                                        $catatan = getCatatanPenolakan($pendaftar['dokumen_ktp_status']);
+                                        if (!empty($catatan)):
+                                        ?>
+                                            <div class="catatan-penolakan mt-1">
+                                                <small class="text-danger">
+                                                    <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
+                                                </small>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-folder-open"></i> <!-- Dokumen Lainnya -->
-                            </div>
-                            <div class="document-name">Dokumen Lainnya</div>
-                            <div class="document-status">
-                                <?= badgeStatus($pendaftar['dokumen_lain_status']) ?>
-                                <?php
-                                $catatan = getCatatanPenolakan($pendaftar['dokumen_lain_status']);
-                                if (!empty($catatan)):
-                                ?>
-                                    <div class="catatan-penolakan mt-1">
-                                        <small class="text-danger">
-                                            <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
-                                        </small>
+                                </div>
+                                <div class="document-item">
+                                    <?php if (!empty($pendaftar['dokumen_kk'])): ?>
+                                        <a href="<?= getFileUrl($pendaftar['dokumen_kk']) ?>" target="_blank" class="text-decoration-none">
+                                            <div class="document-icon">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="document-name">Kartu Keluarga <i class="fas fa-external-link-alt fa-xs"></i></div>
+                                        </a>
+                                    <?php else: ?>
+                                        <div class="document-icon text-muted"><i class="fas fa-users"></i></div>
+                                        <div class="document-name text-muted">Kartu Keluarga</div>
+                                    <?php endif; ?>
+                                    <div class="document-status">
+                                        <?= badgeStatus($pendaftar['dokumen_kk_status']) ?>
+                                        <?php
+                                        $catatan = getCatatanPenolakan($pendaftar['dokumen_kk_status']);
+                                        if (!empty($catatan)):
+                                        ?>
+                                            <div class="catatan-penolakan mt-1">
+                                                <small class="text-danger">
+                                                    <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
+                                                </small>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-camera"></i> <!-- Foto Wajah -->
-                            </div>
-                            <div class="document-name">Foto Wajah</div>
-                            <div class="document-status">
-                                <?= badgeStatus($pendaftar['foto_wajah_status']) ?>
-                                <?php
-                                $catatan = getCatatanPenolakan($pendaftar['foto_wajah_status']);
-                                if (!empty($catatan)):
-                                ?>
-                                    <div class="catatan-penolakan mt-1">
-                                        <small class="text-danger">
-                                            <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
-                                        </small>
+                                </div>
+                                <div class="document-item">
+                                    <?php if (!empty($pendaftar['dokumen_lain'])): ?>
+                                        <a href="<?= getFileUrl($pendaftar['dokumen_lain']) ?>" target="_blank" class="text-decoration-none">
+                                            <div class="document-icon">
+                                                <i class="fas fa-folder-open"></i>
+                                            </div>
+                                            <div class="document-name">Dokumen Lainnya <i class="fas fa-external-link-alt fa-xs"></i></div>
+                                        </a>
+                                    <?php else: ?>
+                                        <div class="document-icon text-muted"><i class="fas fa-folder-open"></i></div>
+                                        <div class="document-name text-muted">Dokumen Lainnya</div>
+                                    <?php endif; ?>
+                                    <div class="document-status">
+                                        <?= badgeStatus($pendaftar['dokumen_lain_status']) ?>
+                                        <?php
+                                        $catatan = getCatatanPenolakan($pendaftar['dokumen_lain_status']);
+                                        if (!empty($catatan)):
+                                        ?>
+                                            <div class="catatan-penolakan mt-1">
+                                                <small class="text-danger">
+                                                    <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
+                                                </small>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                                <div class="document-item">
+                                    <?php if (!empty($pendaftar['foto_wajah'])): ?>
+                                        <a href="<?= getFileUrl($pendaftar['foto_wajah']) ?>" target="_blank" class="text-decoration-none">
+                                            <div class="document-icon">
+                                                <i class="fas fa-camera"></i>
+                                            </div>
+                                            <div class="document-name">Foto Wajah <i class="fas fa-external-link-alt fa-xs"></i></div>
+                                        </a>
+                                    <?php else: ?>
+                                        <div class="document-icon text-muted"><i class="fas fa-camera"></i></div>
+                                        <div class="document-name text-muted">Foto Wajah</div>
+                                    <?php endif; ?>
+                                    <div class="document-status">
+                                        <?= badgeStatus($pendaftar['foto_wajah_status']) ?>
+                                        <?php
+                                        $catatan = getCatatanPenolakan($pendaftar['foto_wajah_status']);
+                                        if (!empty($catatan)):
+                                        ?>
+                                            <div class="catatan-penolakan mt-1">
+                                                <small class="text-danger">
+                                                    <i class="fas fa-info-circle"></i> <?= htmlspecialchars($catatan) ?>
+                                                </small>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <!-- Tombol Cetak hanya aktif jika status verifikasi adalah "Disetujui" -->
-                    <a href="<?= $status_verifikasi == 'Disetujui'
-                                    ? '/phu-kemenag-banjar-copy/' . $file_path
-                                    : '#' ?>"
-                        class="btn btn-primary <?= $status_verifikasi != 'Disetujui' ? 'disabled' : '' ?>"
-                        <?= $status_verifikasi != 'Disetujui'
-                            ? 'onclick="return false;" title="Data belum disetujui"'
-                            : 'target="_blank"' ?>>
-                        <i class="fas fa-print"></i>
-                        Cetak Data
-                    </a>
-                    <?php
-                        echo $status_verifikasi;
-                        echo $pendaftar['status'];
-                    ?>
-                    <!-- Tombol Edit hanya muncul jika status belum disetujui -->
-                    <?php if ($pendaftar['status'] != 'Disetujui') : ?>
-                        <a href="includes/edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>"
-                            class="btn btn-secondary">
-                            <i class="fas fa-edit"></i> Edit Data
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <!-- Tombol Cetak hanya aktif jika status verifikasi adalah "Disetujui" -->
+                        <a href="<?= $status_verifikasi == 'Disetujui'
+                                        ? '/phu-kemenag-banjar-copy/' . $file_path
+                                        : '#' ?>"
+                            class="btn btn-primary <?= $status_verifikasi != 'Disetujui' ? 'disabled' : '' ?>"
+                            <?= $status_verifikasi != 'Disetujui'
+                                ? 'onclick="return false;" title="Data belum disetujui"'
+                                : 'target="_blank"' ?>>
+                            <i class="fas fa-print"></i>
+                            Cetak Data
                         </a>
-                    <?php else : ?>
-                        <button class="btn btn-secondary" disabled title="Data sudah diverifikasi oleh Kepala">
-                            <i class="fas fa-lock"></i> Data Terkunci
-                        </button>
-                    <?php endif; ?>
-                </div>
+                        <!-- Tombol Edit hanya muncul jika status belum disetujui -->
+                        <?php if ($pendaftar['status'] != 'Disetujui') : ?>
+                            <a href="includes/edit_pendaftaran.php?id_pendaftaran=<?= $pendaftar['id_pendaftaran'] ?>"
+                                class="btn btn-secondary">
+                                <i class="fas fa-edit"></i> Edit Data
+                            </a>
+                        <?php else : ?>
+                            <button class="btn btn-secondary" disabled title="Data sudah diverifikasi oleh Kepala">
+                                <i class="fas fa-lock"></i> Data Terkunci
+                            </button>
+                        <?php endif; ?>
+                    </div>
 
-            <?php else: ?>
-                <div class="alert alert-warning text-center">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>Data Pendaftaran Tidak Ditemukan</h4>
-                    <p>Silakan daftar terlebih dahulu.</p>
-                    <a href="includes/tambah_pendaftaran.php" class="btn btn-primary">Daftar Sekarang</a>
+                <?php else: ?>
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Data Pendaftaran Tidak Ditemukan</h4>
+                        <p>Silakan daftar terlebih dahulu.</p>
+                        <a href="includes/tambah_pendaftaran.php" class="btn btn-primary">Daftar Sekarang</a>
+                    </div>
+                <?php endif; ?>
+                <?php include_once __DIR__ . '/../includes/footer_jamaah.php'; ?>
                 </div>
-            <?php endif; ?>
-            <?php include_once __DIR__ . '/../includes/footer_jamaah.php'; ?>
-            </div>
         </main>
     </div>
 </div>

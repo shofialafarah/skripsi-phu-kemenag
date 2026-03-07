@@ -11,11 +11,9 @@ include_once __DIR__ . '/../../../includes/koneksi.php';
 
 // Update pengaturan sistem
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Mengupdate pengaturan lainnya (termasuk warna teks)
     if (isset($_POST['update_settings'])) {
         foreach ($_POST as $key => $value) {
-            if ($key !== 'update_settings') {
-                // Cek apakah key sudah ada di database
+            if ($key !== 'update_settings' && $key !== 'app_logo') {
                 $check_stmt = $koneksi->prepare("SELECT COUNT(*) FROM pengaturan WHERE key_name = ?");
                 $check_stmt->bind_param('s', $key);
                 $check_stmt->execute();
@@ -57,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (in_array($file_extension, $allowed_types)) {
                 // Pindahkan file yang diunggah
                 if (move_uploaded_file($_FILES['app_logo']['tmp_name'], $target_file)) {
-                    // Cek apakah key app_logo sudah ada
                     $check_stmt = $koneksi->prepare("SELECT COUNT(*) FROM pengaturan WHERE key_name = 'app_logo'");
                     $check_stmt->execute();
                     $check_stmt->bind_result($count);
@@ -65,14 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $check_stmt->close();
 
                     if ($count > 0) {
-                        // Update path logo di database
                         $stmt = $koneksi->prepare("UPDATE pengaturan SET value=? WHERE key_name='app_logo'");
                     } else {
-                        // Insert jika belum ada
                         $stmt = $koneksi->prepare("INSERT INTO pengaturan (key_name, value) VALUES ('app_logo', ?)");
                     }
-                    $relative_path = 'assets/img/' . $file_name;
-                    $stmt->bind_param('s', $relative_path);
+                    $stmt->bind_param('s', $file_name);
                     $stmt->execute();
                     $stmt->close();
                 } else {
@@ -102,35 +96,30 @@ $app_name = $settings['app_name'] ?? 'PHU KEMENAG';
 $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
-// Tentukan src logo untuk ditampilkan dan fallback ke sistem.png jika tidak ada
-$default_system_logo = '../../../assets/img/sistem.png';
+// Path dasar folder image (relatif dari file pengaturan.php ini)
+$base_img_path = '../../../assets/img/';
+
 if (empty($app_logo)) {
-    $app_logo_src = $default_system_logo;
+    $app_logo_src = $base_img_path . 'sistem.png';
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
     $app_logo_src = $app_logo;
-} elseif (strpos($app_logo, '/') === 0) {
-    // Sudah path absolut pada server
-    $app_logo_src = $app_logo;
 } else {
-    // Anggap nama file di folder assets
-    $candidate = '../../../assets/img/' . $app_logo;
-    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
-        $app_logo_src = $candidate;
-    } else {
-        $app_logo_src = $default_system_logo;
+    // Jika hanya nama file (hasil upload baru atau reset default)
+    $app_logo_src = $base_img_path . $app_logo;
+
+    // Opsional: Cek apakah filenya benar-benar ada di folder
+    if (!file_exists(__DIR__ . '/' . $base_img_path . $app_logo)) {
+        $app_logo_src = $base_img_path . 'sistem.png';
     }
 }
 
 if (isset($_POST['reset_default'])) {
-    // Set default nilai (simpan hanya nama file, tampilan akan mencari di /assets/img/)
     $default_logo = 'sistem.png';
     $default_color = '#7bd247';
 
-    // Update ke database
     $koneksi->query("UPDATE pengaturan SET value = '$default_logo' WHERE key_name = 'app_logo'");
     $koneksi->query("UPDATE pengaturan SET value = '$default_color' WHERE key_name = 'theme_text_color'");
 
-    // redirect ulang agar refresh tidak mengulangi POST
     header("Location: pengaturan.php?reset=success");
     exit();
 }
@@ -197,7 +186,6 @@ if (isset($_POST['reset_default'])) {
     </div>
 </div>
 <script src="../assets/js/sidebar.js"></script>
-<!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/pengaturan.js"></script>
 </body>
