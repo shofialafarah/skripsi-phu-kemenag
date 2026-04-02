@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -39,16 +40,11 @@ if (isset($_SESSION['id_jamaah'])) {
 
     $stmt->close();
 } else {
-    header("Location: login.php");
+    header("Location: ../pembatalan.php");
     exit();
 }
-
-// Cek dokumen KTP misalnya
-$folder = '../assets/berkas/pengajuan/ktp/';
-$file_path = $folder . basename($batal['dokumen_ktp'] ?? '');
-$dokumen_ktp_ada = !empty($batal['dokumen_ktp']) && file_exists($file_path);
-
 ?>
+<link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -505,8 +501,6 @@ $dokumen_ktp_ada = !empty($batal['dokumen_ktp']) && file_exists($file_path);
         </main>
     </div>
 </div>
-<script src="../../assets/js/sidebar.js"></script>
-<script src="../../assets/js/jamaah.js"></script>
 
 </body>
 

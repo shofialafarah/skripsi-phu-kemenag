@@ -71,6 +71,7 @@ function hitungSelisihWaktu($tanggal_awal, $tanggal_akhir)
     return implode(', ', $hasil);
 }
 ?>
+<?php include_once __DIR__ . '/../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -186,7 +187,6 @@ function hitungSelisihWaktu($tanggal_awal, $tanggal_akhir)
         </div>
     </div>
 </div>
-<script src="../assets/js/sidebar.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('nomorPorsi');

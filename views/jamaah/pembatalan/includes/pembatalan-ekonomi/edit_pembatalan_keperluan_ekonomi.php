@@ -31,29 +31,36 @@ if (!$result || $result->num_rows == 0) {
 $data = $result->fetch_assoc();
 
 // Fungsi upload
-function uploadFile($input_name, $folder, $old_path = null)
+function uploadFile($input_name, $folder_jamaah, $prefix, $old_path = null)
 {
     if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] === UPLOAD_ERR_OK) {
-        $target_dir = "../../assets/berkas/pengajuan/$folder/";
+        
+        // 1. Path Fisik (Naik 5 tingkat ke Root/uploads)
+        $target_dir = "../../../../../uploads/pembatalan/pengajuan-jamaah/" . $folder_jamaah . "/";
+        
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
 
-        $file_tmp = $_FILES[$input_name]['tmp_name'];
         $ext = pathinfo($_FILES[$input_name]['name'], PATHINFO_EXTENSION);
-        $new_name = uniqid($folder . "_") . '.' . $ext;
-        $target_path = $target_dir . $new_name;
+        // Format Nama File: Prefix_NamaJamaah.pdf (Prefix misal: KTP)
+        $new_name = $prefix . "_" . $folder_jamaah . "." . $ext;
+        $physical_path = $target_dir . $new_name;
 
-        if (move_uploaded_file($file_tmp, $target_path)) {
-            if ($old_path && file_exists($old_path)) {
-                unlink($old_path);
+        if (move_uploaded_file($_FILES[$input_name]['tmp_name'], $physical_path)) {
+            // Hapus file lama jika ada update
+            if ($old_path) {
+                $old_physical_path = "../../../../../" . $old_path;
+                if (file_exists($old_physical_path)) {
+                    unlink($old_physical_path);
+                }
             }
-            return $target_path;
+            // 2. Simpan path "bersih" di database agar mudah dipanggil
+            return "uploads/pembatalan/pengajuan-jamaah/" . $folder_jamaah . "/" . $new_name;
         }
     }
     return $old_path;
 }
-
 // Proses update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama_jamaah = $_POST['nama_jamaah'] ?? '';
@@ -70,14 +77,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kelurahan = $_POST['kelurahan'] ?? '';
     $kode_pos = $_POST['kode_pos'] ?? '';
 
-    // Upload dokumen baru jika ada
-    $dokumen_setor_awal = uploadFile('dokumen_setor_awal', 'setor_awal', $data['dokumen_setor_awal']);
-    $dokumen_spph = uploadFile('dokumen_spph', 'spph', $data['dokumen_spph']);
-    $dokumen_ktp = uploadFile('dokumen_ktp', 'ktp', $data['dokumen_ktp']);
-    $dokumen_kk = uploadFile('dokumen_kk', 'kk', $data['dokumen_kk']);
-    $dokumen_akta_kelahiran = uploadFile('dokumen_akta_kelahiran', 'akta_kelahiran', $data['dokumen_akta_kelahiran']);
-    $dokumen_rekening = uploadFile('dokumen_rekening', 'rekening', $data['dokumen_rekening']);
-    $foto_wajah = uploadFile('foto_wajah', 'foto', $data['foto_wajah']);
+    // Buat nama folder (contoh: Shofia_Nabila-123456)
+    $safe_nama = preg_replace('/[^A-Za-z0-9\-]/', '_', $nama_jamaah);
+    $folder_jamaah = $safe_nama . "-" . $spph_validasi;
+
+    // Proses Upload dengan folder otomatis
+    $dokumen_setor_awal = uploadFile('dokumen_setor_awal', $folder_jamaah, 'SetorAwal', $data['dokumen_setor_awal']);
+    $dokumen_spph       = uploadFile('dokumen_spph', $folder_jamaah, 'SPPH', $data['dokumen_spph']);
+    $dokumen_ktp        = uploadFile('dokumen_ktp', $folder_jamaah, 'KTP', $data['dokumen_ktp']);
+    $dokumen_kk         = uploadFile('dokumen_kk', $folder_jamaah, 'KK', $data['dokumen_kk']);
+    $dokumen_akta       = uploadFile('dokumen_akta_kelahiran', $folder_jamaah, 'Akta', $data['dokumen_akta_kelahiran']);
+    $dokumen_rekening   = uploadFile('dokumen_rekening', $folder_jamaah, 'Rekening', $data['dokumen_rekening']);
+    $foto_wajah         = uploadFile('foto_wajah', $folder_jamaah, 'FotoWajah', $data['foto_wajah']);
 
     // Update query
     $stmt = $koneksi->prepare("UPDATE pembatalan_ekonomi SET 
@@ -126,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 }
 ?>
+<link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -361,8 +373,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </main>
         </div>
     </div>
-    <script src="../../../assets/js/sidebar.js"></script>
-    <script src="../../../includes/link_script.php"></script>
     <script src="../../assets/js/tambah_data_kelurahan.js"></script>
 </body>
 

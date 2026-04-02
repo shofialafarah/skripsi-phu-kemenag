@@ -19,6 +19,7 @@ $id_jamaah = $_SESSION['id_jamaah'];
 updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pembatalan', 'Membuka halaman pilihan jenis pembatalan haji');
 
 ?>
+<link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -50,7 +51,6 @@ updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pembatalan', 'Membuka halaman pil
             </main>
         </div>
     </div>
-    <script src="../assets/js/sidebar.js"></script>
 </body>
 
 </html>
