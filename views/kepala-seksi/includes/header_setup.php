@@ -27,7 +27,7 @@ if (!isset($_SESSION['id_kepala'])) {
 // Ambil data kasi (pastikan nama kolom di tabel 'kasi' adalah 'nama' — cek pakai DESCRIBE kasi di phpMykepala-seksi)
 $kasiQuery = $koneksi->query("SELECT nama_kepala FROM kepala_seksi WHERE id_kepala = 1");
 $kasi = $kasiQuery->fetch_assoc();
-$base_url = "http://localhost/phu-kemenag-banjar-copy/";
+$base_url = BASE_URL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,16 +53,16 @@ $base_url = "http://localhost/phu-kemenag-banjar-copy/";
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     <!-- css -->
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/global_style.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/header.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/header.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/sidebar.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/dashboard.css">
     <!-- css halaman tampil -->
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/entry.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/dashboard_kepala_seksi.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/verifikasi_kepala_seksi.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/laporan_kepala_seksi.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/kepala-seksi/assets/css/estimasi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/entry.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/dashboard_kepala_seksi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/verifikasi_kepala_seksi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/laporan_kepala_seksi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/estimasi.css">
 </head>
 
 <body>

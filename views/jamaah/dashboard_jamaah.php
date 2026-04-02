@@ -46,12 +46,12 @@ if ($result && $row = $result->fetch_assoc()) {
     $nomor_porsi = $row['nomor_porsi'] ?? 'Belum terdaftar';
     $nama_file_foto = $row['foto'];
 
-    $upload_dir_fisik = $_SERVER['DOCUMENT_ROOT'] . '/phu-kemenag-banjar-copy/uploads/akun-pengguna/jamaah/';
+    $upload_dir_fisik = $_SERVER['DOCUMENT_ROOT'] . '/uploads/akun-pengguna/jamaah/';
 
     if (!empty($nama_file_foto) && file_exists($upload_dir_fisik . $nama_file_foto)) {
-        $foto_tampil = '../../uploads/akun-pengguna/jamaah/' . $nama_file_foto;
+        $foto_tampil = BASE_URL . 'uploads/akun-pengguna/jamaah/' . $nama_file_foto;
     } else {
-        $foto_tampil = 'assets/img/profil.jpg';
+        $foto_tampil = BASE_URL . 'views/jamaah/assets/img/profil.jpg';
     }
 }
 $nomor_porsi_login = $nomor_porsi ?? '';
@@ -77,7 +77,6 @@ $stmt_status->bind_param("issss", $id_jamaah, $nomor_porsi_login, $nomor_porsi_l
 $stmt_status->execute();
 $res_status = $stmt_status->get_result();
 
-// Inisialisasi default
 $jenis = 'Belum Ada';
 $verifikasi = 'Belum Ada Pengajuan';
 
@@ -86,7 +85,6 @@ if ($data_pelayanan = $res_status->fetch_assoc()) {
     $verifikasi = $data_pelayanan['status_verifikasi'];
 }
 
-// Timeline logic
 $s1 = ($jenis != 'Belum Ada') ? 'selesai' : 'proses';
 $s2 = ($verifikasi == 'Disetujui') ? 'selesai' : (($verifikasi == 'Pending' || $verifikasi == 'Proses') ? 'proses' : 'belum');
 $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
@@ -95,10 +93,8 @@ $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
 <?php include_once 'includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
-        <!-- SIDEBAR -->
         <?php include 'includes/sidebar_jamaah.php'; ?>
     </div>
-    <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include 'includes/header_jamaah.php'; ?>
         <main class="dashboard-wrapper">
@@ -117,13 +113,10 @@ $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
                         <div class="hari">Thu</div>
                         <div class="hari">Fri</div>
                         <div class="hari">Sat</div>
-
-                        <!-- contoh isi tanggal -->
                         <div class="tanggal">1</div>
                         <div class="tanggal">2</div>
                         <div class="tanggal today-fix">3</div>
                         <div class="tanggal">4</div>
-                        <!-- lanjutkan sesuai kebutuhan -->
                     </div>
                 </div>
 
@@ -136,8 +129,7 @@ $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
                         </div>
                         <span class="material-symbols-outlined" style="font-size: 48px; color: #f39c12;">wb_sunny</span>
                     </div>
-                    <div class="pembatas">
-                    </div>
+                    <div class="pembatas"></div>
                     <div class="profil-jamaah">
                         <div class="profil-jamaah-card">
                             <img src="<?= htmlspecialchars($foto_tampil) ?>" alt="Foto Jamaah" class="jamaah-foto" />
@@ -151,19 +143,15 @@ $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
                                 </div>
                             </div>
                         </div>
-                        <!-- Popup Form -->
                         <div class="popup-form" id="popupForm">
                             <form method="POST" action="includes/popup_edit_profil.php" enctype="multipart/form-data">
                                 <input type="hidden" name="id_jamaah" value="<?= $id_jamaah ?>">
                                 <label>Nama:</label>
                                 <input type="text" name="nama" value="<?= htmlspecialchars($nama) ?>" required>
-
                                 <label>Nomor Porsi:</label>
                                 <input type="text" name="nomor_porsi" value="<?= htmlspecialchars($nomor_porsi) ?>" required>
-
                                 <label>Foto Baru (opsional):</label>
                                 <input type="file" name="foto">
-
                                 <button type="submit">Simpan</button>
                                 <button type="button" onclick="togglePopup()">Batal</button>
                             </form>
@@ -206,14 +194,13 @@ $s3 = ($verifikasi == 'Disetujui') ? 'selesai' : 'belum';
                     </div>
                 </div>
             </div>
-                <?php include_once __DIR__ . '../includes/footer_jamaah.php'; ?>
+            <?php include 'includes/footer_jamaah.php'; ?>
         </main>
     </div>
 </div>
 
-<script src="assets/js/sidebar.js"></script>
-<script src="assets/js/kalender_dashboard.js"></script>
-<script src="assets/js/cuaca_dashboard.js"></script>
+<script src="<?= BASE_URL ?>views/jamaah/assets/js/kalender_dashboard.js"></script>
+<script src="<?= BASE_URL ?>views/jamaah/assets/js/cuaca_dashboard.js"></script>
 <script>
     function togglePopup() {
         const popup = document.getElementById("popupForm");

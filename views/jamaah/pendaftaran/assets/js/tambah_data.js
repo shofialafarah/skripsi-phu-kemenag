@@ -347,32 +347,51 @@ function updateKelurahanOptions(kecamatanID, kelurahanID) {
 }
 
 // =================== Event untuk KTP ===================
-document.getElementById("ktp_kecamatan").addEventListener("change", () => {
-  updateKelurahanOptions("ktp_kecamatan", "ktp_kelurahan");
-});
+const ktpKecamatan = document.getElementById("ktp_kecamatan");
+if (ktpKecamatan) {
+    ktpKecamatan.addEventListener("change", () => {
+        updateKelurahanOptions("ktp_kecamatan", "ktp_kelurahan");
+    });
+}
 
 // =================== Event untuk Domisili ===================
-document.getElementById("kecamatan").addEventListener("change", () => {
-  updateKelurahanOptions("kecamatan", "kelurahan");
-});
+const kecamatanDom = document.getElementById("kecamatan");
+if (kecamatanDom) {
+    kecamatanDom.addEventListener("change", () => {
+        updateKelurahanOptions("kecamatan", "kelurahan");
+    });
+}
 
 // =================== Checkbox "Sama dengan alamat KTP" ===================
-document.getElementById("checkbox_sama").addEventListener("change", function () {
-  if (this.checked) {
-    // Salin alamat
-    document.getElementById("alamat").value = document.getElementById("ktp_alamat").value;
+const checkboxSama = document.getElementById("checkbox_sama");
+if (checkboxSama) {
+    checkboxSama.addEventListener("change", function () {
+        if (this.checked) {
+            // Pastikan elemen KTP & Domisili ada sebelum di-copy
+            const ktpAlamat = document.getElementById("ktp_alamat");
+            const domAlamat = document.getElementById("alamat");
+            
+            if (ktpAlamat && domAlamat) {
+                domAlamat.value = ktpAlamat.value;
+            }
 
-    // Salin Kecamatan
-    const kecamatanKTP = document.getElementById("ktp_kecamatan").value;
-    document.getElementById("kecamatan").value = kecamatanKTP;
+            const ktpKec = document.getElementById("ktp_kecamatan");
+            const domKec = document.getElementById("kecamatan");
 
-    // Delay sedikit agar kelurahan terisi dulu sebelum dipilih
-    setTimeout(() => {
-      const kelurahanKTP = document.getElementById("ktp_kelurahan").value;
-      document.getElementById("kelurahan").value = kelurahanKTP;
+            if (ktpKec && domKec) {
+                domKec.value = ktpKec.value;
+                // Jalankan fungsi update agar kelurahan domisili terisi
+                updateKelurahanOptions("kecamatan", "kelurahan");
 
-      // Trigger event agar kode pos juga muncul
-      document.getElementById("kelurahan").dispatchEvent(new Event("change"));
-    }, 100);
-  }
-});
+                setTimeout(() => {
+                    const ktpKel = document.getElementById("ktp_kelurahan");
+                    const domKel = document.getElementById("kelurahan");
+                    if (ktpKel && domKel) {
+                        domKel.value = ktpKel.value;
+                        domKel.dispatchEvent(new Event("change"));
+                    }
+                }, 100);
+            }
+        }
+    });
+}

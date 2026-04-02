@@ -1,4 +1,4 @@
-<?php include 'header_setup.php'; ?>
+<?php include 'header_setup.php';?>
     <div class="header-wrapper">
         <header>
             <div class="header">
@@ -60,4 +60,4 @@
         </header>
     </div>
 
-    <script src="/phu-kemenag-banjar-copy/views/jamaah/assets/js/waktu_header.js"></script>
+    <script src="<?= BASE_URL ?>views/jamaah/assets/js/waktu_header.js"></script>

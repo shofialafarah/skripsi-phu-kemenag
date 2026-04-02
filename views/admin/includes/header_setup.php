@@ -21,8 +21,7 @@ if (!isset($_SESSION['id_admin'])) {
 // Ambil data admin
 $staffQuery = $koneksi->query("SELECT nama_admin FROM administrator WHERE id_admin = $id");
 $adminstrator = $staffQuery->fetch_assoc();
-
-$base_url = "http://localhost/phu-kemenag-banjar-copy/";
+$base_url = BASE_URL;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -39,12 +38,12 @@ $base_url = "http://localhost/phu-kemenag-banjar-copy/";
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/global_style.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/header.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/dashboard.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/dashboard_administrator.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/admin/assets/css/pendaftaran_jamaah.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/header.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/sidebar.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/dashboard_administrator.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/admin/assets/css/pendaftaran_jamaah.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css">
 </head>
 <body>

@@ -9,7 +9,6 @@
  */
 session_start();
 include_once __DIR__ . '/../../../../includes/koneksi.php';
-
 include '../../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_jamaah'])) {
@@ -72,67 +71,68 @@ function uploadDokumen($fileFieldName, $target_dir, $nama_jamaah, $old_file_path
     if (move_uploaded_file($_FILES[$fileFieldName]['tmp_name'], $target_path)) {
         // Hapus file lama jika ada
         if (!empty($old_file_path)) {
+            // old_file_path di DB sudah berupa path relatif seperti /uploads/...
             $physical_old_path = $_SERVER['DOCUMENT_ROOT'] . $old_file_path;
             if (file_exists($physical_old_path)) {
                 unlink($physical_old_path);
             }
         }
-        // Simpan path relatif ke DB agar gampang dipanggil di tag <img>
+        // Simpan path relatif ke DB (hapus DOCUMENT_ROOT dari path absolut)
         return str_replace($_SERVER['DOCUMENT_ROOT'], '', $target_path);
     }
     return $old_file_path;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama_jamaah = $_POST['nama_jamaah'] ?? '';
-    $nik = $_POST['nik'] ?? '';
-    $nama_ayah = $_POST['nama_ayah'] ?? '';
-    $tempat_lahir = $_POST['tempat_lahir'] ?? '';
-    $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
-    $pendidikan = $_POST['pendidikan'] ?? '';
-    $pekerjaan = $_POST['pekerjaan'] ?? '';
-    $kewarganegaraan = $_POST['kewarganegaraan'] ?? '';
-    $goldar = $_POST['goldar'] ?? '';
-    $telp_rumah = $_POST['telp_rumah'] ?? '';
-    $no_telepon = $_POST['no_telepon'] ?? '';
-    $status_perkawinan = strtolower($_POST['status_perkawinan'] ?? '');
-    $status_pergi_haji = strtolower($_POST['status_pergi_haji'] ?? '');
-    $ktp_alamat = $_POST['ktp_alamat'] ?? '';
-    $ktp_kecamatan = $_POST['ktp_kecamatan'] ?? '';
-    $ktp_kelurahan = $_POST['ktp_kelurahan'] ?? '';
-    $ktp_kode_pos = $_POST['ktp_kode_pos'] ?? '';
-    $alamat = $_POST['alamat'] ?? '';
-    $kecamatan = $_POST['kecamatan'] ?? '';
-    $kelurahan = $_POST['kelurahan'] ?? '';
-    $kode_pos = $_POST['kode_pos'] ?? '';
-    $jenis_kelamin = strtolower($_POST['jenis_kelamin'] ?? '');
-    $wajah = $_POST['wajah'] ?? '';
-    $tinggi_badan = $_POST['tinggi_badan'] ?? '';
-    $berat_badan = $_POST['berat_badan'] ?? '';
-    $rambut = $_POST['rambut'] ?? '';
-    $alis = $_POST['alis'] ?? '';
-    $hidung = $_POST['hidung'] ?? '';
+    $nama_jamaah        = $_POST['nama_jamaah'] ?? '';
+    $nik                = $_POST['nik'] ?? '';
+    $nama_ayah          = $_POST['nama_ayah'] ?? '';
+    $tempat_lahir       = $_POST['tempat_lahir'] ?? '';
+    $tanggal_lahir      = $_POST['tanggal_lahir'] ?? '';
+    $pendidikan         = $_POST['pendidikan'] ?? '';
+    $pekerjaan          = $_POST['pekerjaan'] ?? '';
+    $kewarganegaraan    = $_POST['kewarganegaraan'] ?? '';
+    $goldar             = $_POST['goldar'] ?? '';
+    $telp_rumah         = $_POST['telp_rumah'] ?? '';
+    $no_telepon         = $_POST['no_telepon'] ?? '';
+    $status_perkawinan  = strtolower($_POST['status_perkawinan'] ?? '');
+    $status_pergi_haji  = strtolower($_POST['status_pergi_haji'] ?? '');
+    $ktp_alamat         = $_POST['ktp_alamat'] ?? '';
+    $ktp_kecamatan      = $_POST['ktp_kecamatan'] ?? '';
+    $ktp_kelurahan      = $_POST['ktp_kelurahan'] ?? '';
+    $ktp_kode_pos       = $_POST['ktp_kode_pos'] ?? '';
+    $alamat             = $_POST['alamat'] ?? '';
+    $kecamatan          = $_POST['kecamatan'] ?? '';
+    $kelurahan          = $_POST['kelurahan'] ?? '';
+    $kode_pos           = $_POST['kode_pos'] ?? '';
+    $jenis_kelamin      = strtolower($_POST['jenis_kelamin'] ?? '');
+    $wajah              = $_POST['wajah'] ?? '';
+    $tinggi_badan       = $_POST['tinggi_badan'] ?? '';
+    $berat_badan        = $_POST['berat_badan'] ?? '';
+    $rambut             = $_POST['rambut'] ?? '';
+    $alis               = $_POST['alis'] ?? '';
+    $hidung             = $_POST['hidung'] ?? '';
 
-    // 1. Buat nama folder yang bersih (lowercase dan spasi jadi underscore)
+    // Buat nama folder berdasarkan nama + NIK
     $folder_name = str_replace(' ', '_', strtolower($nama_jamaah)) . '-' . $nik;
 
-    // 2. Gunakan path absolut DOCUMENT_ROOT agar mkdir tidak salah lokasi
-    $base_dir = $_SERVER['DOCUMENT_ROOT'] . "/phu-kemenag-banjar-copy/uploads/pendaftaran/pengajuan-jamaah/";
+    // Path fisik ke folder upload (pakai DOCUMENT_ROOT, tanpa phu-kemenag-banjar-copy)
+    $base_dir   = $_SERVER['DOCUMENT_ROOT'] . "/uploads/pendaftaran/pengajuan-jamaah/";
     $target_dir = $base_dir . $folder_name . "/";
 
-    // 3. Buat folder otomatis jika belum ada (0777 = akses penuh, true = rekursif)
+    // Buat folder jika belum ada
     if (!is_dir($target_dir)) {
         if (!mkdir($target_dir, 0777, true)) {
             die("Gagal membuat folder: " . $target_dir);
         }
     }
 
-    // Perbarui dokumen jika ada file baru yang diupload
-    $dokumen_setor_awal = uploadDokumen('SetorAwal', $target_dir, $nama_jamaah, $data['dokumen_setor_awal']);
-    $dokumen_ktp        = uploadDokumen('KTP', $target_dir, $nama_jamaah, $data['dokumen_ktp']);
-    $dokumen_kk         = uploadDokumen('KK', $target_dir, $nama_jamaah, $data['dokumen_kk']);
-    $dokumen_lain       = uploadDokumen('DokumenLain', $target_dir, $nama_jamaah, $data['dokumen_lain']);
-    $foto_wajah         = uploadDokumen('FotoWajah', $target_dir, $nama_jamaah, $data['foto_wajah']);
+    // Upload dokumen (jika tidak ada file baru, kembalikan path lama dari DB)
+    $dokumen_setor_awal = uploadDokumen('SetorAwal',    $target_dir, $nama_jamaah, $data['dokumen_setor_awal']);
+    $dokumen_ktp        = uploadDokumen('KTP',          $target_dir, $nama_jamaah, $data['dokumen_ktp']);
+    $dokumen_kk         = uploadDokumen('KK',           $target_dir, $nama_jamaah, $data['dokumen_kk']);
+    $dokumen_lain       = uploadDokumen('DokumenLain',  $target_dir, $nama_jamaah, $data['dokumen_lain']);
+    $foto_wajah         = uploadDokumen('FotoWajah',    $target_dir, $nama_jamaah, $data['foto_wajah']);
 
     // Update query
     $query_update = "UPDATE pendaftaran SET 
@@ -152,50 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Query update gagal: " . $koneksi->error);
     }
 
-    // Hitung jumlah variabel yang di-bind
-    $bindVars = [
-        $nama_jamaah,
-        $nik,
-        $nama_ayah,
-        $tempat_lahir,
-        $tanggal_lahir,
-        $pendidikan,
-        $pekerjaan,
-        $kewarganegaraan,
-        $goldar,
-        $telp_rumah,
-        $no_telepon,
-        $status_perkawinan,
-        $status_pergi_haji,
-        $ktp_alamat,           // Pastikan ini ada dan benar
-        $ktp_kecamatan,
-        $ktp_kelurahan,
-        $ktp_kode_pos,
-        $alamat,
-        $kecamatan,
-        $kelurahan,
-        $kode_pos,
-        $jenis_kelamin,
-        $wajah,
-        $tinggi_badan,
-        $berat_badan,
-        $rambut,
-        $alis,
-        $hidung,
-        $dokumen_setor_awal,
-        $dokumen_ktp,
-        $dokumen_kk,
-        $dokumen_lain,
-        $foto_wajah,
-        $id_pendaftaran,
-        $id_jamaah
-    ];
-
-    echo "Total bind vars: " . count($bindVars) . "<br>";
-
     $stmt_update->bind_param(
         "sssssssssssssssssssssssssssssssssii",
-
         $nama_jamaah,
         $nik,
         $nama_ayah,
@@ -209,9 +167,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $no_telepon,
         $status_perkawinan,
         $status_pergi_haji,
-        $ktp_alamat,           // asumsi ini ktp_alamat
-        $ktp_kecamatan,         // ktp_kecamatan
-        $ktp_kelurahan,        // ktp_kelurahan
+        $ktp_alamat,
+        $ktp_kecamatan,
+        $ktp_kelurahan,
         $ktp_kode_pos,
         $alamat,
         $kecamatan,
@@ -235,7 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt_update->execute()) {
         updateAktivitasPengguna($id_jamaah, 'jamaah', 'Pendaftaran', 'Mengedit data pendaftaran');
-
         $_SESSION['success_message'] = "Data berhasil diperbarui.";
         header("Location: ../pendaftaran_jamaah.php");
         exit();
@@ -246,6 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_update->close();
 }
 ?>
+<?php include_once __DIR__ . '/../../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -625,9 +583,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </main>
     </div>
 </div>
-<script src="../../assets/js/sidebar.js"></script>
-<script src="/../../includes/link_script.php"></script>
-<script src="../assets/js/tambah_data.js"></script>
+<script src="<?= BASE_URL ?>views/jamaah/pendaftaran/assets/js/tambah_data.js"></script>
 </body>
 
 </html>

@@ -10,31 +10,24 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 include_once __DIR__ . '/../../../includes/koneksi.php';
 
-// Ambil ID jamaah dari session
+// Cek login
 if (!isset($_SESSION['id_jamaah'])) {
-    // Jika tidak ada session, arahkan ke login atau beri nilai default
     header("Location: ../../auth/login.php");
     exit();
 }
+$id_jamaah = $_SESSION['id_jamaah'];
 
-// Cek session
-if (!isset($_SESSION['id_jamaah'])) {
-    $id_jamaah = 1; // Fallback sementara
-} else {
-    $id_jamaah = $_SESSION['id_jamaah'];
-}
-
-// Ambil data jamaah
-$sql_jamaah = "SELECT nama FROM jamaah WHERE id_jamaah = ?";
-$stmt = $koneksi->prepare($sql_jamaah);
+// Ambil data nama jamaah
+$stmt = $koneksi->prepare("SELECT nama FROM jamaah WHERE id_jamaah = ?");
 $stmt->bind_param("i", $id_jamaah);
 $stmt->execute();
 $jamaah = $stmt->get_result()->fetch_assoc();
 
 // =============================
-// 1. NOTIF BEL (unggah ulang)
+// NOTIF BEL (berkas perlu diunggah ulang)
 // =============================
 $sql = "
     -- Pendaftaran
@@ -243,7 +236,7 @@ $jumlah_notif_mail = count($notif_mail);
 
 $keyword = $_GET['search'] ?? '';
 $keyword = $koneksi->real_escape_string($keyword);
-$base_url = "http://localhost/phu-kemenag-banjar-copy/";
+$base_url = BASE_URL;
 
 // AMBIL DATA PENGATURAN (Sangat Penting!)
 $result_settings = $koneksi->query("SELECT * FROM pengaturan");
@@ -266,8 +259,8 @@ if (empty($app_logo)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halaman Jamaah</title>
 
-    <link rel="icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
-    <link rel="shortcut icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+    <link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -281,15 +274,15 @@ if (empty($app_logo)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
 
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/global_style.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/header.css" />
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/sidebar.css" />
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/entry.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/dashboard_jamaah.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pendaftaran_jamaah.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pembatalan_jamaah.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/pelimpahan_jamaah.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/jamaah/assets/css/estimasi.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/header.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/sidebar.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/entry.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/dashboard_jamaah.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/pendaftaran_jamaah.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/pembatalan_jamaah.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/pelimpahan_jamaah.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/jamaah/assets/css/estimasi.css">
     <style>
         .dropdown-menu.scrollable-dropdown {
             max-height: 300px;

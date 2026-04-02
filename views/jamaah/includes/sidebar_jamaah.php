@@ -24,7 +24,7 @@ $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
 // Tentukan src logo untuk sidebar (sama dengan logika di pengaturan)
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/img/sistem.png';
+$default_system_logo = BASE_URL . 'assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -32,7 +32,7 @@ if (empty($app_logo)) {
 } elseif (strpos($app_logo, '/') === 0) {
     $app_logo_src = $app_logo;
 } else {
-    $candidate = '/phu-kemenag-banjar-copy/assets/img/' . $app_logo;
+    $candidate = BASE_URL . 'assets/img/' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {
@@ -126,27 +126,27 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
 
             <div class="content-wrapper">
                 <nav class="menu">
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/dashboard_jamaah.php" class="<?= ($currentPage == 'dashboard_jamaah.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/jamaah/dashboard_jamaah.php" class="<?= ($currentPage == 'dashboard_jamaah.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p>Dashboard</p>
                     </a>
                     <!-- Menu Pendaftaran Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/pendaftaran/pendaftaran_jamaah.php" class="<?= ($currentPage == 'pendaftaran_jamaah.php' || $currentPage == 'tambah_pendaftaran.php' || $currentPage == 'edit_pendaftaran.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/jamaah/pendaftaran/pendaftaran_jamaah.php" class="<?= ($currentPage == 'pendaftaran_jamaah.php' || $currentPage == 'tambah_pendaftaran.php' || $currentPage == 'edit_pendaftaran.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">assignment_add</span>
                         <p>Pendaftaran Haji</p>
                     </a>
                     <!-- Menu Cek Estimasi Keberangkatan Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/estimasi/estimasi_jamaah.php" class="<?= ($currentPage == 'estimasi_jamaah.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/jamaah/estimasi/estimasi_jamaah.php" class="<?= ($currentPage == 'estimasi_jamaah.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">schedule</span>
                         <p>Estimasi Haji</p>
                     </a>
                     <!-- Menu Pembatalan Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/pembatalan/pembatalan.php" class="<?= ($currentPage == 'pembatalan_jamaah_ekonomi.php' || $currentPage == 'pembatalan_jamaah_meninggal.php' || $currentPage == 'tambah_pembatalan.php' || $currentPage == 'tambah_pembatalan_keperluan_ekonomi.php' || $currentPage == 'edit_pembatalan_keperluan_ekonomi.php' || $currentPage == 'tambah_pembatalan_meninggal_dunia.php' || $currentPage == 'edit_pembatalan_meninggal_dunia.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/jamaah/pembatalan/pembatalan.php" class="<?= ($currentPage == 'pembatalan_jamaah_ekonomi.php' || $currentPage == 'pembatalan_jamaah_meninggal.php' || $currentPage == 'tambah_pembatalan.php' || $currentPage == 'tambah_pembatalan_keperluan_ekonomi.php' || $currentPage == 'edit_pembatalan_keperluan_ekonomi.php' || $currentPage == 'tambah_pembatalan_meninggal_dunia.php' || $currentPage == 'edit_pembatalan_meninggal_dunia.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">cancel</span>
                         <p>Pembatalan Haji</p>
                     </a>
                     <!-- Menu Pelimpahan Haji -->
-                    <a href="/phu-kemenag-banjar-copy/views/jamaah/pelimpahan/pelimpahan.php" class="<?= ($currentPage == 'pelimpahan_jamaah_sakit.php' || $currentPage == 'pelimpahan_jamaah_meninggal.php' || $currentPage == 'tambah_pelimpahan.php' || $currentPage == 'tambah_pelimpahan_sakit_permanen.php' || $currentPage == 'edit_pelimpahan_sakit_permanen.php' || $currentPage == 'tambah_pelimpahan_meninggal_dunia.php' || $currentPage == 'edit_pelimpahan_meninggal_dunia.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/jamaah/pelimpahan/pelimpahan.php" class="<?= ($currentPage == 'pelimpahan_jamaah_sakit.php' || $currentPage == 'pelimpahan_jamaah_meninggal.php' || $currentPage == 'tambah_pelimpahan.php' || $currentPage == 'tambah_pelimpahan_sakit_permanen.php' || $currentPage == 'edit_pelimpahan_sakit_permanen.php' || $currentPage == 'tambah_pelimpahan_meninggal_dunia.php' || $currentPage == 'edit_pelimpahan_meninggal_dunia.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">swap_horiz</span>
                         <p>Pelimpahan Haji</p>
                     </a>
@@ -159,7 +159,7 @@ $cetakPage = ['laporan_data_pengguna.php', 'laporan_riwayat_aksi.php'];
     </aside>
 </div>
 <!-- Scripts -->
-<script src="../assets/js/sidebar.js"></script>
+<script src="<?= BASE_URL ?>views/jamaah/assets/js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('tombol-logout').addEventListener('click', function(e) {

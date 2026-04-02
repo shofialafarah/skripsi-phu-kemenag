@@ -45,6 +45,7 @@ $target_date = date('Y-m-d H:i:s', strtotime('+30 days'));
 //Jika Staf mengupload dokumen, maka tombol cetak berfungsi
 $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
 ?>
+<?php include_once __DIR__ . '/../includes/header_setup.php'; ?>
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -523,7 +524,6 @@ $file_path = isset($pendaftar['upload_doc']) ? $pendaftar['upload_doc'] : null;
     </div>
 </div>
 
-<script src="../assets/js/sidebar.js"></script>
 <?php include_once __DIR__ . '/../includes/link_script.php'; ?>
 <script src="assets/js/jamaah.js"></script>
 <?php if (isset($_SESSION['success_message'])): ?>

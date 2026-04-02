@@ -99,7 +99,7 @@ while ($row = $result_notif_ditolak->fetch_assoc()) {
     $notifikasi_ditolak[] = $row;
 }
 $jumlah_notif_ditolak = count($notifikasi_ditolak);
-$base_url = "http://localhost/phu-kemenag-banjar-copy/";
+$base_url = BASE_URL;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,15 +125,15 @@ $base_url = "http://localhost/phu-kemenag-banjar-copy/";
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     <!-- css -->
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/global_style.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/header.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/sidebar.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/header.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/sidebar.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/dashboard.css">
 
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/dashboard_staf.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/monitoring.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/entry.css">
-    <link rel="stylesheet" href="/phu-kemenag-banjar-copy/views/staf/assets/css/notifikasi.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/dashboard_staf.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/monitoring.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/entry.css">
+    <link rel="stylesheet" href="<?= $base_url ?>views/staf/assets/css/notifikasi.css">
     <style>
         .dropdown-menu.scrollable-dropdown {
             max-height: 300px;
