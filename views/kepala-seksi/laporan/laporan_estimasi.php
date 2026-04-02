@@ -163,7 +163,6 @@ function clean_input($data)
         </main>
     </div>
 </div>
-<script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->
@@ -189,7 +188,7 @@ function clean_input($data)
 
 <!-- Sweetalert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/assets/js/filterTanggal_estimasi.js"></script>
+<script src="assets/js/filterTanggal_estimasi.js"></script>
 <script src="assets/js/cetakEstimasi.js"></script>
 </body>
 

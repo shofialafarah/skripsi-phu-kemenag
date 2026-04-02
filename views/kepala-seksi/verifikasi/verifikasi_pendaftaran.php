@@ -11,7 +11,7 @@ include_once __DIR__ . '/../../../includes/koneksi.php';
 include '../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_kepala']) || $_SESSION['role'] != 'kepala_seksi') {
-    header("Location: login.php");
+    header("Location: ../../../auth/login.php");
     exit();
 }
 
@@ -181,14 +181,14 @@ $total_data = mysqli_num_rows($result);
 
                                         // Dokumen
                                         if (!empty($row['upload_doc'])) {
-                                        echo "<td class='text-center'>
+                                            echo "<td class='text-center'>
                                             <a href='/phu-kemenag-banjar-copy/" . htmlspecialchars($row['upload_doc']) . "' 
                                             class='btn btn-sm btn-outline-primary' target='_blank'>
                                             <i class='fas fa-file-pdf'></i> Lihat</a>
                                         </td>";
-                                    } else {
-                                        echo "<td class='text-center'>-</td>";
-                                    }
+                                        } else {
+                                            echo "<td class='text-center'>-</td>";
+                                        }
 
 
                                         //Status Verifikasi
@@ -279,8 +279,6 @@ $total_data = mysqli_num_rows($result);
         </form>
     </div>
 </div>
-
-<script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->

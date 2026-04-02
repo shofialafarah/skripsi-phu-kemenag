@@ -11,7 +11,7 @@ include_once __DIR__ . '/../../../includes/koneksi.php';
 include '../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_kepala']) || $_SESSION['role'] != 'kepala_seksi') {
-    header("Location: login.php");
+    header("Location: ../../../auth/login.php");
     exit();
 }
 
@@ -303,7 +303,6 @@ $result = mysqli_query($koneksi, $query);
         </form>
     </div>
 </div>
-<script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->

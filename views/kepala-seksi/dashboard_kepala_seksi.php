@@ -10,7 +10,7 @@
 session_start();
 include '../../includes/koneksi.php';
 
-//Proteksi Halaman
+// Proteksi Halaman
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'kepala_seksi') {
     header("Location: ../auth/login.php");
     exit;
@@ -311,8 +311,7 @@ function getBadgeClass($jenis)
     <!-- MAIN AREA -->
     <div class="layout-content">
         <?php include 'includes/header_kasi.php'; ?>
-
-        <!-- Ganti bagian <main class="dashboard-wrapper"> dengan kode ini -->
+        <!-- DASHBOARD -->
         <main class="dashboard-wrapper">
             <div class="kasi-grid">
                 <!-- Kalender -->
@@ -386,7 +385,6 @@ function getBadgeClass($jenis)
         </main>
     </div>
 </div>
-<script src="assets/js/sidebar.js"></script>
 <script src="assets/js/kalender_dashboard.js"></script>
 <script src="assets/js/cuaca_dashboard.js"></script>
 <script>
@@ -398,16 +396,17 @@ function getBadgeClass($jenis)
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <?php if (isset($_SESSION['login_success_msg'])): ?>
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Login Berhasil',
-        text: '<?= $_SESSION['login_success_msg']; ?>',
-        timer: 2000,
-        showConfirmButton: false
-    });
-</script>
-<?php unset($_SESSION['login_success_msg']); endif; ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Login Berhasil',
+            text: '<?= $_SESSION['login_success_msg']; ?>',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    </script>
+<?php unset($_SESSION['login_success_msg']);
+endif; ?>
 </body>
 
 </html>

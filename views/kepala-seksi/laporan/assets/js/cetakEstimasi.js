@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      const printUrl = `/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/cetak/cetak_laporan_estimasi.php?start_date=${startDate}&end_date=${endDate}`;
+      const printUrl = `cetak/cetak_laporan_estimasi.php?start_date=${startDate}&end_date=${endDate}`;
 
       Swal.fire({
         title: "Cetak Laporan?",

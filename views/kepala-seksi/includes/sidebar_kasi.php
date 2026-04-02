@@ -24,7 +24,7 @@ $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
 // Tentukan src logo untuk sidebar (sama dengan logika di pengaturan)
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/img/sistem.png';
+$default_system_logo = BASE_URL . 'assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -32,7 +32,7 @@ if (empty($app_logo)) {
 } elseif (strpos($app_logo, '/') === 0) {
     $app_logo_src = $app_logo;
 } else {
-    $candidate = '/phu-kemenag-banjar-copy/assets/img/' . $app_logo;
+    $candidate = BASE_URL . 'assets/img/' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {
@@ -40,7 +40,7 @@ if (empty($app_logo)) {
     }
 }
 
-// Buat array submenu agar lebih gampang
+// Array submenu untuk menentukan item mana yang aktif
 $verifikasiPages = ['verifikasi_pendaftaran.php', 'verifikasi_pembatalan.php', 'verifikasi_pelimpahan.php'];
 $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pelimpahan.php', 'laporan_estimasi.php', 'laporan_rekapitulasi.php'];
 ?>
@@ -49,8 +49,6 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
     :root {
         --sidebar-text-color: <?= htmlspecialchars($theme_text_color); ?>;
     }
-
-    /* Warna default dari database */
 
     .sidebar .menu a p,
     .sidebar .menu a .material-symbols-outlined,
@@ -62,7 +60,6 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
 
     .sidebar .header h1 {
         color: white !important;
-        /* atau warna tetap lainnya */
     }
 
     /* Hover putih */
@@ -89,13 +86,12 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
         color: white !important;
     }
 
-    /* Opsional: tambahkan background gelap transparan agar terlihat terpilih */
     .sidebar a.active {
         background-color: rgba(255, 255, 255, 0.1);
     }
 </style>
 
-<!-- SIDEBAR langsung di sini (karena baru satu) -->
+<!-- SIDEBAR  -->
 <div class="sidebar-wrapper">
     <aside class="sidebar">
         <button class="toggle" type="button" onclick="toggleOpen()">
@@ -113,7 +109,7 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
 
             <div class="content-wrapper">
                 <nav class="menu">
-                    <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/dashboard_kepala_seksi.php" class="<?= ($currentPage == 'dashboard_kepala_seksi.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/kepala-seksi/dashboard_kepala_seksi.php" class="<?= ($currentPage == 'dashboard_kepala_seksi.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p>Dashboard</p>
                     </a>
@@ -124,9 +120,9 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $verifikasiPages) ? 'open' : '' ?>" id="monitoringSubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/verifikasi/verifikasi_pendaftaran.php" class="<?= ($currentPage == 'verifikasi_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/verifikasi/verifikasi_pembatalan.php" class="<?= ($currentPage == 'verifikasi_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/verifikasi/verifikasi_pelimpahan.php" class="<?= ($currentPage == 'verifikasi_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/verifikasi/verifikasi_pendaftaran.php" class="<?= ($currentPage == 'verifikasi_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/verifikasi/verifikasi_pembatalan.php" class="<?= ($currentPage == 'verifikasi_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/verifikasi/verifikasi_pelimpahan.php" class="<?= ($currentPage == 'verifikasi_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
                     </div>
                     <!-- Laporan -->
                     <a class="dropdown-toggle <?= in_array($currentPage, $cetakPages) ? 'active' : '' ?>" onclick="toggleDropdown('entrySubmenu', this)">
@@ -135,11 +131,11 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $cetakPages) ? 'open' : '' ?>" id="entrySubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pendaftaran.php" class="<?= ($currentPage == 'laporan_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_estimasi.php" class="<?= ($currentPage == 'laporan_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pembatalan.php" class="<?= ($currentPage == 'laporan_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_pelimpahan.php" class="<?= ($currentPage == 'laporan_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/kepala-seksi/laporan/laporan_rekapitulasi.php" class="<?= ($currentPage == 'laporan_rekapitulasi.php') ? 'active' : '' ?>">Rekapitulasi</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/laporan/laporan_pendaftaran.php" class="<?= ($currentPage == 'laporan_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/laporan/laporan_estimasi.php" class="<?= ($currentPage == 'laporan_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/laporan/laporan_pembatalan.php" class="<?= ($currentPage == 'laporan_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/laporan/laporan_pelimpahan.php" class="<?= ($currentPage == 'laporan_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                        <a href="<?= BASE_URL ?>views/kepala-seksi/laporan/laporan_rekapitulasi.php" class="<?= ($currentPage == 'laporan_rekapitulasi.php') ? 'active' : '' ?>">Rekapitulasi</a>
                     </div>
                 </nav>
                 <a href="<?= BASE_URL ?>views/auth/logout.php" id="tombol-logout" class="logout-btn">
@@ -151,7 +147,7 @@ $cetakPages = ['laporan_pendaftaran.php', 'laporan_pembatalan.php', 'laporan_pel
 </div>
 
 <!-- Scripts -->
-<script src="../assets/js/sidebar.js"></script>
+<script src="<?= BASE_URL ?>views/kepala-seksi/assets/js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('tombol-logout').addEventListener('click', function(e) {

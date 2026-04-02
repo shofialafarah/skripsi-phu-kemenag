@@ -1,4 +1,5 @@
 <?php
+
 /** =============================================================================
  * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
  * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
@@ -11,16 +12,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include_once __DIR__ . '/../../../includes/koneksi.php';
 
-// Ambil ID jamaah dari session
 if (!isset($_SESSION['id_kepala'])) {
-    // Jika tidak ada session, arahkan ke login atau beri nilai default
-    header("Location: ../../auth/login.php"); 
+    header("Location: ../../auth/login.php");
     exit();
 }
 
 // Cek session
 if (!isset($_SESSION['id_kepala'])) {
-    $id = 1; // Fallback sementara
+    $id = 1;
 } else {
     $id = $_SESSION['id_kepala'];
 }
@@ -37,9 +36,9 @@ $base_url = BASE_URL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halaman Kepala Seksi</title>
 
-    <link rel="icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
-    <link rel="shortcut icon" href="<?= $base_url ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
-    
+    <link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png?v=1.1" type="image/png">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome untuk icon -->
@@ -53,16 +52,14 @@ $base_url = BASE_URL;
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     <!-- css -->
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/global_style.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/header.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/sidebar.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/dashboard.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/global_style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/header.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/sidebar.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/dashboard.css">
     <!-- css halaman tampil -->
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/entry.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/dashboard_kepala_seksi.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/verifikasi_kepala_seksi.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/laporan_kepala_seksi.css">
-    <link rel="stylesheet" href="<?= $base_url ?>views/kepala-seksi/assets/css/estimasi.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/dashboard_kepala_seksi.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/verifikasi_kepala_seksi.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>views/kepala-seksi/assets/css/laporan_kepala_seksi.css">
 </head>
 
 <body>

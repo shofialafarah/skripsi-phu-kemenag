@@ -6,7 +6,7 @@
  * ==============================================================================
  */
 document.addEventListener("DOMContentLoaded", function() {
-        const apiKey = "10fc461BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX";
+        const apiKey = "10fc461d891b997b984bfd3e8114334b";
         const city = "Martapura,ID"; // Kota dan kode negara (ID untuk Indonesia)
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
