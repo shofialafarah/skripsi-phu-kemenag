@@ -12,7 +12,7 @@ include '../../../../partials/fungsi.php';
 
 // Cek apakah jamaah sudah login
 if (!isset($_SESSION['id_jamaah'])) {
-    header("Location: login.php");
+    header("Location: ../pelimpahan.php");
     exit();
 }
 
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $target_path = $target_dir . $unique_file_name;
 
             if (move_uploaded_file($file_tmp, $target_path)) {
-                return $target_path; // ✅ Ini akan return full path seperti yang Anda inginkan
+                return $target_path; 
             }
         }
         return null;
@@ -140,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt_pelimpahan->close();
 }
 ?>
+<link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -363,7 +364,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 <script src="../../assets/js/tambah_data_ahliwaris.js"></script>
 </body>
 

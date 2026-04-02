@@ -11,7 +11,7 @@ include '../../../../../includes/koneksi.php';
 include '../../../../partials/fungsi.php';
 
 if (!isset($_SESSION['id_jamaah'])) {
-    header("Location: login.php");
+    header("Location: ../pelimpahan.php");
     exit();
 }
 
@@ -144,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 }
 ?>
+<link rel="icon" href="<?= BASE_URL ?>assets/img/logo_kemenag.png">
 <div class="layout">
     <div class="layout-sidebar">
         <!-- SIDEBAR -->
@@ -454,7 +455,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 <script src="../../assets/js/tambah_data_ahliwaris.js"></script>
 </body>
 
