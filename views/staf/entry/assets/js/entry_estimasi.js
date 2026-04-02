@@ -31,16 +31,20 @@ function isiDataJamaah() {
   }
 }
 
-// Fungsi untuk menampilkan modal edit
-function showEditModal(data) {
-  $("#id_estimasi").val(data.id_estimasi);
-  $("#nomor_porsi").val(data.nomor_porsi);
-  $("#nama_jamaah").val(data.nama_jamaah);
-  $("#nama_ayah").val(data.nama_ayah);
-  $("#jenis_kelamin").val(data.jenis_kelamin);
-  $("#tanggal_lahir").val(data.tanggal_lahir);
-  $("#status_pergi_haji").val(data.status_pergi_haji);
-  $("#editModal").modal("show");
+function editData(data) {
+  // 1. Isi Hidden ID (Penting untuk WHERE di SQL)
+  document.getElementById("edit_id_estimasi").value = data.id_estimasi;
+  document.getElementById("edit_id_pendaftaran").value = data.id_pendaftaran;
+
+  // 2. Isi Input yang boleh diubah
+  document.getElementById("edit_nomor_porsi").value = data.nomor_porsi;
+  document.getElementById("edit_tgl_pendaftaran").value = data.tgl_pendaftaran;
+
+  // 3. Isi Label/Input Readonly sebagai referensi saja
+  document.getElementById("edit_nama_jamaah").value = data.nama_jamaah;
+
+  // Debugging di console
+  console.log("Data diedit:", data);
 }
 
 // Urutan: id, nomorPorsi, nama
@@ -71,7 +75,7 @@ function hapusData(id, nomorPorsi, nama) {
 $(document).ready(function () {
   $("#dataEstimasi").DataTable({
     responsive: false,
-    "scrollX": true,
+    scrollX: true,
     language: {
       url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/id.json",
     },

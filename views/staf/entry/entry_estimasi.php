@@ -315,14 +315,36 @@ function formatWaktuDariHari($total_hari)
                                         $masa_menunggu = $row['masa_menunggu'] ?? 0;
                                         echo "<td>" . formatWaktuDariHari($masa_menunggu) . "</td>";
 
-                                        // Encode data untuk modal edit
                                         $encodedRow = json_encode($row, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-                                        echo "<td class='text-center' style='min-width: 150px;'>";
-                                        // Tombol Hapus - Tambahkan class 'me-1'
-                                        echo "<button class='btn btn-danger btn-sm me-2' onclick='hapusData(\"" . $row['id_estimasi'] . "\", \"" . $row['nomor_porsi'] . "\", \"" . addslashes($row['nama_jamaah']) . "\")' title='Hapus'><i class='fas fa-trash'></i></button>";
 
-                                        // Tombol Cetak
-                                        echo "<a href='includes/estimasi/cetak_estimasi.php?id_estimasi=" . $row['id_pendaftaran'] . "' target='_blank' class='btn btn-sm btn-success' title='Cetak'><i class='fas fa-print'></i></a>";
+                                        echo "<td class='text-center' style='min-width: 160px;'>";
+                                        echo "<div class='d-flex justify-content-center align-items-center gap-1'>";
+
+                                        // 1. Tombol Edit (Kuning)
+                                        echo "<button class='btn btn-warning btn-sm' 
+        data-bs-toggle='modal' 
+        data-bs-target='#editModal' 
+        onclick='editData(" . $encodedRow . ")' 
+        title='Edit'>
+        <i class='fas fa-edit'></i>
+      </button>";
+
+                                        // 2. Tombol Hapus (Merah)
+                                        echo "<button class='btn btn-danger btn-sm' 
+        onclick='hapusData(\"" . $row['id_estimasi'] . "\", \"" . $row['nomor_porsi'] . "\", \"" . addslashes($row['nama_jamaah']) . "\")' 
+        title='Hapus'>
+        <i class='fas fa-trash'></i>
+      </button>";
+
+                                        // 3. Tombol Cetak (Hijau)
+                                        echo "<a href='includes/estimasi/cetak_estimasi.php?id_estimasi=" . $row['id_pendaftaran'] . "' 
+        target='_blank' 
+        class='btn btn-success btn-sm' 
+        title='Cetak'>
+        <i class='fas fa-print'></i>
+      </a>";
+
+                                        echo "</div>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
@@ -435,8 +457,6 @@ function formatWaktuDariHari($total_hari)
                             </div>
                         </div>
 
-
-
                     <?php else: ?>
                         <div class="alert alert-warning">
                             <h5><i class="fas fa-exclamation-triangle"></i> Tidak Ada Jamaah Tersedia</h5>
@@ -471,54 +491,30 @@ function formatWaktuDariHari($total_hari)
 
 <!-- Modal Edit Estimasi -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg"> <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Data Estimasi</h5>
+                <h5 class="modal-title" id="editModalLabel"><i class="fas fa-edit"></i> Edit Data Estimasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
             </div>
-            <form action="includes/estimasi/edit_estimasi.php" method="post" id="editForm">
+            <form action="includes/estimasi/edit_estimasi.php" method="post">
                 <div class="modal-body">
                     <input type="hidden" name="id_estimasi" id="edit_id_estimasi">
                     <input type="hidden" name="id_pendaftaran" id="edit_id_pendaftaran">
-                    <input type="hidden" name="nomor_porsi_lama" id="edit_nomor_porsi_lama">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Jamaah</label>
+                                <input type="text" class="form-control" id="edit_nama_jamaah" readonly style="background-color: #f8f9fa;">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="edit_nomor_porsi" class="form-label">Nomor Porsi</label>
                                 <input type="text" class="form-control" name="nomor_porsi" id="edit_nomor_porsi" required>
-                                <small class="form-text text-muted">Nomor porsi harus unik</small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_nama_jamaah" class="form-label">Nama Jamaah</label>
-                                <input type="text" class="form-control" name="nama_jamaah" id="edit_nama_jamaah" readonly style="background-color: #f8f9fa;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_nama_ayah" class="form-label">Nama Ayah Kandung</label>
-                                <input type="text" class="form-control" name="nama_ayah" id="edit_nama_ayah" readonly style="background-color: #f8f9fa;">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                <input type="text" class="form-control" name="jenis_kelamin" id="edit_jenis_kelamin" readonly style="background-color: #f8f9fa;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_tanggal_lahir" class="form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-control" name="tanggal_lahir" id="edit_tanggal_lahir" readonly style="background-color: #f8f9fa;">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -529,46 +525,10 @@ function formatWaktuDariHari($total_hari)
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_status_haji" class="form-label">Status Haji</label>
-                                <input type="text" class="form-control" name="status_pergi_haji" id="edit_status_haji" readonly style="background-color: #f8f9fa;">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="edit_telah_menunggu" class="form-label">Telah Menunggu (dalam hari)</label>
-                                <input type="number" class="form-control" name="telah_menunggu" id="edit_telah_menunggu">
-                                <small class="form-text text-muted">Masukkan dalam satuan hari</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="edit_estimasi_berangkat" class="form-label">Estimasi Keberangkatan</label>
-                                <input type="date" class="form-control" name="estimasi_berangkat" id="edit_estimasi_berangkat">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="edit_sisa_menunggu" class="form-label">Sisa Menunggu (dalam hari)</label>
-                                <input type="number" class="form-control" name="sisa_menunggu" id="edit_sisa_menunggu">
-                                <small class="form-text text-muted">Masukkan dalam satuan hari</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="edit_masa_menunggu" class="form-label">Masa Menunggu (dalam hari)</label>
-                                <input type="number" class="form-control" name="masa_menunggu" id="edit_masa_menunggu">
-                                <small class="form-text text-muted">Masukkan dalam satuan hari</small>
-                            </div>
-                        </div>
+                    <div class="alert alert-warning mt-2">
+                        <small><i class="fas fa-info-circle"></i> Data umur, estimasi berangkat, dan masa tunggu akan dikalkulasi ulang secara otomatis setelah disimpan.</small>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-success">Simpan Perubahan</button>
@@ -578,7 +538,6 @@ function formatWaktuDariHari($total_hari)
     </div>
 </div>
 
-<script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->

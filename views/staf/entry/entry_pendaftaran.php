@@ -279,7 +279,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_pendaftaran'])) {
     <div id="flash-error" style="display: none;"><?php echo $_SESSION['error_message']; ?></div>
     <?php unset($_SESSION['error_message']); ?>
 <?php endif; ?>
-<script src="../assets/js/sidebar.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->

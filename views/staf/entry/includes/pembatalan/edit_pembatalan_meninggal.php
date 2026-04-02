@@ -493,7 +493,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 <script src="assets/js/tambah_data_ahliwaris.js"></script>
 
 </body>

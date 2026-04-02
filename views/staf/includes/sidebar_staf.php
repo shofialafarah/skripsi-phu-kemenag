@@ -23,8 +23,7 @@ $app_name = $settings['app_name'] ?? 'PHU KEMENAG';
 $app_logo = $settings['app_logo'] ?? '';
 $theme_text_color = $settings['theme_text_color'] ?? '#ffffff';
 
-$default_system_logo = '/phu-kemenag-banjar-copy/assets/img/sistem.png';
-
+$default_system_logo = BASE_URL . 'assets/img/sistem.png';
 if (empty($app_logo)) {
     $app_logo_src = $default_system_logo;
 } elseif (filter_var($app_logo, FILTER_VALIDATE_URL)) {
@@ -32,7 +31,7 @@ if (empty($app_logo)) {
 } elseif (strpos($app_logo, '/') === 0) {
     $app_logo_src = $app_logo;
 } else {
-    $candidate = '/phu-kemenag-banjar-copy/assets/img/' . $app_logo;
+    $candidate = BASE_URL . 'assets/img/' . $app_logo;
     if (file_exists($_SERVER['DOCUMENT_ROOT'] . $candidate)) {
         $app_logo_src = $candidate;
     } else {
@@ -104,7 +103,7 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'edit_pembatalan
 
             <div class="content-wrapper">
                 <nav class="menu">
-                    <a href="/phu-kemenag-banjar-copy/views/staf/dashboard_staf.php" class="<?= ($currentPage == 'dashboard_staf.php') ? 'active' : '' ?>">
+                    <a href="<?= BASE_URL ?>views/staf/dashboard_staf.php" class="<?= ($currentPage == 'dashboard_staf.php') ? 'active' : '' ?>">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p>Dashboard</p>
                     </a>
@@ -115,9 +114,9 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'edit_pembatalan
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $monitoringPages) ? 'open' : '' ?>" id="monitoringSubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pendaftaran.php" class="<?= ($currentPage == 'monitoring_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pembatalan.php" class="<?= ($currentPage == 'monitoring_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/staf/monitoring/monitoring_pelimpahan.php" class="<?= ($currentPage == 'monitoring_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/monitoring/monitoring_pendaftaran.php" class="<?= ($currentPage == 'monitoring_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/monitoring/monitoring_pembatalan.php" class="<?= ($currentPage == 'monitoring_pembatalan.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/monitoring/monitoring_pelimpahan.php" class="<?= ($currentPage == 'monitoring_pelimpahan.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
                     </div>
                     <!-- Entry -->
                     <a class="dropdown-toggle <?= in_array($currentPage, $entryPages) ? 'active' : '' ?>" onclick="toggleDropdown('entrySubmenu', this)">
@@ -126,19 +125,11 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'edit_pembatalan
                         <span class="material-symbols-outlined arrow">expand_more</span>
                     </a>
                     <div class="submenu <?= in_array($currentPage, $entryPages) ? 'open' : '' ?>" id="entrySubmenu">
-                        <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pendaftaran.php" class="<?= ($currentPage == 'entry_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_estimasi.php" class="<?= ($currentPage == 'entry_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pembatalan.php" class="<?= ($currentPage == 'entry_pembatalan.php' || $currentPage == 'edit_pembatalan_meninggal.php' || $currentPage == 'cetak_pembatalan_meninggal.php' || $currentPage == 'edit_pembatalan_ekonomi.php' || $currentPage == 'cetak_pembatalan_ekonomi.php') ? 'active' : '' ?>">Pembatalan Haji</a>
-                        <a href="/phu-kemenag-banjar-copy/views/staf/entry/entry_pelimpahan.php" class="<?= ($currentPage == 'entry_pelimpahan.php' || $currentPage == 'edit_pelimpahan_meninggal.php' || $currentPage == 'cetak_pelimpahan.php' || $currentPage == 'edit_pelimpahan_sakit.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/entry/entry_pendaftaran.php" class="<?= ($currentPage == 'entry_pendaftaran.php') ? 'active' : '' ?>">Pendaftaran Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/entry/entry_estimasi.php" class="<?= ($currentPage == 'entry_estimasi.php') ? 'active' : '' ?>">Estimasi Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/entry/entry_pembatalan.php" class="<?= ($currentPage == 'entry_pembatalan.php' || $currentPage == 'edit_pembatalan_meninggal.php' || $currentPage == 'cetak_pembatalan_meninggal.php' || $currentPage == 'edit_pembatalan_ekonomi.php' || $currentPage == 'cetak_pembatalan_ekonomi.php') ? 'active' : '' ?>">Pembatalan Haji</a>
+                        <a href="<?= BASE_URL ?>views/staf/entry/entry_pelimpahan.php" class="<?= ($currentPage == 'entry_pelimpahan.php' || $currentPage == 'edit_pelimpahan_meninggal.php' || $currentPage == 'cetak_pelimpahan.php' || $currentPage == 'edit_pelimpahan_sakit.php') ? 'active' : '' ?>">Pelimpahan Haji</a>
                     </div>
-                    <!-- <a href="pembatalan_haji.php" class="<?= ($currentPage == 'pembatalan_haji.php') ? 'active' : '' ?>">
-                            <span class="material-symbols-outlined">cancel</span>
-                            <p>Pembatalan Haji</p>
-                        </a>
-                        <a href="pelimpahan_haji.php">
-                            <span class="material-symbols-outlined" class="<?= ($currentPage == 'pelimpahan_haji.php') ? 'active' : '' ?>">swap_horiz</span>
-                            <p>Pelimpahan Haji</p>
-                        </a> -->
                 </nav>
                 <a href="<?= BASE_URL ?>views/auth/logout.php" id="tombol-logout" class="logout-btn">
                     <span class="material-symbols-outlined">logout</span>
@@ -150,7 +141,7 @@ $entryPages = ['entry_pendaftaran.php', 'entry_pembatalan.php', 'edit_pembatalan
 
 
 <!-- Scripts -->
-<script src="../assets/js/sidebar.js"></script>
+<script src="<?= BASE_URL ?>views/staf/assets/js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('tombol-logout').addEventListener('click', function(e) {

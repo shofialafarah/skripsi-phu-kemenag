@@ -1,104 +1,75 @@
 <?php
-
-/** =============================================================================
- * Nama Aplikasi: Sistem Informasi Pelayanan Ibadah Haji Berbasis Web pada Kementerian Agama Kabupaten Banjar
- * Author: SHOFIA NABILA ELFA RAHMA - 2110010113
- * Copyright (c) 2025. All Rights Reserved.
- * Dibuat untuk keperluan Skripsi di Universitas Islam Kalimantan Muhammad Arsyad Al Banjari Banjarmasin
- * ==============================================================================
- */
 session_start();
 include_once __DIR__ . '/../../../../../includes/koneksi.php';
 
-function clean_input($data) {
-    global $koneksi;
-    return mysqli_real_escape_string($koneksi, htmlspecialchars(stripslashes(trim($data))));
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_estimasi = $_POST['id_estimasi'];
+    $id_pendaftaran = $_POST['id_pendaftaran'];
+    $nomor_porsi = $_POST['nomor_porsi'];
+    $tgl_pendaftaran = $_POST['tgl_pendaftaran'];
 
-// Ambil data dari form
-$id_estimasi = clean_input($_POST['id_estimasi']);
-$nomor_porsi = clean_input($_POST['nomor_porsi']);
-$nama_jamaah = clean_input($_POST['nama_jamaah']);
-$nama_ayah = clean_input($_POST['nama_ayah']);
-$jenis_kelamin = clean_input($_POST['jenis_kelamin']);
-$tanggal_lahir = clean_input($_POST['tanggal_lahir']);
-$tgl_pendaftaran = clean_input($_POST['tgl_pendaftaran']);
-$status_haji = clean_input($_POST['status_haji']);
+    // 1. Cek duplikat nomor porsi di tabel pendaftaran (kecuali milik jamaah ini sendiri)
+    $cek_porsi = $koneksi->prepare("SELECT id_pendaftaran FROM pendaftaran WHERE nomor_porsi = ? AND id_pendaftaran != ?");
+    $cek_porsi->bind_param("si", $nomor_porsi, $id_pendaftaran);
+    $cek_porsi->execute();
+    $cek_porsi->store_result();
 
-// Validasi nomor porsi (tidak boleh sama dengan jamaah lain)
-$cek = mysqli_query($koneksi, "SELECT id_estimasi FROM estimasi WHERE nomor_porsi = '$nomor_porsi' AND id_estimasi != '$id_estimasi'");
-if (mysqli_num_rows($cek) > 0) {
-    $_SESSION['error_message'] = 'Nomor Porsi sudah digunakan oleh jamaah lain!';
-    header("Location: entry_estimasi.php");
-    exit();
-}
-
-// Hitung umur
-$lahir = new \DateTime($tanggal_lahir);
-$now = new \DateTime();
-$umur = $lahir->diff($now)->y;
-
-function formatInterval($interval) {
-    $result = [];
-
-    if ($interval->y > 0) {
-        $result[] = $interval->y . ' tahun';
+    if ($cek_porsi->num_rows > 0) {
+        echo "<script>alert('Nomor porsi sudah digunakan oleh jamaah lain.'); window.history.back();</script>";
+        exit();
     }
-    if ($interval->m > 0) {
-        $result[] = $interval->m . ' bulan';
+    $cek_porsi->close();
+
+    // 2. Logika Perhitungan Otomatis (Sesuai tambah_estimasi.php)
+    $hariIni = new \DateTime();
+    $tglDaftar = new \DateTime($tgl_pendaftaran);
+
+    // Hitung telah menunggu
+    $diff = $tglDaftar->diff($hariIni);
+    $telah_menunggu = "{$diff->y} tahun, {$diff->m} bulan, {$diff->d} hari";
+
+    // Estimasi berangkat (Masa tunggu 30 tahun sesuai file tambahmu)
+    $masa_menunggu = 30;
+    $estimasi_berangkat_date = (clone $tglDaftar)->modify("+$masa_menunggu year");
+    $estimasi_berangkat = $estimasi_berangkat_date->format('Y-m-d');
+
+    // Sisa menunggu (dalam hari)
+    $sisa_menunggu = $hariIni->diff($estimasi_berangkat_date)->days;
+
+    // Ambil tanggal lahir untuk hitung umur
+    $query_lahir = $koneksi->prepare("SELECT tanggal_lahir FROM pendaftaran WHERE id_pendaftaran = ?");
+    $query_lahir->bind_param("i", $id_pendaftaran);
+    $query_lahir->execute();
+    $query_lahir->bind_result($tanggal_lahir);
+    $query_lahir->fetch();
+    $query_lahir->close();
+
+    $tglLahir = new \DateTime($tanggal_lahir);
+    $umur = $tglLahir->diff($hariIni)->y;
+
+    // 3. Update Tabel Estimasi
+    $stmt = $koneksi->prepare("UPDATE estimasi SET 
+        tgl_pendaftaran = ?, 
+        telah_menunggu = ?, 
+        estimasi_berangkat = ?, 
+        umur = ?, 
+        sisa_menunggu = ?, 
+        masa_menunggu = ? 
+        WHERE id_estimasi = ?");
+
+    // Bind parameter (s = string, i = integer)
+    // masa_menunggu di file tambahmu disimpan sebagai integer (30)
+    $stmt->bind_param("ssssiii", $tgl_pendaftaran, $telah_menunggu, $estimasi_berangkat, $umur, $sisa_menunggu, $masa_menunggu, $id_estimasi);
+
+    if ($stmt->execute()) {
+        // 4. Update juga nomor_porsi di tabel pendaftaran
+        $stmt_update = $koneksi->prepare("UPDATE pendaftaran SET nomor_porsi = ? WHERE id_pendaftaran = ?");
+        $stmt_update->bind_param("si", $nomor_porsi, $id_pendaftaran);
+        $stmt_update->execute();
+
+        header("Location: ../../entry_estimasi.php?success=update");
+        exit();
+    } else {
+        echo "Gagal memperbarui data: " . $stmt->error;
     }
-    if ($interval->d > 0) {
-        $result[] = $interval->d . ' hari';
-    }
-
-    return implode(' ', $result);
 }
-
-
-$masa_menunggu_tahun = 25;
-$daftar = new \DateTime($tgl_pendaftaran);
-
-// Telah Menunggu
-$interval_telahan_menunggu = $daftar->diff($now);
-$telah_menunggu = formatInterval($interval_telahan_menunggu);
-
-// Estimasi Berangkat (sebelumnya sudah benar)
-$estimasi_berangkat = (clone $daftar)->modify("+$masa_menunggu_tahun years")->format('Y-m-d');
-
-// Sisa Menunggu
-$estimasi_date = new \DateTime($estimasi_berangkat);
-$interval_sisa_menunggu = $now->diff($estimasi_date);
-$sisa_menunggu = formatInterval($interval_sisa_menunggu);
-
-// Masa Menunggu (pakai dummy date)
-$masa_date = (clone $daftar)->modify("+$masa_menunggu_tahun years");
-$interval_masa_menunggu = $daftar->diff($masa_date);
-$masa_menunggu = formatInterval($interval_masa_menunggu);
-
-
-// Update data di database
-$query = "UPDATE estimasi SET 
-    nomor_porsi = '$nomor_porsi',
-    nama_jamaah = '$nama_jamaah',
-    nama_ayah = '$nama_ayah',
-    jenis_kelamin = '$jenis_kelamin',
-    tanggal_lahir = '$tanggal_lahir', 
-    umur = '$umur',
-    tgl_pendaftaran = '$tgl_pendaftaran',  
-    status_haji = '$status_haji', 
-    telah_menunggu = '$telah_menunggu',
-    estimasi_berangkat = '$estimasi_berangkat',
-    sisa_menunggu = '$sisa_menunggu',
-    masa_menunggu = '$masa_menunggu'
-    WHERE id_estimasi = '$id_estimasi'";
-
-if (mysqli_query($koneksi, $query)) {
-    $_SESSION['success_message'] = 'Data berhasil diperbarui!';
-} else {
-    // Menangani error SQL dengan mysqli_error()
-    $_SESSION['error_message'] = 'Gagal memperbarui data! Error: ' . mysqli_error($koneksi);
-}
-
-header("Location: ../../entry_estimasi.php");
-exit();
-?>

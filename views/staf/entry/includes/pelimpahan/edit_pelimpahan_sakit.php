@@ -617,7 +617,6 @@ WHERE id_limpah_sakit = ?";
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 </body>
 
 </html>

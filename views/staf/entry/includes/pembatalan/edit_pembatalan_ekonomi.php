@@ -356,7 +356,6 @@ if (isset($_POST['update'])) {
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 </body>
 
 </html>

@@ -47,25 +47,24 @@ if (isset($_GET['id'])) {
 
                 <div class="btn-group">
                     <!-- Tombol untuk mencetak SURAT REKOMENDASI -->
-                    <a href="/phu-kemenag-banjar-copy/uploads/pelimpahan/dokumen-staf/surat_rekomendasi.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Rekomendasi</a>
+                    <a href="../../../../../uploads/pelimpahan/dokumen-staf/surat_rekomendasi.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Rekomendasi</a>
 
                     <!-- Tombol untuk mencetak SURAT PENGANTAR -->
-                    <a href="/phu-kemenag-banjar-copy/uploads/pelimpahan/dokumen-staf/surat_pengantar.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pengantar</a>
+                    <a href="../../../../../uploads/pelimpahan/dokumen-staf/surat_pengantar.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pengantar</a>
 
                     <!-- Tombol untuk mencetak SPTJM -->
-                    <a href="/phu-kemenag-banjar-copy/uploads/pelimpahan/dokumen-staf/sptjm_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
+                    <a href="../../../../../uploads/pelimpahan/dokumen-staf/sptjm_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak SPTJM</a>
 
                     <!-- Tombol untuk mencetak Permohonan -->
-                    <a href="/phu-kemenag-banjar-copy/uploads/pelimpahan/dokumen-staf/surat_permohonan_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
+                    <a href="../../../../../uploads/pelimpahan/dokumen-staf/surat_permohonan_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Permohonan</a>
 
                     <!-- Tombol untuk mencetak Surat Tanda Tangan Kasi -->
-                    <a href="/phu-kemenag-banjar-copy/uploads/pelimpahan/dokumen-staf/surat_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pelimpahan</a>
+                    <a href="../../../../../uploads/pelimpahan/dokumen-staf/surat_pelimpahan.php?id=<?php echo $id_limpah_meninggal; ?>" class="btn-cetak" target="_blank">Cetak Surat Pelimpahan</a>
                 </div>
             </div>
         </main>
     </div>
 </div>
-<script src="../../../assets/js/sidebar.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Button hover animation
